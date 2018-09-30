@@ -2,10 +2,10 @@
 How to compile hcOMNI for ubuntu
 =========================================
 
-how to compile for ubuntu:
+how to compile for ubuntu16.04:
 
 ```
-git clone hcOMNI soure to ubuntu16.04 computer
+git clone https://github.com/HcashOrg/hcOMNI.git
 cd hcOMNI
 $ chmod 777 autogen.sh
 $ chmod 777 share/genbuild.sh
