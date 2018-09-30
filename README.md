@@ -4,6 +4,7 @@ How to compile hcOMNI for ubuntu
 
 how to compile for ubuntu:
 
+```
 git clone hcOMNI soure to ubuntu16.04 computer
 cd hcOMNI
 $ chmod 777 autogen.sh
@@ -27,6 +28,7 @@ cp secp256k1/.libs/libsecp256k1.a .
 
 #copy all .a to hcwallent/omnilib dir,refer below cmd,then build hcwallet and hcd
 cp *.a $GOPATH/src/github.com/HcashOrg/hcwallet/omnilib 
+```
 
 
 Omni Core (beta) integration/staging tree
