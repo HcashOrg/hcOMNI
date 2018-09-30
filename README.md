@@ -1,8 +1,6 @@
 
-How to compile hcOMNI for ubuntu
+How to compile hcOMNI for ubuntu 16.04
 =========================================
-
-how to compile for ubuntu16.04:
 
 ```
 git clone https://github.com/HcashOrg/hcOMNI.git
