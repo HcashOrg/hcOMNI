@@ -43,7 +43,7 @@ http://www.omnilayer.org
 What is Omni Core
 -----------------
 
-Omni Core is a fast, portable Omni Layer implementation that is based off the HCash Core codebase (currently 0.13). This implementation requires no external dependencies extraneous to HCash Core, and is native to the HCash network just like other HCash nodes. It currently supports a wallet mode and is seamlessly available on three platforms: Windows, Linux and Mac OS. Omni Layer extensions are exposed via the JSON-RPC interface. Development has been consolidated on the Omni Core product, and it is the reference client for the Omni Layer.
+Omni Core is a fast, portable Omni Layer implementation that is based off the HCash Core codebase . This implementation requires no external dependencies extraneous to HCash Core, and is native to the HCash network just like other HCash nodes. It currently supports a wallet mode and is seamlessly available on three platforms: Windows, Linux and Mac OS. Omni Layer extensions are exposed via the JSON-RPC interface. Development has been consolidated on the Omni Core product, and it is the reference client for the Omni Layer.
 
 Disclaimer, warning
 -------------------
