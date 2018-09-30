@@ -1,3 +1,34 @@
+
+How to compile hcOMNI for ubuntu
+=========================================
+
+how to compile for ubuntu:
+
+git clone hcOMNI soure to ubuntu16.04 computer
+cd hcOMNI
+$ chmod 777 autogen.sh
+$ chmod 777 share/genbuild.sh
+
+$ sudo apt-get install make  pkg-config autoconf libtool
+$ sudo apt-get install libboost-all-dev libssl-dev libevent-dev libdb-dev  libdb++-dev
+
+$ ./autogen.sh
+$ ./configure --with-incompatible-bdb --disable-tests --disable-bench
+$ make clean
+$ make
+
+cd src
+ar rc libomnicored.a omnicored-bitcoind.o omnicored-omnicoreApi.o 
+cp univalue/.libs/libunivalue.a .
+cp crypto/libbitcoin_crypto.a .
+cp leveldb/libleveldb.a .
+cp leveldb/libmemenv.a .
+cp secp256k1/.libs/libsecp256k1.a .
+
+#copy all .a to hcwallent/omnilib dir,refer below cmd,then build hcwallet and hcd
+cp *.a $(GOPATH)/src/github.com/HcashOrg/hcwallet/omnilib 
+
+
 Omni Core (beta) integration/staging tree
 =========================================
 
