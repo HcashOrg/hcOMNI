@@ -1981,13 +1981,10 @@ UniValue omni_gettransaction(const UniValue& params, bool fHelp)
 
     UniValue txobj(UniValue::VOBJ);
 	UniValue result(UniValue::VOBJ);
-	std::string history = p_txhistory->GetEndHistory();
+	std::string history;
 	int i=1;
-	int blockHeight = -1;
-	if(txobj.read(history))
-	{
-		blockHeight = txobj["Block"].get_int();
-	}
+	int blockHeight = mastercore::GetHeight();
+
 	do {
 		history = p_txhistory->GetHistory(i++);
 		if(!txobj.read(history))
@@ -2049,14 +2046,10 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 
 	UniValue response(UniValue::VARR);
 	
-	std::string history = p_txhistory->GetEndHistory();
+	std::string history;
 	int i=1;
-	int blockHeight = -1;
+	int blockHeight = mastercore::GetHeight();
 	UniValue txobj;
-	if(txobj.read(history))
-	{
-		blockHeight = txobj["Block"].get_int();
-	}
 	do {
 		UniValue result(UniValue::VOBJ);
 		history = p_txhistory->GetHistory(i++);
@@ -2307,8 +2300,6 @@ UniValue omni_getactivations(const UniValue& params, bool fHelp)
 
 UniValue omni_getsto(const UniValue& params, bool fHelp)
 {
-	throw runtime_error("not implement");
-    /*
 	if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
             "omni_getsto \"txid\" \"recipientfilter\"\n"
@@ -2345,16 +2336,46 @@ UniValue omni_getsto(const UniValue& params, bool fHelp)
             + HelpExampleRpc("omni_getsto", "\"1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d\", \"*\"")
         );
 
-    uint256 hash = ParseHashV(params[0], "txid");
+    //uint256 hash = ParseHashV(params[0], "txid");
+    //std::string filterAddress;
+    //if (params.size() > 1) filterAddress = ParseAddressOrWildcard(params[1]);
+
+    //UniValue txobj(UniValue::VOBJ);
+    //int populateResult = populateRPCTransactionObject(hash, txobj, "", true, filterAddress);
+    //if (populateResult != 0) PopulateFailure(populateResult);
+
+
+	uint256 hash = ParseHashV(params[0], "txid");
     std::string filterAddress;
     if (params.size() > 1) filterAddress = ParseAddressOrWildcard(params[1]);
 
     UniValue txobj(UniValue::VOBJ);
-    int populateResult = populateRPCTransactionObject(hash, txobj, "", true, filterAddress);
-    if (populateResult != 0) PopulateFailure(populateResult);
+	UniValue result(UniValue::VOBJ);
+	std::string history;
+	int i=1;
+	int blockHeight = mastercore::GetHeight();
+	do {
+		history = p_txhistory->GetHistory(i++);
+		if(!txobj.read(history))
+			break;
+		if(uint256S(txobj["TxHash"].getValStr()) == (hash))
+		{
+			std::string ScriptEncode = txobj["PayLoad"].get_str();
+			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
 
-    return txobj;
-	*/
+			CMPTransaction mp_obj;
+			mp_obj.unlockLogic();
+			mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+			mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+			mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
+				0, uint256S(txobj["TxHash"].getValStr()),
+				txobj["Block"].get_int(), txobj["Idx"].get_int(),
+				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
+			Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight, "", true, filterAddress);
+			break;
+		}
+	} while (!history.empty());
+    return result;
 }
 
 UniValue omni_gettrade(const UniValue& params, bool fHelp)
@@ -2403,15 +2424,41 @@ UniValue omni_gettrade(const UniValue& params, bool fHelp)
             + HelpExampleCli("omni_gettrade", "\"1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d\"")
             + HelpExampleRpc("omni_gettrade", "\"1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d\"")
         );
-    throw runtime_error("not implement");
+    //throw runtime_error("not implement");
 
     uint256 hash = ParseHashV(params[0], "txid");
 
-    UniValue txobj(UniValue::VOBJ);
-    int populateResult = populateRPCTransactionObject(hash, txobj, "", true);
-    if (populateResult != 0) PopulateFailure(populateResult);
+    //UniValue txobj(UniValue::VOBJ);
+    //int populateResult = populateRPCTransactionObject(hash, txobj, "", true);
+    //if (populateResult != 0) PopulateFailure(populateResult);
 
-    return txobj;
+	UniValue txobj(UniValue::VOBJ);
+	UniValue result(UniValue::VOBJ);
+	std::string history;
+	int i=1;
+	int blockHeight = mastercore::GetHeight();
+	do {
+		history = p_txhistory->GetHistory(i++);
+		if(!txobj.read(history))
+			break;
+		if(uint256S(txobj["TxHash"].getValStr()) == (hash))
+		{
+			std::string ScriptEncode = txobj["PayLoad"].get_str();
+			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
+
+			CMPTransaction mp_obj;
+			mp_obj.unlockLogic();
+			mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+			mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+			mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
+				0, uint256S(txobj["TxHash"].getValStr()),
+				txobj["Block"].get_int(), txobj["Idx"].get_int(),
+				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
+			Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight, "", true);
+			break;
+		}
+	} while (!history.empty());
+    return result;
 }
 
 UniValue omni_getcurrentconsensushash(const UniValue& params, bool fHelp)
@@ -2621,12 +2668,14 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
             "\nExamples:\n" +
             HelpExampleCli("omni_processpayment", "000000fff3d3322faddd"));
 
-	int64_t Block = params[0].get_int64();
-    uint256 BlockHash = uint256S(params[1].get_str());
-	int64_t Time = params[2].get_int64();
+	mastercore::_LatestBlock = params[0].get_int();
+    mastercore::_LatestBlockHash = uint256S(params[1].get_str());
+	mastercore::_LatestBlockTime = params[2].get_int64();
 
-	eraseExpiredAccepts(Block);
-	calculate_and_update_devmsc(Time, Block);
+	PrintToConsole("omni_onblockconnected : %d\t%s\t%I64d\n", mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString(), mastercore::_LatestBlockTime);
+
+	eraseExpiredAccepts(mastercore::_LatestBlock);
+	calculate_and_update_devmsc(mastercore::_LatestBlockTime, mastercore::_LatestBlock);
 	return "";
 }
 

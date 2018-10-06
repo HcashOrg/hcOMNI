@@ -37,6 +37,7 @@
 #include "utilstrencodings.h"
 #include "validationinterface.h"
 #include "versionbits.h"
+#include "omnicore/utilsbitcoin.h"
 
 #include <atomic>
 #include <sstream>
@@ -376,11 +377,11 @@ CNodeState* State(NodeId pnode)
     return &it->second;
 }
 
-int GetHeight()
-{
-    LOCK(cs_main);
-    return chainActive.Height();
-}
+//int GetHeight()
+//{
+//    LOCK(cs_main);
+//    return chainActive.Height();
+//}
 
 void UpdatePreferredDownload(CNode* node, CNodeState* state)
 {
@@ -702,7 +703,7 @@ bool GetNodeStateStats(NodeId nodeid, CNodeStateStats& stats)
 
 void RegisterNodeSignals(CNodeSignals& nodeSignals)
 {
-    nodeSignals.GetHeight.connect(&GetHeight);
+    nodeSignals.GetHeight.connect(&mastercore::GetHeight);
     nodeSignals.ProcessMessages.connect(&ProcessMessages);
     nodeSignals.SendMessages.connect(&SendMessages);
     nodeSignals.InitializeNode.connect(&InitializeNode);
@@ -711,7 +712,7 @@ void RegisterNodeSignals(CNodeSignals& nodeSignals)
 
 void UnregisterNodeSignals(CNodeSignals& nodeSignals)
 {
-    nodeSignals.GetHeight.disconnect(&GetHeight);
+    nodeSignals.GetHeight.disconnect(&mastercore::GetHeight);
     nodeSignals.ProcessMessages.disconnect(&ProcessMessages);
     nodeSignals.SendMessages.disconnect(&SendMessages);
     nodeSignals.InitializeNode.disconnect(&InitializeNode);
@@ -2803,8 +2804,8 @@ bool static DisconnectTip(CValidationState& state, const CChainParams& chainpara
     UpdateTip(pindexDelete->pprev, chainparams);
 
     //! Omni Core: begin block disconnect notification
-    LogPrint("handler", "Omni Core handler: block disconnect begin [height: %d, reindex: %d]\n", GetHeight(), (int)fReindex);
-    mastercore_handler_disc_begin(GetHeight(), pindexDelete);
+    LogPrint("handler", "Omni Core handler: block disconnect begin [height: %d, reindex: %d]\n", mastercore::GetHeight(), (int)fReindex);
+    mastercore_handler_disc_begin(mastercore::GetHeight(), pindexDelete);
 
     // Let wallets know transactions went from 1-confirmed to
     // 0-confirmed or conflicted:
@@ -2813,8 +2814,8 @@ bool static DisconnectTip(CValidationState& state, const CChainParams& chainpara
     }
 
     //! Omni Core: end of block disconnect notification
-    LogPrint("handler", "Omni Core handler: block disconnect end [height: %d, reindex: %d]\n", GetHeight(), (int)fReindex);
-    mastercore_handler_disc_end(GetHeight(), pindexDelete);
+    LogPrint("handler", "Omni Core handler: block disconnect end [height: %d, reindex: %d]\n", mastercore::GetHeight(), (int)fReindex);
+    mastercore_handler_disc_end(mastercore::GetHeight(), pindexDelete);
 
     return true;
 }
@@ -2876,8 +2877,8 @@ bool static ConnectTip(CValidationState& state, const CChainParams& chainparams,
     unsigned int nNumMetaTxs = 0;
 
     //! Omni Core: begin block connect notification
-    LogPrint("handler", "Omni Core handler: block connect begin [height: %d]\n", GetHeight());
-    mastercore_handler_block_begin(GetHeight(), pindexNew);
+    LogPrint("handler", "Omni Core handler: block connect begin [height: %d]\n", mastercore::GetHeight());
+    mastercore_handler_block_begin(mastercore::GetHeight(), pindexNew);
 
     // Remove conflicting transactions from the mempool.
     list<CTransaction> txConflicted;
@@ -2895,14 +2896,14 @@ bool static ConnectTip(CValidationState& state, const CChainParams& chainparams,
         SyncWithWallets(tx, pindexNew, pblock);
 
         //! Omni Core: new confirmed transaction notification
-        LogPrint("handler", "Omni Core handler: new confirmed transaction [height: %d, idx: %u]\n", GetHeight(), nTxIdx);
-        if (mastercore_handler_tx(tx, GetHeight(), nTxIdx++, pindexNew))
+        LogPrint("handler", "Omni Core handler: new confirmed transaction [height: %d, idx: %u]\n", mastercore::GetHeight(), nTxIdx);
+        if (mastercore_handler_tx(tx, mastercore::GetHeight(), nTxIdx++, pindexNew))
             ++nNumMetaTxs;
     }
 
     //! Omni Core: end of block connect notification
-    LogPrint("handler", "Omni Core handler: block connect end [new height: %d, found: %u txs]\n", GetHeight(), nNumMetaTxs);
-    mastercore_handler_block_end(GetHeight(), pindexNew, nNumMetaTxs);
+    LogPrint("handler", "Omni Core handler: block connect end [new height: %d, found: %u txs]\n", mastercore::GetHeight(), nNumMetaTxs);
+    mastercore_handler_block_end(mastercore::GetHeight(), pindexNew, nNumMetaTxs);
 
     int64_t nTime6 = GetTimeMicros();
     nTimePostConnect += nTime6 - nTime5;

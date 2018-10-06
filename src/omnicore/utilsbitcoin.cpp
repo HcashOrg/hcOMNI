@@ -8,6 +8,9 @@
 #include "chainparams.h"
 #include "main.h"
 #include "sync.h"
+#include "dbTxHistory.h"
+#include "univalue.h"
+#include "omnicore.h"
 
 #include <stdint.h>
 #include <string>
@@ -19,8 +22,20 @@ namespace mastercore
  */
 int GetHeight()
 {
-    LOCK(cs_main);
-    return chainActive.Height();
+	return _LatestBlock;
+    //LOCK(cs_main);
+    //return chainActive.Height();
+	//if(!p_txhistory)
+	//	return -1;
+	//std::string history = p_txhistory->GetEndHistory();
+	//int i=1;
+	//int blockHeight = -1;
+	//UniValue txobj;
+	//if(txobj.read(history))
+	//{
+	//	blockHeight = txobj["Block"].get_int();
+	//}
+	//return blockHeight;
 }
 
 /**

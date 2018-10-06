@@ -185,6 +185,10 @@ extern CCoinsViewCache view;
 //! Guards coins view cache
 extern CCriticalSection cs_tx_cache;
 
+extern int _LatestBlock;
+extern uint256 _LatestBlockHash;
+extern int64_t _LatestBlockTime;
+
 /** Returns the encoding class, used to embed a payload. */
 int GetEncodingClass(const CTransaction& tx, int nBlock);
 

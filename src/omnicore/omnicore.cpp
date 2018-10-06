@@ -148,6 +148,10 @@ COmniFeeHistory* mastercore::p_feehistory;
 //! LevelDB based storage for the TxHistory
 COmniTxHistory* mastercore::p_txhistory;
 
+int mastercore::_LatestBlock = -1;
+uint256 mastercore::_LatestBlockHash;
+int64_t mastercore::_LatestBlockTime = 0;
+
 //! In-memory collection of DEx offers
 OfferMap mastercore::my_offers;
 //! In-memory collection of DEx accepts
