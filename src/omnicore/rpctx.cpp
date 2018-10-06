@@ -1277,12 +1277,12 @@ UniValue omni_sendenablefreezing(const UniValue& params, bool fHelp)
 
     // create a payload for the transaction
     std::vector<unsigned char> payload = CreatePayload_EnableFreezing(propertyId);
-
-    std::vector<unsigned char> vchData;
-    std::vector<unsigned char> vchOmBytes = GetOmMarker();
-    vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
-    vchData.insert(vchData.end(), payload.begin(), payload.end());
-    return HexStr(vchData.begin(), vchData.end());
+	return PayLoadWrap(payload);
+    //std::vector<unsigned char> vchData;
+    //std::vector<unsigned char> vchOmBytes = GetOmMarker();
+    //vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
+    //vchData.insert(vchData.end(), payload.begin(), payload.end());
+    //return HexStr(vchData.begin(), vchData.end());
 }
 
 UniValue omni_senddisablefreezing(const UniValue& params, bool fHelp)
@@ -1315,12 +1315,12 @@ UniValue omni_senddisablefreezing(const UniValue& params, bool fHelp)
 
     // create a payload for the transaction
     std::vector<unsigned char> payload = CreatePayload_DisableFreezing(propertyId);
-
-    std::vector<unsigned char> vchData;
-    std::vector<unsigned char> vchOmBytes = GetOmMarker();
-    vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
-    vchData.insert(vchData.end(), payload.begin(), payload.end());
-    return HexStr(vchData.begin(), vchData.end());
+	return PayLoadWrap(payload);
+    //std::vector<unsigned char> vchData;
+    //std::vector<unsigned char> vchOmBytes = GetOmMarker();
+    //vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
+    //vchData.insert(vchData.end(), payload.begin(), payload.end());
+    //return HexStr(vchData.begin(), vchData.end());
 }
 
 UniValue omni_sendfreeze(const UniValue& params, bool fHelp)
@@ -1353,12 +1353,13 @@ UniValue omni_sendfreeze(const UniValue& params, bool fHelp)
 
     // create a payload for the transaction
     std::vector<unsigned char> payload = CreatePayload_FreezeTokens(propertyId, amount, refAddress);
+	return PayLoadWrap(payload);
 
-    std::vector<unsigned char> vchData;
-    std::vector<unsigned char> vchOmBytes = GetOmMarker();
-    vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
-    vchData.insert(vchData.end(), payload.begin(), payload.end());
-    return HexStr(vchData.begin(), vchData.end());
+    //std::vector<unsigned char> vchData;
+    //std::vector<unsigned char> vchOmBytes = GetOmMarker();
+    //vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
+    //vchData.insert(vchData.end(), payload.begin(), payload.end());
+    //return HexStr(vchData.begin(), vchData.end());
 }
 
 UniValue omni_sendunfreeze(const UniValue& params, bool fHelp)
