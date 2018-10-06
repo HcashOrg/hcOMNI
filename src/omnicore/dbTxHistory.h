@@ -42,6 +42,7 @@ public:
     bool GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total);
 
 	std::string GetHistory(int index);
+	std::string GetEndHistory();
 
 	bool PutHistory(const std::string& history);
 };
