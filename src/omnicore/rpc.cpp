@@ -2049,21 +2049,20 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 
 	UniValue response(UniValue::VARR);
 	
-	std::string history;
+	std::string history = p_txhistory->GetEndHistory();
 	int i=1;
 	int blockHeight = -1;
 	UniValue txobj;
+	if(txobj.read(history))
+	{
+		blockHeight = txobj["Block"].get_int();
+	}
 	do {
 		UniValue result(UniValue::VOBJ);
 		history = p_txhistory->GetHistory(i++);
 		if(history.empty())
 			break;
 		txobj.read(history);
-		if (blockHeight <0)
-		{
-			blockHeight = txobj["Block"].get_int();
-		}
-
 //		response.push_back(txobj);
 		std::string ScriptEncode = txobj["PayLoad"].get_str();
 		std::vector<unsigned char> Script = ParseHex(ScriptEncode);
