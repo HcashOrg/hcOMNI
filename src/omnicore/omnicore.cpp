@@ -387,7 +387,7 @@ void mastercore::disableFreezing(uint32_t propertyId)
         if ((*it).second == propertyId) {
             PrintToLog("Address %s has been unfrozen for property %d.\n", (*it).first, propertyId);
             it = setFrozenAddresses.erase(it);
-            assert(!isAddressFrozen((*it).first, (*it).second));
+            //assert(!isAddressFrozen((*it).first, (*it).second));
         } else {
             it++;
         }
