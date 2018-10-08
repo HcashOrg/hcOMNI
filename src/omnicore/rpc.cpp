@@ -1902,13 +1902,17 @@ UniValue omni_listblocktransactions(const UniValue& params, bool fHelp)
 		{
 			if(txobj["Block"].get_int() == blockHeight )
 			{
-				for (std::set<std::string>::iterator itr = addresses.begin(); itr != addresses.end(); itr++)
+				auto it = std::find(addresses.begin(), addresses.end(), txobj["Sender"].getValStr());
+				if(it != addresses.end())
 				{
-					if(txobj["Sender"].getValStr() == *itr ||
-						txobj["Reference"].getValStr() == *itr)
-					{
-						response.push_back(txobj);
-					}
+					response.push_back(txobj);
+					continue;
+				}
+				it = std::find(addresses.begin(), addresses.end(), txobj["Reference"].getValStr());
+				if(it != addresses.end())
+				{
+					response.push_back(txobj);
+					continue;
 				}
 			}
 		}
