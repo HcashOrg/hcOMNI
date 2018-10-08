@@ -873,7 +873,7 @@ UniValue omni_getallbalancesforaddress(const UniValue& params, bool fHelp)
     CMPTally* addressTally = getTally(address);
 
     if (NULL == addressTally) { // addressTally object does not exist
-        throw JSONRPCError(RPC_INVALID_PARAMETER, "Address not found");
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "No funds in the address");//"Address  not found"
     }
 
     addressTally->init();
