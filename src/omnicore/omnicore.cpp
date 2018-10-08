@@ -148,6 +148,10 @@ COmniFeeHistory* mastercore::p_feehistory;
 //! LevelDB based storage for the TxHistory
 COmniTxHistory* mastercore::p_txhistory;
 
+int mastercore::_LatestBlock = -1;
+uint256 mastercore::_LatestBlockHash;
+int64_t mastercore::_LatestBlockTime = 0;
+
 //! In-memory collection of DEx offers
 OfferMap mastercore::my_offers;
 //! In-memory collection of DEx accepts
@@ -383,7 +387,7 @@ void mastercore::disableFreezing(uint32_t propertyId)
         if ((*it).second == propertyId) {
             PrintToLog("Address %s has been unfrozen for property %d.\n", (*it).first, propertyId);
             it = setFrozenAddresses.erase(it);
-            assert(!isAddressFrozen((*it).first, (*it).second));
+            //assert(!isAddressFrozen((*it).first, (*it).second));
         } else {
             it++;
         }

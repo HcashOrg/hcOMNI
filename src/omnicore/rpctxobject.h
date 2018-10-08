@@ -12,6 +12,8 @@ class CTransaction;
 int populateRPCTransactionObject(const uint256& txid, UniValue& txobj, std::string filterAddress = "", bool extendedDetails = false, std::string extendedDetailsFilter = "");
 int populateRPCTransactionObject(const CTransaction& tx, const uint256& blockHash, UniValue& txobj, std::string filterAddress = "", bool extendedDetails = false, std::string extendedDetailsFilter = "", int blockHeight = 0);
 
+int Parsehistory(CMPTransaction& mp_obj, const uint256& txid, const uint256& blockHash, UniValue& txobj, int blockHeight = 0, std::string filterAddress = "", bool extendedDetails = false, std::string extendedDetailsFilter = "");
+
 void populateRPCTypeInfo(CMPTransaction& mp_obj, UniValue& txobj, uint32_t txType, bool extendedDetails, std::string extendedDetailsFilter, int confirmations);
 
 void populateRPCTypeSimpleSend(CMPTransaction& omniObj, UniValue& txobj);

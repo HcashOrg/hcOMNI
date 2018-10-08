@@ -232,3 +232,8 @@ std::string COmniTxHistory::GetHistory(int index)
     }
 	return strValue;
 }
+
+std::string COmniTxHistory::GetEndHistory()
+{
+	return GetHistory(CountRecords());
+}

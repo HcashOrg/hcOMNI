@@ -212,7 +212,10 @@ public:
     uint32_t getMinClientVersion() const { return min_client_version; }
     unsigned int getIndexInBlock() const { return tx_idx; }
     uint32_t getDistributionProperty() const { return distribution_property; }
+	int getCurrentBlock() const { return block; }
+	int64_t getBlockTime() const { return blockTime; }
 
+	
     /** Creates a new CMPTransaction object. */
     CMPTransaction()
     {
