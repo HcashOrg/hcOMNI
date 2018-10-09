@@ -2070,6 +2070,25 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
             + HelpExampleRpc("omni_listtransactions", "")
         );
 
+	 // obtains parameters - default all wallet addresses & last 10 transactions
+    std::string addressParam;
+    if (params.size() > 0) {
+        if (("*" != params[0].get_str()) && ("" != params[0].get_str())) addressParam = params[0].get_str();
+    }
+    int64_t nCount = 10;
+    if (params.size() > 1) nCount = params[1].get_int64();
+    if (nCount < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative count");
+    int64_t nFrom = 0;
+    if (params.size() > 2) nFrom = params[2].get_int64();
+    if (nFrom < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative from");
+    int64_t nStartBlock = 0;
+    if (params.size() > 3) nStartBlock = params[3].get_int64();
+    if (nStartBlock < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative start block");
+    int64_t nEndBlock = 999999999;
+    if (params.size() > 4) nEndBlock = params[4].get_int64();
+    if (nEndBlock < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative end block");
+
+
 	UniValue response(UniValue::VARR);
 	
 	std::string history;
@@ -2081,21 +2100,29 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 		history = p_txhistory->GetHistory(i++);
 		if(history.empty())
 			break;
-		txobj.read(history);
-//		response.push_back(txobj);
-		std::string ScriptEncode = txobj["PayLoad"].get_str();
-		std::vector<unsigned char> Script = ParseHex(ScriptEncode);
+		if (nFrom <= 0 && nCount > 0) {
+			txobj.read(history);
+			if(txobj["Block"].get_int() > nEndBlock ||
+				txobj["Block"].get_int() < nStartBlock)
+				continue;
 
-		CMPTransaction mp_obj;
-		mp_obj.unlockLogic();
-		mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
-		mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
-		mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
-			0, uint256S(txobj["TxHash"].getValStr()),
-			txobj["Block"].get_int(), txobj["Idx"].get_int(),
-			&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
-		Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight);
-		response.push_back(result);
+	//		response.push_back(txobj);
+			std::string ScriptEncode = txobj["PayLoad"].get_str();
+			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
+
+			CMPTransaction mp_obj;
+			mp_obj.unlockLogic();
+			mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+			mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+			mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
+				0, uint256S(txobj["TxHash"].getValStr()),
+				txobj["Block"].get_int(), txobj["Idx"].get_int(),
+				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
+			Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight, addressParam);
+			response.push_back(result);
+			nCount--;
+		}
+		nFrom--;
 	} while (!history.empty());
     return response;
 }
