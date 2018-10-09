@@ -257,7 +257,7 @@ void CMPTradeList::getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyI
         uint256 sellerTxid, matchingTxid;
         std::string sellerAddress, matchingAddress;
         int64_t amountReceived = 0, amountSold = 0;
-        if (strKey.size() != 129) continue; //comment 20181008 // only interested in matches
+        if (strKey.size() != 129) continue; 
         boost::split(vecKeys, strKey, boost::is_any_of("+"), boost::token_compress_on);
         boost::split(vecValues, strValue, boost::is_any_of(":"), boost::token_compress_on);
         if (vecKeys.size() != 2 || vecValues.size() != 8) {
