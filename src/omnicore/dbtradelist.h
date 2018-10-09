@@ -30,6 +30,9 @@ public:
     void printAll();
     bool getMatchingTrades(const uint256& txid, uint32_t propertyId, UniValue& tradeArray, int64_t& totalSold, int64_t& totalBought);
     void getTradesForAddress(const std::string& address, std::vector<uint256>& vecTransactions, uint32_t propertyIdFilter = 0);
+
+	void getTradesForAddressNew(const std::string& address, UniValue& response, uint32_t count = 10, uint32_t propertyIdFilter = 0);
+
     void getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyIdSideB, UniValue& response, uint64_t count);
     int getMPTradeCountTotal();
 };
