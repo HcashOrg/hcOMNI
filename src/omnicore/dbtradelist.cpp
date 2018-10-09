@@ -257,7 +257,7 @@ void CMPTradeList::getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyI
         uint256 sellerTxid, matchingTxid;
         std::string sellerAddress, matchingAddress;
         int64_t amountReceived = 0, amountSold = 0;
-        if (strKey.size() != 129) continue; // only interested in matches
+        if (strKey.size() != 129) continue; //comment 20181008 // only interested in matches
         boost::split(vecKeys, strKey, boost::is_any_of("+"), boost::token_compress_on);
         boost::split(vecValues, strValue, boost::is_any_of(":"), boost::token_compress_on);
         if (vecKeys.size() != 2 || vecValues.size() != 8) {
@@ -326,6 +326,7 @@ void CMPTradeList::getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyI
     std::vector<UniValue> responseArrayValues = responseArray.getValues();
     std::reverse(responseArrayValues.begin(), responseArrayValues.end());
     responseArray.clear();
+    responseArray.setArray();//add 20181009,responseArray.if no this,responseArray.push_back below will return false and do nothing 
     for (std::vector<UniValue>::iterator it = responseArrayValues.begin(); it != responseArrayValues.end(); ++it) {
         responseArray.push_back(*it);
     }
