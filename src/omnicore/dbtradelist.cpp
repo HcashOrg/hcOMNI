@@ -5,9 +5,9 @@
 #include "omnicore/sp.h"
 
 #include "amount.h"
+#include "tinyformat.h"
 #include "uint256.h"
 #include "utilstrencodings.h"
-#include "tinyformat.h"
 
 #include <univalue.h>
 
@@ -37,26 +37,31 @@ CMPTradeList::CMPTradeList(const boost::filesystem::path& path, bool fWipe)
 
 CMPTradeList::~CMPTradeList()
 {
-    if (msc_debug_persistence) PrintToLog("CMPTradeList closed\n");
+    if (msc_debug_persistence)
+        PrintToLog("CMPTradeList closed\n");
 }
 
 void CMPTradeList::recordMatchedTrade(const uint256& txid1, const uint256& txid2, const std::string& address1, const std::string& address2, uint32_t prop1, uint32_t prop2, int64_t amount1, int64_t amount2, int blockNum, int64_t fee)
 {
-    if (!pdb) return;
+    if (!pdb)
+        return;
     const std::string key = txid1.ToString() + "+" + txid2.ToString();
     const std::string value = strprintf("%s:%s:%u:%u:%lu:%lu:%d:%d", address1, address2, prop1, prop2, amount1, amount2, blockNum, fee);
     leveldb::Status status = pdb->Put(writeoptions, key, value);
     ++nWritten;
-    if (msc_debug_tradedb) PrintToLog("%s: %s\n", __func__, status.ToString());
+    if (msc_debug_tradedb)
+        PrintToLog("%s: %s\n", __func__, status.ToString());
 }
 
 void CMPTradeList::recordNewTrade(const uint256& txid, const std::string& address, uint32_t propertyIdForSale, uint32_t propertyIdDesired, int blockNum, int blockIndex)
 {
-    if (!pdb) return;
+    if (!pdb)
+        return;
     std::string strValue = strprintf("%s:%d:%d:%d:%d", address, propertyIdForSale, propertyIdDesired, blockNum, blockIndex);
     leveldb::Status status = pdb->Put(writeoptions, txid.ToString(), strValue);
     ++nWritten;
-    if (msc_debug_tradedb) PrintToLog("%s: %s\n", __func__, status.ToString());
+    if (msc_debug_tradedb)
+        PrintToLog("%s: %s\n", __func__, status.ToString());
 }
 
 /**
@@ -78,15 +83,17 @@ int CMPTradeList::deleteAboveBlock(int blockNum)
         ++count;
         std::string strvalue = it->value().ToString();
         boost::split(vstr, strvalue, boost::is_any_of(":"), boost::token_compress_on);
-        if (7 == vstr.size()) block = atoi(vstr[6]); // trade matches have 7 tokens, key is txid+txid, only care about block
-        if (5 == vstr.size()) block = atoi(vstr[3]); // trades have 5 tokens, key is txid, only care about block
+        if (7 == vstr.size())
+            block = atoi(vstr[6]); // trade matches have 7 tokens, key is txid+txid, only care about block
+        if (5 == vstr.size())
+            block = atoi(vstr[3]); // trades have 5 tokens, key is txid, only care about block
         if (block >= blockNum) {
             ++n_found;
             PrintToLog("%s() DELETING FROM TRADEDB: %s=%s\n", __func__, skey.ToString(), svalue.ToString());
             pdb->Delete(writeoptions, skey);
         }
     }
-    
+
     delete it;
 
     PrintToLog("%s(%d); tradedb n_found= %d\n", __func__, blockNum, n_found);
@@ -117,7 +124,8 @@ void CMPTradeList::printAll()
 
 bool CMPTradeList::getMatchingTrades(const uint256& txid, uint32_t propertyId, UniValue& tradeArray, int64_t& totalSold, int64_t& totalReceived)
 {
-    if (!pdb) return false;
+    if (!pdb)
+        return false;
 
     int count = 0;
     totalReceived = 0;
@@ -132,10 +140,12 @@ bool CMPTradeList::getMatchingTrades(const uint256& txid, uint32_t propertyId, U
         std::string strValue = it->value().ToString();
         std::string matchTxid;
         size_t txidMatch = strKey.find(txidStr);
-        if (txidMatch == std::string::npos) continue; // no match
+        if (txidMatch == std::string::npos)
+            continue; // no match
 
         // sanity check key is the correct length for a matched trade
-        if (strKey.length() != 129) continue;
+        if (strKey.length() != 129)
+            continue;
 
         // obtain the txid of the match
         if (txidMatch == 0) {
@@ -198,13 +208,18 @@ bool CMPTradeList::getMatchingTrades(const uint256& txid, uint32_t propertyId, U
     }
 }
 
+static bool CompareTradePair(const std::pair<int64_t, UniValue>& firstJSONObj, const std::pair<int64_t, UniValue>& secondJSONObj)
+{
+    return firstJSONObj.first > secondJSONObj.first;
+}
 
 // obtains a vector of txids where the supplied address participated in a trade (needed for gettradehistory_MP)
 // optional property ID parameter will filter on propertyId transacted if supplied
 // sorted by block then index
 void CMPTradeList::getTradesForAddress(const std::string& address, std::vector<uint256>& vecTransactions, uint32_t propertyIdFilter)
 {
-    if (!pdb) return;
+    if (!pdb)
+        return;
 
     std::map<std::string, uint256> mapTrades;
     leveldb::Iterator* it = NewIterator();
@@ -212,10 +227,12 @@ void CMPTradeList::getTradesForAddress(const std::string& address, std::vector<u
         std::string strKey = it->key().ToString();
         std::string strValue = it->value().ToString();
         std::vector<std::string> vecValues;
-        if (strKey.size() != 64) continue; // only interested in trades
+        if (strKey.size() != 64)
+            continue; // only interested in trades
         uint256 txid = uint256S(strKey);
         size_t addressMatch = strValue.find(address);
-        if (addressMatch == std::string::npos) continue;
+        if (addressMatch == std::string::npos)
+            continue;
         boost::split(vecValues, strValue, boost::is_any_of(":"), boost::token_compress_on);
         if (vecValues.size() != 5) {
             PrintToLog("TRADEDB error - unexpected number of tokens in value (%s)\n", strValue);
@@ -225,7 +242,8 @@ void CMPTradeList::getTradesForAddress(const std::string& address, std::vector<u
         uint32_t propertyIdDesired = boost::lexical_cast<uint32_t>(vecValues[2]);
         int64_t blockNum = boost::lexical_cast<uint32_t>(vecValues[3]);
         int64_t txIndex = boost::lexical_cast<uint32_t>(vecValues[4]);
-        if (propertyIdFilter != 0 && propertyIdFilter != propertyIdForSale && propertyIdFilter != propertyIdDesired) continue;
+        if (propertyIdFilter != 0 && propertyIdFilter != propertyIdForSale && propertyIdFilter != propertyIdDesired)
+            continue;
         std::string sortKey = strprintf("%06d%010d", blockNum, txIndex);
         mapTrades.insert(std::make_pair(sortKey, txid));
     }
@@ -236,15 +254,84 @@ void CMPTradeList::getTradesForAddress(const std::string& address, std::vector<u
     }
 }
 
-static bool CompareTradePair(const std::pair<int64_t, UniValue>& firstJSONObj, const std::pair<int64_t, UniValue>& secondJSONObj)
+void CMPTradeList::getTradesForAddressNew(const std::string& address, UniValue& responseArray, uint32_t count, uint32_t propertyIdFilter)
 {
-    return firstJSONObj.first > secondJSONObj.first;
+    if (!pdb)
+        return;
+
+	std::vector<std::pair<int64_t, UniValue> > vecResponse;
+
+    std::map<std::string, uint256> mapTrades;
+    leveldb::Iterator* it = NewIterator();
+    for (it->SeekToFirst(); it->Valid(); it->Next()) {
+        std::string strKey = it->key().ToString();
+        std::string strValue = it->value().ToString();
+        std::vector<std::string> vecValues;
+        if (strKey.size() != 64)
+            continue; // only interested in trades
+        uint256 txid = uint256S(strKey);
+        size_t addressMatch = strValue.find(address);
+        if (addressMatch == std::string::npos)
+            continue;
+        boost::split(vecValues, strValue, boost::is_any_of(":"), boost::token_compress_on);
+        if (vecValues.size() != 5) {
+            PrintToLog("TRADEDB error - unexpected number of tokens in value (%s)\n", strValue);
+            continue;
+        }
+        uint32_t propertyIdForSale = boost::lexical_cast<uint32_t>(vecValues[1]);
+        uint32_t propertyIdDesired = boost::lexical_cast<uint32_t>(vecValues[2]);
+        int64_t blockNum = boost::lexical_cast<uint32_t>(vecValues[3]);
+        int64_t txIndex = boost::lexical_cast<uint32_t>(vecValues[4]);
+        if (propertyIdFilter != 0 && propertyIdFilter != propertyIdForSale && propertyIdFilter != propertyIdDesired)
+            continue;
+        std::string sortKey = strprintf("%06d%010d", blockNum, txIndex);
+        mapTrades.insert(std::make_pair(sortKey, txid));
+
+		
+		UniValue trade(UniValue::VOBJ);
+        trade.push_back(Pair("propertyIdForSale", vecValues[1]));
+        trade.push_back(Pair("propertyIdDesired", vecValues[2]));
+        trade.push_back(Pair("blockNum", vecValues[3]));
+        trade.push_back(Pair("txIndex", vecValues[4]));
+
+		vecResponse.push_back(std::make_pair(blockNum, trade));
+
+		//response.push_back(trade);//maybe need sort like getTradesForPair
+    }
+
+  // sort the response most recent first before adding to the array
+    std::sort(vecResponse.begin(), vecResponse.end(), CompareTradePair);
+    uint64_t processed = 0;
+    for (std::vector<std::pair<int64_t, UniValue> >::iterator it = vecResponse.begin(); it != vecResponse.end(); ++it) {
+        responseArray.push_back(it->second);
+        processed++;
+        if (processed >= count)
+            break;
+    }
+
+    std::vector<UniValue> responseArrayValues = responseArray.getValues();
+    std::reverse(responseArrayValues.begin(), responseArrayValues.end());
+    responseArray.clear();
+    responseArray.setArray(); //add 20181009,responseArray.if no this,responseArray.push_back below will return false and do nothing
+    for (std::vector<UniValue>::iterator it = responseArrayValues.begin(); it != responseArrayValues.end(); ++it) {
+        responseArray.push_back(*it);
+    }
+
+    delete it;
+    //delete it;
+
+	/*
+    for (std::map<std::string, uint256>::iterator it = mapTrades.begin(); it != mapTrades.end(); it++) {
+        vecTransactions.push_back(it->second);
+    }
+	*/
 }
 
 // obtains an array of matching trades with pricing and volume details for a pair sorted by blocknumber
 void CMPTradeList::getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyIdSideB, UniValue& responseArray, uint64_t count)
 {
-    if (!pdb) return;
+    if (!pdb)
+        return;
     leveldb::Iterator* it = NewIterator();
     std::vector<std::pair<int64_t, UniValue> > vecResponse;
     bool propertyIdSideAIsDivisible = isPropertyDivisible(propertyIdSideA);
@@ -257,7 +344,8 @@ void CMPTradeList::getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyI
         uint256 sellerTxid, matchingTxid;
         std::string sellerAddress, matchingAddress;
         int64_t amountReceived = 0, amountSold = 0;
-        if (strKey.size() != 129) continue; // only interested in matches
+        if (strKey.size() != 129)
+            continue;
         boost::split(vecKeys, strKey, boost::is_any_of("+"), boost::token_compress_on);
         boost::split(vecValues, strValue, boost::is_any_of(":"), boost::token_compress_on);
         if (vecKeys.size() != 2 || vecValues.size() != 8) {
@@ -286,8 +374,10 @@ void CMPTradeList::getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyI
 
         rational_t unitPrice(amountReceived, amountSold);
         rational_t inversePrice(amountSold, amountReceived);
-        if (!propertyIdSideAIsDivisible) unitPrice = unitPrice / COIN;
-        if (!propertyIdSideBIsDivisible) inversePrice = inversePrice / COIN;
+        if (!propertyIdSideAIsDivisible)
+            unitPrice = unitPrice / COIN;
+        if (!propertyIdSideBIsDivisible)
+            inversePrice = inversePrice / COIN;
         std::string unitPriceStr = xToString(unitPrice); // TODO: not here!
         std::string inversePriceStr = xToString(inversePrice);
 
@@ -320,12 +410,14 @@ void CMPTradeList::getTradesForPair(uint32_t propertyIdSideA, uint32_t propertyI
     for (std::vector<std::pair<int64_t, UniValue> >::iterator it = vecResponse.begin(); it != vecResponse.end(); ++it) {
         responseArray.push_back(it->second);
         processed++;
-        if (processed >= count) break;
+        if (processed >= count)
+            break;
     }
 
     std::vector<UniValue> responseArrayValues = responseArray.getValues();
     std::reverse(responseArrayValues.begin(), responseArrayValues.end());
     responseArray.clear();
+    responseArray.setArray(); //add 20181009,responseArray.if no this,responseArray.push_back below will return false and do nothing
     for (std::vector<UniValue>::iterator it = responseArrayValues.begin(); it != responseArrayValues.end(); ++it) {
         responseArray.push_back(*it);
     }

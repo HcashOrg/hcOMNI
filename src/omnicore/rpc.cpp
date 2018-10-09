@@ -1664,7 +1664,14 @@ UniValue omni_gettradehistoryforaddress(const UniValue& params, bool fHelp)
         RequireExistingProperty(propertyId);
     }
 
+	// request pair trade history from trade db
+    UniValue response(UniValue::VARR);
+    LOCK(cs_tally);
+    t_tradelistdb->getTradesForAddressNew(address, response, count, propertyId);//to be changed later
+    return response;
+
     // Obtain a sorted vector of txids for the address trade history
+    /*
     std::vector<uint256> vecTransactions;
     {
         LOCK(cs_tally);
@@ -1674,6 +1681,19 @@ UniValue omni_gettradehistoryforaddress(const UniValue& params, bool fHelp)
     // Populate the address trade history into JSON objects until we have processed count transactions
     UniValue response(UniValue::VARR);
     uint32_t processed = 0;
+
+    for (std::vector<uint256>::reverse_iterator it = vecTransactions.rbegin(); it != vecTransactions.rend(); ++it) {
+        UniValue txobj(UniValue::VOBJ);
+        int populateResult = populateRPCTransactionObject(*it, txobj, "", true);
+        if (0 == populateResult) {
+            response.push_back(txobj);
+            processed++;
+            if (processed >= count)
+                break;
+        }
+    }
+
+
     for(std::vector<uint256>::reverse_iterator it = vecTransactions.rbegin(); it != vecTransactions.rend(); ++it) {
         UniValue txobj(UniValue::VOBJ);
         int populateResult = populateRPCTransactionObject(*it, txobj, "", true);
@@ -1683,8 +1703,8 @@ UniValue omni_gettradehistoryforaddress(const UniValue& params, bool fHelp)
             if (processed >= count) break;
         }
     }
-
     return response;
+	*/
 }
 
 UniValue omni_gettradehistoryforpair(const UniValue& params, bool fHelp)
