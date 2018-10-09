@@ -261,31 +261,6 @@ UniValue omni_send(const UniValue& params, bool fHelp)
 	*/
 }
 
-
-UniValue omni_padding_add(const UniValue& params, bool fHelp)
-{
-    if (fHelp || params.size() < 4 || params.size() > 6)
-        throw runtime_error(
-            "\nExamples:\n" + HelpExampleCli("omni_padding_add", "\"3M9qvHKtgARhqcMtM5cRT9VaiDJ5PSfQGY\" \"37FaKponF7zqoMLUjEiko25pDiuVH5YLEa\" 1 \"100.0\"") + HelpExampleRpc("omni_padding_add", "\"3M9qvHKtgARhqcMtM5cRT9VaiDJ5PSfQGY\", \"37FaKponF7zqoMLUjEiko25pDiuVH5YLEa\", 1, \"100.0\""));
-
-    // obtain parameters & info
-    std::string fromAddress = params[0].getValStr();
-    uint32_t propertyId = ParsePropertyId(params[1]);
-    int64_t amount = ParseAmount(params[2], isPropertyDivisible(propertyId));
-    std::vector<unsigned char> vecTxHash = ParseHex(params[3].get_str());
-
-    // perform checks
-    RequireExistingProperty(propertyId);
-    RequireBalance(fromAddress, propertyId, amount);
-
-    PendingAdd(uint256(vecTxHash), fromAddress, params[4].get_int(), propertyId, amount);
-
-    printf("omni_padding_add %d txhash = %I64d      1111111111111111\n", uint256(vecTxHash).GetCheapHash());
-
-    return "";
-}
-
-
 UniValue omni_sendall(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 5)
@@ -1425,22 +1400,22 @@ UniValue omni_sendactivation(const UniValue& params, bool fHelp)
 
     // create a payload for the transaction
     std::vector<unsigned char> payload = CreatePayload_ActivateFeature(featureId, activationBlock, minClientVersion);
-
+	return PayLoadWrap(payload);
     // request the wallet build the transaction (and if needed commit it)
-    uint256 txid;
-    std::string rawHex;
-    int result = WalletTxBuilder(fromAddress, "", "", 0, payload, txid, rawHex, autoCommit);
+    //uint256 txid;
+    //std::string rawHex;
+    //int result = WalletTxBuilder(fromAddress, "", "", 0, payload, txid, rawHex, autoCommit);
 
-    // check error and return the txid (or raw hex depending on autocommit)
-    if (result != 0) {
-        throw JSONRPCError(result, error_str(result));
-    } else {
-        if (!autoCommit) {
-            return rawHex;
-        } else {
-            return txid.GetHex();
-        }
-    }
+    //// check error and return the txid (or raw hex depending on autocommit)
+    //if (result != 0) {
+    //    throw JSONRPCError(result, error_str(result));
+    //} else {
+    //    if (!autoCommit) {
+    //        return rawHex;
+    //    } else {
+    //        return txid.GetHex();
+    //    }
+    //}
 }
 
 UniValue omni_senddeactivation(const UniValue& params, bool fHelp)
@@ -1464,22 +1439,22 @@ UniValue omni_senddeactivation(const UniValue& params, bool fHelp)
 
     // create a payload for the transaction
     std::vector<unsigned char> payload = CreatePayload_DeactivateFeature(featureId);
+	return PayLoadWrap(payload);
+    //// request the wallet build the transaction (and if needed commit it)
+    //uint256 txid;
+    //std::string rawHex;
+    //int result = WalletTxBuilder(fromAddress, "", "", 0, payload, txid, rawHex, autoCommit);
 
-    // request the wallet build the transaction (and if needed commit it)
-    uint256 txid;
-    std::string rawHex;
-    int result = WalletTxBuilder(fromAddress, "", "", 0, payload, txid, rawHex, autoCommit);
-
-    // check error and return the txid (or raw hex depending on autocommit)
-    if (result != 0) {
-        throw JSONRPCError(result, error_str(result));
-    } else {
-        if (!autoCommit) {
-            return rawHex;
-        } else {
-            return txid.GetHex();
-        }
-    }
+    //// check error and return the txid (or raw hex depending on autocommit)
+    //if (result != 0) {
+    //    throw JSONRPCError(result, error_str(result));
+    //} else {
+    //    if (!autoCommit) {
+    //        return rawHex;
+    //    } else {
+    //        return txid.GetHex();
+    //    }
+    //}
 }
 
 UniValue omni_sendalert(const UniValue& params, bool fHelp)
@@ -1515,22 +1490,23 @@ UniValue omni_sendalert(const UniValue& params, bool fHelp)
 
     // create a payload for the transaction
     std::vector<unsigned char> payload = CreatePayload_OmniCoreAlert(alertType, expiryValue, alertMessage);
+	return PayLoadWrap(payload);
 
-    // request the wallet build the transaction (and if needed commit it)
-    uint256 txid;
-    std::string rawHex;
-    int result = WalletTxBuilder(fromAddress, "", "", 0, payload, txid, rawHex, autoCommit);
+    //// request the wallet build the transaction (and if needed commit it)
+    //uint256 txid;
+    //std::string rawHex;
+    //int result = WalletTxBuilder(fromAddress, "", "", 0, payload, txid, rawHex, autoCommit);
 
-    // check error and return the txid (or raw hex depending on autocommit)
-    if (result != 0) {
-        throw JSONRPCError(result, error_str(result));
-    } else {
-        if (!autoCommit) {
-            return rawHex;
-        } else {
-            return txid.GetHex();
-        }
-    }
+    //// check error and return the txid (or raw hex depending on autocommit)
+    //if (result != 0) {
+    //    throw JSONRPCError(result, error_str(result));
+    //} else {
+    //    if (!autoCommit) {
+    //        return rawHex;
+    //    } else {
+    //        return txid.GetHex();
+    //    }
+    //}
 }
 
 

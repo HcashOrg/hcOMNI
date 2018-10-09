@@ -2645,7 +2645,7 @@ UniValue omni_processpayment(const UniValue& params, bool fHelp)
     //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
     int len = params.size();
 
-    if (fHelp || params.size() != 9)
+    if (fHelp || params.size() != 6)
         throw runtime_error(
             "omni_processpayment\n"
             "\nExamples:\n" +
