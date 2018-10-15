@@ -2,6 +2,7 @@
 #define OMNICORE_PERSISTENCE_H
 
 #include <boost/filesystem.hpp>
+#include "uint256.h"
 
 class CBlockIndex;
 
@@ -17,5 +18,9 @@ int RestoreInMemoryState(const std::string& filename, int what, bool verifyHash 
 /** Loads and restores the latest state. Returns -1 if reparse is required. */
 int LoadMostRelevantInMemoryState();
 
+/** Loads and restores the latest state. Returns -1 if reparse is required. */
+int LoadMostRelevantInMemoryStateEx();
+
+int PersistInMemoryStateEx(const uint256& hash);
 
 #endif // OMNICORE_PERSISTENCE_H

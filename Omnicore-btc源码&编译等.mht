@@ -1,0 +1,1622 @@
+Date: Wed, 10 Oct 2018 14:01:33 +0800
+Message-ID: <00020944$9c5441d0$d97d5536$EverNote>
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_NextPart_0002_0944_B3B3ECEE.9FFA43AC"
+X-Mailer: Evernote® v6.15.4.7934
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_0002_0944_B3B3ECEE.9FFA43AC
+Content-Type: text/html; 
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+  <title>Evernote Export</title>
+  <basefont face=3D"=E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91" size=3D"2" />
+  <meta http-equiv=3D"Content-Type" =
+content=3D"text/html;charset=3Dutf-8" />
+  <meta name=3D"exporter-version" content=3D"Evernote Windows/307934 =
+(zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: =E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name=3D"1977"/>
+
+<div>=0A<span><div>1=C2=A0</div><div>omnicored_SOURCES =3D bitcoind.cpp =
+bitcoindmain.cpp omnicoreApi.cpp =
+omnicore/dbTxHistory.cpp</div><div><br/></div><div><br/></div><div>2=EF=BC=
+=89</div><div>a) omnicored</div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">=E5=91=BD=E4=BB=A4=E8=AF=B7=E6=B1=82=E5=A4=84=E7=90=86=E5=87=BD=
+=E6=95=B0 HTTPReq_JSONRPC</span></div><div><span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;"><span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, =
+0, 255); font-family: NSimSun;"><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: NSimSun;"><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: =
+NSimSun;">main()=3D&gt;AppInit=3D&gt;</span>AppInit2=3D&gt;</span>AppInit=
+Servers =3D&gt;=C2=A0</span>bool</span> <span style=3D"font-size: 9pt; =
+min-height: 11pt; font-family: =
+NSimSun;">StartHTTPRPC()=3D&gt;=C2=A0</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: =
+NSimSun;">RegisterHTTPHandler(</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(163, 21, 21); font-family: =
+NSimSun;">&quot;/&quot;</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">true</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">, =
+HTTPReq_JSONRPC);</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=E9=80=9A=E8=BF=87=E5=9C=A8Debug=E6=96=AD=E7=82=B9=E6=94=BE=E5=88=
+=B0=E4=B8=8B=E9=9D=A2=E5=87=BD=E6=95=B0=E5=86=85,=E7=9C=8B=E8=B0=83=E7=94=
+=A8=E5=A0=86=E6=A0=88,=E7=9C=8B=E5=88=B0=E8=B0=83=E7=94=A8=E5=85=B3=E7=B3=
+=BB</span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">UniValue getbalance(</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">const</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">UniValue</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">&amp;</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(128, 128, 128); font-family: =
+NSimSun;">params</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">,</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">bool</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(128, 128, 128); font-family: NSimSun;">fHelp</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">)</span></div><div><br/></div><div><span style=3D"font-size: =
+9pt; min-height: 11pt; font-family: =
+NSimSun;">HTTPWorkQueueRun=3D&gt;</span><span style=3D"font-size: 9pt; =
+min-height: 11pt; font-family: NSimSun;">Run()=3D&gt;</span><span =
+style=3D"font-size: 9pt; min-height: 11pt; font-family: =
+NSimSun;">HTTPReq_JSONRPC()(=E5=8C=85=E5=90=AB=E9=AA=8C=E8=AF=81) =
+=3D&gt;</span><span style=3D"min-height: 11pt; font-size: 9pt; color: =
+rgb(43, 145, 175); font-family: NSimSun;">CRPCTable</span><span =
+style=3D"font-size: 9pt; min-height: 11pt; font-family: =
+NSimSun;">::execute=3D&gt;</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">=C2=A0pcmd-&gt;actor(</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(128, 128, 128); =
+font-family: NSimSun;">params</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">false</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">)=3D&gt;</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">UniValue</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">getbalance</span></div><div>b) =
+omni_cli</div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">main() =3D&gt;</span><span style=3D"font-size: =
+9pt; min-height: 11pt; font-family: =
+NSimSun;">CommandLineRPC=3D&gt;</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">CallRPC(=E4=B8=BB=E8=A6=81=E5=91=BD=E4=BB=A4=E8=B0=83=E7=94=A8=E5=
+=9C=A8=E8=BF=99=E9=87=8C) =3D&gt;<span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">GetAuthCookie=3D&gt;<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">GetAuthCookieFile</span></span></span> <span =
+style=3D"font-size: 9pt; min-height: 11pt; font-family: =
+NSimSun;">=3D&gt;=C2=A0</span><span style=3D"font-size: 9pt; min-height: =
+11pt; font-family: =
+NSimSun;">GetDataDir()</span></div><div>c)=E7=BB=8F=E8=BF=87=E6=B5=8B=E8=AF=
+=95</div><div>bitcoin-cli=E5=91=BD=E4=BB=A4=E7=9A=84 =
+-datadir=C2=A0=E5=BF=85=E9=A1=BB=E6=94=BE=E5=88=B0=E4=B8=80=E8=88=AC=E5=91=
+=BD=E4=BB=A4=E5=A6=82getbalance=C2=A0=E6=88=96 =
+help=E7=AD=89=E4=B9=8B=E5=89=8D=EF=BC=8C=E5=8F=AF=E4=BB=A5=E6=8E=A8=E6=96=
+=AD=E5=B8=A6-=E7=9A=84=E5=8F=82=E6=95=B0=E8=A6=81=E6=94=BE=E5=9C=A8=E4=B8=
+=8D=E5=B8=A6=E7=9A=84=E5=8F=82=E6=95=B0=E4=B9=8B=E5=89=8D;</div><div><br/=
+></div><div><span style=3D"font-weight: bold;">3=C2=A0 =
+=E6=BA=90=E7=A0=81</span></div><div>1=EF=BC=89=E5=8F=82=E6=95=B0=E4=BF=AE=
+=E6=94=B9</div><div>a) =
+ominicored=E4=B8=BB=E8=A6=81=E5=8F=82=E6=95=B0=E4=BF=AE=E6=94=B9=C2=A0=E5=
+=9C=A8=E6=96=87=E4=BB=B6 src/chainparas.cpp</div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">class</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">CTestNetParams</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">:</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">public</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: =
+NSimSun;">CChainParams</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">b)</span></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">pblock-&gt;nBits=C2=A0=E4=B8=8E=E6=8C=96=E7=9F=BF=E9=9A=BE=E5=BA=
+=A6=E7=9B=B4=E6=8E=A5=E7=9B=B8=E5=85=B3;</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">pblock-&gt;nBits =3D GetNextWorkRequired(pindexPrev, pblock, =
+chainparams.GetConsensus());</span></div><div><br/></div><div>c)</div><di=
+v><span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, =
+255); font-family: NSimSun;">int</span> <span style=3D"font-size: 9pt; =
+min-height: 11pt; font-family: NSimSun;">WalletTxBuilder</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">(</span><span style=3D"font-size: 9pt; min-height: 11pt; =
+font-family: NSimSun;">=C2=A0</span><span style=3D"font-size: 9pt; =
+min-height: 11pt; color: rgb(0, 128, 0); font-family: NSimSun;">/** =
+Creates and sends a transaction. */ ,</span><span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">ominicored=E5=86=85</span><span style=3D"font-size: 9pt; =
+min-height: 11pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">=E4=BA=A4=E6=98=93=E7=9B=B8=E5=85=B3=E7=9A=84=E4=B8=BB=E8=A6=81=
+=E5=87=BD=E6=95=B0=C2=A0</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">bool</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">OmniCore_Encode_ClassC=C2=A0=E9=87=8C=E9=9D=A2=E6=93=8D=E4=BD=9C=
+=C2=A0<span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun; color: rgb(47, 79, =
+79);">OP_RETURN</span></span></div><div><br/></div><div>d) =
+omni=E4=B8=8E=E9=92=B1=E5=8C=85=C2=A0=E8=81=94=E7=B3=BB=C2=A0<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">pwalletMain</span></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">pwalletMain =3D =
+walletInstance;</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">-disablewallet=C2=A0=E5=90=AF=E5=8A=A8=E5=8F=82=E6=95=B0=C2=A0<=
+/span></div><div>=E6=96=87=E4=BB=B6bitcoin-config.h=E4=B8=AD #define =
+ENABLE_WALLET =
+1</div><div><br/></div><div>3=EF=BC=89</div><div>a)</div><div>omni_sendis=
+suancecrowdsale=C2=A0=E7=9B=B8=E5=85=B3=E7=9A=84=C2=A0=E8=AE=A1=E7=AE=97=E5=
+=85=91=E6=8D=A2=E6=AF=94=E4=BE=8B=E5=9C=A8=E5=87=BD=E6=95=B0calculateFund=
+raiser=EF=BC=8C=E6=A0=B9=E6=8D=AEdeadline=3D<span style=3D"min-height: =
+11pt; font-family: NSimSun; font-size: =
+9pt;">fundraiserSecs=C2=A0=E5=88=B0=E5=BD=93=E5=89=8D=E6=97=B6=E9=97=B4=E7=
+=9A=84=E5=91=A8=E6=95=B0=E4=B9=98=E4=BB=A5</span><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">earlybonus =
+;</span></div><div><br/></div><div><span style=3D"font-size: 12pt; =
+font-weight: =
+bold;">3)=E6=95=B0=E6=8D=AE=E6=9F=A5=E8=AF=A2,=E6=8C=81=E4=B9=85=E5=8C=96=
+=E7=AD=89=E7=9B=B8=E5=85=B3</span> <span style=3D"font-size: =
+12pt;">;</span>=E4=B8=8Ebitcoin=E5=AF=B9=E6=AF=94=EF=BC=8C.bitcoin=E7=9B=AE=
+=E5=BD=95=E5=A4=9A=E5=87=BA=E7=9A=84=E6=96=87=E4=BB=B6=E7=9B=AE=E5=BD=95=E5=
+=AF=B9=E5=BA=94=E7=9A=84=E6=BA=90=E7=A0=81</div><div>a)</div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">MP_=C2=A0=E6=84=8F=E6=80=9D=E6=98=AF Master Protocol =
+?</span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;"><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;"><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;"><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">main =
+=3D&gt;=C2=A0</span>AppInit=3D&gt;</span>AppInit2=3D&gt;</span>mastercore=
+_init=C2=A0</span></div><div><span style=3D"font-size: 9pt; min-height: =
+11pt; font-family: =
+NSimSun;">MPPersistencePath=C2=A0=E6=8C=81=E4=B9=85=E5=8C=96=E8=B7=AF=E5=BE=
+=84,=E6=BA=90=E7=A0=81=E4=B8=AD=E6=90=9C=E7=B4=A2</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">MPPersistencePath,</span><span style=3D"font-size: 9pt; =
+min-height: 11pt; font-family: =
+NSimSun;">=E5=BE=88=E5=A4=9A=E5=AD=98=E5=82=A8=E4=BB=A5=E8=BF=99=E4=B8=AA=
+=E8=B7=AF=E5=BE=84=E4=B8=BA=E6=A0=B9=E8=B7=AF=E5=BE=84;=E4=B8=8E</span><s=
+pan style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">FILETYPES=E7=9B=B8=E5=85=B3</span></div><div><span =
+style=3D"font-size: 9pt; min-height: 11pt; font-family: =
+NSimSun;">CMPTradeList,</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">CMPSTOList,<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">CMPTxList,<span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">CMPSPInfo,<span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">COmniTransactionDB,<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">COmniFeeCache,<span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: =
+NSimSun;">COmniFeeHistory</span></span></span></span></span></span> =
+<span style=3D"font-size: 9pt; min-height: 11pt; font-family: =
+NSimSun;">=E7=AD=89=E5=87=A0=E4=B8=AA=E7=B1=BB</span></div><div>b)</div><=
+div><span style=3D"font-size: 9pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">//! In-memory collection of all amounts for all addresses for =
+all properties</span></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">std::</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">unordered_map</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">&lt;std::</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">string</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">CMPTally</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">&gt; mastercore::mp_tally_map; =
+//=E5=85=A8=E5=B1=80=E5=8F=98=E9=87=8F</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=E5=8A=A0=E8=BD=BD=E6=95=B0=E6=8D=AE=E5=9C=A8=E6=96=87=E4=BB=B6=
+persistence.cpp=E7=9A=84=E5=87=BD=E6=95=B0 =
+RestoreInMemoryState=EF=BC=8C=E4=BF=AE=E6=94=B9<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">write_msc_balances</span></span></div><div><br/></div><div>c)=C2=
+=A0<span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, =
+255); font-family: NSimSun;">int</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">CMPTransaction</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">::interpretPacket()=C2=A0=E8=BF=99=E4=B8=AA=E5=8F=AF=E8=83=BD=E6=
+=98=AFomni=E5=8D=8F=E8=AE=AE=E7=9A=84=E4=B8=BB=E8=A6=81=E9=AA=8C=E8=AF=81=
+=E6=95=B0=E6=8D=AE=E5=90=88=E6=B3=95=E6=80=A7=E7=9A=84=E5=87=BD=E6=95=B0(=
+consensus=E5=85=B1=E8=AF=86=E7=AE=97=E6=B3=95)</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">ThreadMessageHandler=3D&gt; ...</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">ProcessMessages=3D&gt;<span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">ProcessMessage=3D&gt; =
+...=C2=A0</span></span></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;"><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">ConnectTip=3D&gt;<span =
+style=3D"font-size: 9pt; font-family: NSimSun;">ConnectBlock(*pblock, =
+state, pindexNew, view, =
+chainparams),</span></span>mastercore_handler_tx=3D&gt;{</span></div><div=
+><span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">static</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: NSimSun;">int</span> =
+<span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">parseTransaction;//=E4=B8=BB=E8=A6=81=E8=A7=A3=E6=9E=90=E4=BB=A3=
+=E7=A0=81=E5=9C=A8=E8=BF=99=E4=B8=AA=E5=87=BD=E6=95=B0=E9=87=8C=E9=9D=A2=EF=
+=BC=8C=E6=94=B6=E5=8F=91=E5=9C=B0=E5=9D=80 =
+=E7=AD=89,</span></div><div><span style=3D"min-height: 11pt; font-size: =
+9pt;"><span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">interpretPacket;</span></span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=3D&gt;{=C2=A0<span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: =
+NSimSun;">parseTransaction=E9=87=8C=E9=9D=A2=E8=A7=A3=E7=A0=81payload=E5=88=
+=B0<span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">mp_obj ;</span></span></span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: NSimSun;"><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0 =
+=C2=A0mp_obj.</span>interpret_Transaction;</span></div><div><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">=C2=A0=C2=A0 =
+=C2=A0ogicMath_SimpleSend =
+//=E8=A2=AB=E6=9C=80=E9=A2=91=E7=B9=81=E8=B0=83=E7=94=A8=E7=9A=84=E5=87=BD=
+=E6=95=B0,=E9=87=8C=E9=9D=A2=E6=9C=89=E9=AA=8C=E8=AF=81=E5=87=BD=E6=95=B0=
+;</span></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0}</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">}</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">ConnectBlock,Disc</span><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">onnectBlock=E5=87=BD=E6=95=B0=E5=A4=84=E7=90=86=E6=96=B0block=E4=
+=B8=8E=E5=9B=9E=E9=80=80;</span></div><div><br/></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">d)=E4=BA=A4=E6=98=93<span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">=E5=A4=84=E7=90=86=E5=9B=9E=E9=80=80=C2=A0=E6=90=9C=E7=B4=A2Dis=
+connnet=E7=9B=B8=E5=85=B3</span></span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">-----------------------</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0//! Omni Core: begin block disconnect =
+notification</span></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0LogPrint(&quot;handler&quot;, =
+&quot;Omni Core handler: block disconnect begin [height: %d, reindex: =
+%d]\n&quot;, GetHeight(), (int)fReindex);</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0mastercore_handler_disc_begin(GetHeight=
+(), pindexDelete);</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0// Let wallets know =
+transactions went from 1-confirmed to</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0// 0-confirmed or =
+conflicted:</span></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0BOOST_FOREACH (const CTransaction&amp; =
+tx, block.vtx) {</span></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0SyncWithWallets=
+(tx, pindexDelete-&gt;pprev, NULL);</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0}</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0//! Omni Core: end of block disconnect =
+notification</span></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0LogPrint(&quot;handler&quot;, =
+&quot;Omni Core handler: block disconnect end [height: %d, reindex: =
+%d]\n&quot;, GetHeight(), (int)fReindex);</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0mastercore_handler_disc_end(GetHeight()=
+, pindexDelete);</span></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">----------------------------------------=C2=A0=C2=A0</span></di=
+v><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;"><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: =
+NSimSun;">mastercore_handler_block_begin</span>=C2=A0</span></div><div><s=
+pan style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">mastercore_handler_block_end</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">RewindDBsAndState=3D&gt;</span><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">msc_initial_scan</span></div><div><br/></div><div><span =
+style=3D"font-size: 9pt; min-height: 11pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">omni=E7=9A=84 CBlockIndex=E6=88=96</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">CBlockHeader=C2=A0</span><span =
+style=3D"font-size: 9pt; min-height: 11pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">=E4=B8=8E hc =E7=9A=84=C2=A0</span><span =
+style=3D"font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">MsgBlock.</span><span style=3D"font-size: 9pt; color: rgb(43, =
+145, 175); font-family: NSimSun;">BlockHeader</span> <span =
+style=3D"font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">=E7=9B=B8=E5=BD=93=EF=BC=9F</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">class</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">CBlock</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(43, 145, 175); font-family: NSimSun;">:</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">public</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">CBlockHeader =
+;=C2=A0=E7=9B=B8=E5=85=B3=E7=9A=84=E5=AE=9A=E4=B9=89=E5=9C=A8block.h=E6=96=
+=87=E4=BB=B6=E4=B8=AD</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 128, 0); =
+font-family: NSimSun;">// Construct new block index =
+object</span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(43, 145, 175); font-family: NSimSun;">=C2=A0 =
+CBlockIndex</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">* pindexNew =3D</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">new</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(43, 145, 175); font-family: NSimSun;">CBlockIndex</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">(</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(128, 128, 128); font-family: NSimSun;">block</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">);</span></div><div><br/></div><div>5)=C2=A0</div><div>a)</div>=
+<div><span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;"><span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">UniValue=E7=B1=BB=E5=9E=8B=E5=8F=98=E9=87=8F=E8=BD=AC=E6=88=90s=
+tring,=C2=A0<span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">HTTPReq_JSONRPC =3D&gt;<span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">tableRPC.execute =
+;=C2=A0</span></span></span>JSONRPCReply(</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">const</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">UniValue</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">&amp;</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">result</span> <span style=3D"font-size: 9pt; min-height: 11pt; =
+font-family: NSimSun;">=3D&gt;=C2=A0</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: =
+NSimSun;">reply.write()</span></div><div><br/></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">9=EF=BC=89</span></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">a)=E7=BC=96=E8=AF=91=E7=94=9F=E6=88=90=E7=9A=84=E4=B8=BB=E8=A6=81=
+=E5=8F=AF=E6=89=A7=E8=A1=8C=E7=A8=8B=E5=BA=8F</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">bitcoin-cli=EF=BC=9A=E6=98=AFBitcoind=E7=9A=84=E4=B8=80=E4=B8=AA=
+=E5=8A=9F=E8=83=BD=E5=AE=8C=E5=A4=87=E7=9A=84RPC=E5=AE=A2=E6=88=B7=E7=AB=AF=
+=EF=BC=8C=E5=8C=85=E6=8B=AC=E6=9F=A5=E8=AF=A2=E5=8C=BA=E5=9D=97=EF=BC=8C=E4=
+=BA=A4=E6=98=93=E4=BF=A1=E6=81=AF=E7=AD=89=E7=AD=89=EF=BC=8C=E5=85=B7=E4=BD=
+=93=E5=B0=86=E5=9C=A8=E7=9B=B8=E5=BA=94=E7=AB=A0=E8=8A=82=E4=BB=8B=E7=BB=8D=
+=E3=80=82</span></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">bitcoind=EF=BC=9A=E6=98=AF=E6=AF=94=E7=89=B9=E5=B8=81=E8=BF=90=E8=
+=A1=8C=E7=9A=84=E6=A0=B8=E5=BF=83=E7=A8=8B=E5=BA=8F=E4=BF=97=E7=A7=B0bitc=
+oin core=E3=80=82</span></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">bitcoin-tx=EF=BC=9A=E6=AF=94=E7=89=B9=E5=B8=81=E4=BA=A4=E6=98=93=
+=E5=A4=84=E7=90=86=E6=A8=A1=E5=9D=97=EF=BC=8C=E6=94=AF=E6=8C=81=E4=BA=A4=E6=
+=98=93=E7=9A=84=E6=9F=A5=E8=AF=A2=E5=92=8C=E5=88=9B=E5=BB=BA=E3=80=82</sp=
+an></div><div><br/></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">4=C2=A0</span></div><div>1)dll=C2=A0c</div><div>a) =
+omnicored=E5=9C=A8vc=E4=B8=AD=E9=A1=B9=E7=9B=AE=E5=B1=9E=E6=80=A7/=E5=B8=B8=
+=E8=A7=84/=E7=9B=B4=E6=8E=A5=C2=A0=E4=BB=8Eexe=E6=94=B9=E4=B8=BAdll=E5=B0=
+=B1=E5=8F=AF=E4=BB=A5=E4=BA=86=EF=BC=8C</div><div>=E5=A2=9E=E5=8A=A0DllEx=
+port.cpp=E6=96=87=E4=BB=B6=EF=BC=8C=E5=86=85=E5=AE=B9:=C2=A0<span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">extern</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(163, 21, 21); font-family: =
+NSimSun;">&quot;C&quot;</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">__declspec</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">(</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">dllexport</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">)</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">void</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">BtcStart()</span><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">{</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">=C2=A0 =C2=A0=C2=A0</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">int</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">i =3D 0;}</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">b)</span></div><div>golang=E9=A1=B9=E7=9B=AE=E4=B8=AD,dll=E6=94=
+=BE=E5=9C=A8=E9=A1=B9=E7=9B=AE=E6=89=80=E5=9C=A8=E7=9B=AE=E5=BD=95=EF=BC=8C=
+goland/=E9=A1=B9=E7=9B=AE=E7=9B=AE=E5=BD=95=C2=A0=E5=8F=B3=E5=87=BB=C2=A0=
+ /create run configure/=C2=A0output=C2=A0=E4=B8=8E working =
+dir=E9=83=BD=E8=AE=BE=E7=BD=AE=E4=B8=BA=E9=A1=B9=E7=9B=AE=E6=89=80=E5=9C=A8=
+=E7=9B=AE=E5=BD=95=EF=BC=8Cdebug=E8=BF=90=E8=A1=8C=E5=B0=B1=E5=8F=AF=E4=BB=
+=A5=E6=89=BE=E5=88=B0dll</div><div><br/></div><div><font =
+style=3D"font-size: 12pt;"><span style=3D"font-size: 12pt; font-weight: =
+bold;">5 btc</span></font></div><div>1)=C2=A0 =
+=E7=9B=B8=E5=85=B3=E8=B5=84=E6=BA=90</div><div>github:=C2=A0<a =
+href=3D"https://github.com/bitcoin/bitcoin">https://github.com/bitcoin/bi=
+tcoin</a></div><div>btc explorer:=C2=A0<a =
+href=3D"https://btc.com/">https://btc.com/</a></div><div>btc testnet =
+explorer:=C2=A0<a =
+href=3D"https://live.blockcypher.com/btc-testnet/">https://live.blockcyph=
+er.com/btc-testnet/</a></div><div>btc testnet=C2=A0faucet :=C2=A0<a =
+href=3D"http://bitcoinfaucet.uo1.net/">http://bitcoinfaucet.uo1.net/</a>=C2=
+=A0 ,=C2=A0=C2=A0<a =
+href=3D"https://testnet.coinfaucet.eu/en/">https://testnet.coinfaucet.eu/=
+en/</a></div><div><br/></div><div>3)=C2=A0 =
+=E7=BC=96=E8=AF=91</div><div>a)</div><div>Windows=E4=B8=8B=E7=BC=96=E8=AF=
+=91bitcoin msys</div><div><a =
+href=3D"https://blog.csdn.net/anda0109/article/details/79454507">https://=
+blog.csdn.net/anda0109/article/details/79454507</a></div><div><br/></div>=
+<div>b)=C2=A0<span style=3D"font-weight: =
+bold;">ubuntu=E4=B8=8B=E4=BA=A4=E5=8F=89=E7=BC=96=E8=AF=91=E6=AF=94=E7=89=
+=B9=E5=B8=81win=E7=89=88=E9=92=B1=E5=8C=85</span></div><div><a =
+href=3D"https://blog.csdn.net/clovexmu/article/details/79162234">https://=
+blog.csdn.net/clovexmu/article/details/79162234</a>=C2=A0 =
+//Good</div><div><a =
+href=3D"https://blog.csdn.net/anda0109/article/details/79458080">https://=
+blog.csdn.net/anda0109/article/details/79458080</a></div><div><br/></div>=
+<div><br/></div><div>$ sudo apt-get =
+update=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</div><div>$ sudo apt install =
+build-essential libtool autotools-dev automake pkg-config bsdmainutils =
+curl git</div><div>$ sudo apt install g++-mingw-w64-x86-64</div><div>$ =
+sudo git clone <a =
+href=3D"https://github.com/bitcoin/bitcoin.git">https://github.com/bitcoi=
+n/bitcoin.git</a></div><div>$ sudo chmod -R a+rw bitcoin</div><div>$ cd =
+bitcoin</div><div>$ cd depends</div><div>$ make =
+HOST=3Dx86_64-w64-mingw32=C2=A0=E6=8F=90=E7=A4=BA=E4=B8=8B=E8=BD=BD=C2=A0=
+<a =
+href=3D"https://github.com/protocolbuffers/protobuf/releases/download/v2.=
+6.1/protobuf-2.6.1.tar.bz2">protobuf-2.6.1.tar.bz2</a>=C2=A0=EF=BC=8Cchec=
+ksum=E7=AD=89=E7=9B=B8=E5=85=B3=E5=87=BA=E9=94=99</div><div>=E6=94=B9=E5=A5=
+=BD=E4=B8=BA :=C2=A0=C2=A0</div><div>$ <span style=3D"font-weight: =
+bold;">sudo make</span> =
+HOST=3Dx86_64-w64-mingw32=C2=A0</div><div>=E6=8F=90=E7=A4=BAqt=E7=9B=B8=E5=
+=85=B3=E9=94=99=E8=AF=AF</div><div>make[5]: Entering directory =
+'/home/helloworld/bitcoin/depends/work/build/x86_64-w64-mingw32/qt/5.9.6-=
+70c56792565/qtbase/src/plugins/platforms/windows'</div><div>compiling =
+qwin10helpers.cpp</div><div>qwin10helpers.cpp:60:37: fatal error: =
+uiviewsettingsinterop.h: No such file or directory</div><div>compilation =
+terminated.</div><div>=E6=9F=A5=E7=9C=8Bmakefile=E4=B8=AD=E6=9C=89NO_QT=E7=
+=9B=B8=E5=85=B3=EF=BC=8C=E6=94=B9=E5=91=BD=E4=BB=A4=E5=A6=82=E4=B8=8B</di=
+v><div>$=C2=A0<span style=3D"font-weight: bold;">sudo make =
+HOST=3Dx86_64-w64-mingw32 NO_QT=3D1</span></div><div><br/></div><div>cd =
+..</div><div>$ ./autogen.sh # not required when building from =
+tarball</div><div>$ =
+CONFIG_SITE=3D$PWD/depends/x86_64-w64-mingw32/share/config.site =
+./configure --prefix=3D/</div><div>$ =
+make</div><div><br/></div><div>c)=C2=A0=C2=A0<span style=3D"font-weight: =
+bold;">ubuntu16.04=E4=B8=8B=E4=BA=A4=E5=8F=89=E7=BC=96=E8=AF=91=E6=AF=94=E7=
+=89=B9=E5=B8=81win=E7=89=88=E9=92=B1=E5=8C=85</span></div><div><a =
+href=3D"http://whobt.com/wallet/249.html">http://whobt.com/wallet/249.htm=
+l</a>=C2=A0//to be check</div><div><br/></div><div><font =
+style=3D"font-size: 12pt;"><span style=3D"font-size: 12pt; font-weight: =
+bold;">6=C2=A0</span><span style=3D"font-size: 12pt; font-weight: =
+bold;">omnicore =
+omnilayer</span></font></div><div>1)=C2=A0</div><div>a)=E7=9B=B8=E5=85=B3=
+=E8=B5=84=E6=BA=90</div><div>=E6=AF=94=E7=89=B9=E5=B8=81=E4=B8=8A=E5=8F=91=
+=E4=BB=A3=E5=B8=81=E7=9A=84=E5=9F=BA=E6=9C=AC=E5=8E=9F=E7=90=86=E2=80=94=E2=
+=80=94omni=E5=8D=8F=E8=AE=AE</div><div><a =
+href=3D"https://zhuanlan.zhihu.com/p/40062558">https://zhuanlan.zhihu.com=
+/p/40062558</a></div><div><a =
+href=3D"https://github.com/OmniLayer/omnicore/releases">https://github.co=
+m/OmniLayer/omnicore/releases</a></div><div><a =
+href=3D"https://www.omniexplorer.info/">https://www.omniexplorer.info/</a=
+></div><div>b)=E4=BB=8B=E7=BB=8D</div><div>OmniLayer / omnicore API =
+=E4=B8=AD=E6=96=87=E7=89=88:<a =
+href=3D"https://blog.csdn.net/ffzhihua/article/details/80705972">https://=
+blog.csdn.net/ffzhihua/article/details/80705972</a></div><div><br/></div>=
+<div>3)ubuntu16<span style=3D"font-weight: bold;">=E7=BC=96=E8=AF=91 =
+omnicore</span></div><div>=E5=9F=BA=E6=9C=AC=E7=94=A8=E7=BC=96=E8=AF=91bt=
+c=E7=9A=84=E6=96=B9=E6=B3=95=E7=BC=96=E8=AF=91omnicore</div><div>omni =
+layer =
+,omnicore=E7=BC=96=E8=AF=91=EF=BC=8C=E6=8F=90=E5=88=B0=E7=95=8C=E9=9D=A2=E7=
+=BC=96=E8=AF=91=E9=80=89=E9=A1=B9<span style=3D"font-weight: =
+bold;">qt5</span>:=C2=A0<a =
+href=3D"https://blog.csdn.net/ffzhihua/article/details/80706661">https://=
+blog.csdn.net/ffzhihua/article/details/80706661</a></div><div><br/></div>=
+<div>a) prepare</div><div>//=C2=A0<a =
+href=3D"https://www.aliyun.com/jiaocheng/182942.html">https://www.aliyun.=
+com/jiaocheng/182942.html</a></div><div>/bin/bash^M: bad interpreter: No =
+such file or directory</div><div><a =
+href=3D"https://www.cnblogs.com/lraa/p/3716709.html">https://www.cnblogs.=
+com/lraa/p/3716709.html</a>=C2=A0</div><div>$ dos2unix autogen.sh=C2=A0 =
+=C2=A0 =
+//0.3.1=E7=89=88=E6=9C=AC=E4=B8=8D=E7=94=A8=E8=BF=99=E4=B8=AA=E5=91=BD=E4=
+=BB=A4=EF=BC=8Cgit=C2=A0clone=E4=B8=8B=E6=9D=A5=E7=9A=84=E8=A6=81=C2=A0</=
+div><div><br/></div><div>$ sudo apt install make</div><div>$ sudo =
+apt-get install pkg-config</div><div>$ sudo apt-get install =
+autoconf</div><div>$ sudo apt-get install libtool</div><div>Libtool =
+library used but 'LIBTOOL' is =
+undefined=E8=A7=A3=E5=86=B3=E6=96=B9=E6=A1=88=EF=BC=9A</div><div><a =
+href=3D"https://blog.csdn.net/jinbaippdpdpdpdpd/article/details/63251756"=
+>https://blog.csdn.net/jinbaippdpdpdpdpd/article/details/63251756</a></di=
+v><div><br/></div><div>b)=C2=A0=E7=BC=96=E8=AF=91btc=E6=96=87=E6=A1=A3</d=
+iv><div>ubuntu=E4=B8=8B=E4=BB=8E=E6=BA=90=E7=A0=81=E7=BC=96=E8=AF=91=E6=AF=
+=94=E7=89=B9=E5=B8=81(Bitcoin)=E5=AE=A2=E6=88=B7=E7=AB=AF</div><div><a =
+href=3D"https://blog.csdn.net/rion_chen/article/details/51104727">https:/=
+/blog.csdn.net/rion_chen/article/details/51104727</a></div><div><a =
+href=3D"https://www.cnblogs.com/wintersun/p/3813424.html">https://www.cnb=
+logs.com/wintersun/p/3813424.html</a></div><div><br/></div><div><span =
+style=3D"font-size: medium; letter-spacing: normal; orphans: 2; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; color: rgb(0, 0, 0); =
+font-family: =E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91; font-variant-caps: =
+normal; font-variant-ligatures: normal;">//$ sudo apt-get install =
+libboost-dev</span></div><div>$ sudo apt-get install =
+libboost-all-dev=C2=A0libssl-dev=C2=A0libevent-dev=C2=A0libdb-dev=C2=A0=C2=
+=A0libdb++-dev</div><div><br/></div><div>=E5=A6=82=E6=9E=9C=E4=BD=A0=E9=81=
+=87=E5=88=B0=E8=BF=99=E6=A0=B7=E7=9A=84=E6=8F=90=E7=A4=BA=EF=BC=9Aconfigu=
+re: error: Found Berkeley DB other than 4.8, required for portable =
+wallets =
+=E9=82=A3=E5=B0=B1=E5=8F=AF=E4=BB=A5=E8=BF=99=E6=A0=B7=EF=BC=9A</div><div=
+>$ ./configure --with-incompatible-bdb</div><div>c)</div><div>$ =
+./autogen.sh</div><div>$ ./configure --with-incompatible-bdb=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0// ./configure</div><div><br/></div><div>$ =
+make</div><div><br/></div><div>=E7=BC=96=E8=AF=91=E5=87=BA=E7=9A=84=E5=8F=
+=AF=E6=89=A7=E8=A1=8C=E6=96=87=E4=BB=B6=E5=9C=A8 =
+src/omnicored</div><div><br/></div><div>d)=E8=BF=90=E8=A1=8C</div><div>cd=
+ src</div><div>$ ./omnicored =C2=A0-testnet -reindex -txindex =
+-server=3D1=C2=A0 =C2=A0//=E6=95=B0=E6=8D=AE=E5=9C=A8 =
+~/.bitcoin</div><div>$ ./omnicore-cli -testnet help=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+//=E5=BE=97=E5=88=B0=E6=89=80=E6=9C=89=E5=91=BD=E4=BB=A4</div><div>=C2=A0=
+</div><div>=E6=AF=94=E7=89=B9=E5=B8=81=E5=AF=B9=E5=BA=94=E7=9A=84=E6=98=AF=
+ bitcoind ,bitcoin-cli</div><div><br/></div><div><span =
+style=3D"font-size: 16pt; font-weight: =
+bold;">5)ubuntu16.04=E7=BC=96=E8=AF=91=E9=9D=99=E6=80=81=E5=BA=93</span><=
+/div><div>a)</div><div>=E5=9C=A8omni-0.3.1=E7=9B=AE=E5=BD=95,=E5=85=88=E6=
+=8C=89=E7=94=9F=E6=88=90=E5=8F=AF=E6=89=A7=E8=A1=8C=E6=96=87=E4=BB=B6=E7=9A=
+=84=E6=96=B9=E6=B3=95=E7=BC=96=E8=AF=91=E4=B8=80=E9=81=8D;</div><div>/*=C2=
+=A0=E4=B8=8B=E9=9D=A2=E6=97=A0=E6=95=88</div><div>$ cd src/</div><div>$ =
+ar -rc libomnicored.a =
+omnicored-bitcoind.o=C2=A0=C2=A0libbitcoin_server.a libbitcoin_common.a =
+univalue/.libs/libunivalue.a libbitcoin_util.a =
+libbitcoin_wallet.a=C2=A0=C2=A0libbitcoin_consensus.a =
+crypto/libbitcoin_crypto.a leveldb/libleveldb.a leveldb/libmemenv.a =
+secp256k1/.libs/libsecp256k1.a</div><div>$ sudo cp=C2=A0libomnicored.a =
+/usr/lib</div><div>*/</div><div><br/></div><div>=E5=90=8E=E9=9D=A2=E8=80=83=
+=E8=99=91=E5=9C=A8go=E6=96=87=E4=BB=B6=E4=B8=AD=E8=BF=9E=E6=8E=A5=E4=B8=AD=
+=E5=8A=A0</div><div>=C2=A0-L/usr/lib/x86_64-linux-gnu -lboost_system =
+-lboost_filesystem -lboost_program_options -lboost_thread -lboost_chrono =
+-ldb_cxx -lssl -lcrypto=C2=A0=C2=A0-levent_pthreads -levent <span =
+style=3D"font-weight: =
+bold;">-lstdc++</span></div><div>b)=E5=BE=97=E5=88=B0=E4=B8=8A=E9=9D=A2=E7=
+=9A=84=E6=96=B9=E6=B3=95</div><div>=E5=9C=A8 =
+src/Makefile=E9=87=8C=E9=9D=A2=E6=89=BE=E5=88=B0 =
+omnicored$(EXEEXT):=C2=A0 =
+,=E5=9C=A8=E5=85=B6=E4=B8=8B=E9=9D=A2=E5=8E=BB=E6=8E=89=E8=A1=8C=E9=A6=96=
+=E7=9A=84@=EF=BC=8C=E5=8A=A0=E4=B8=80=E8=A1=8C=EF=BC=8C=E6=8A=8A=C2=A0=E5=
+=AF=B9=E5=BA=94=E5=91=BD=E4=BB=A4=E6=89=93=E5=8D=B0=E5=87=BA=E6=9D=A5=E4=BE=
+=BF=E4=BA=8E=E8=B0=83=E8=AF=95</div><div>echo=C2=A0$(AM_V_CXXLD)$(omnicor=
+ed_LINK) $(omnicored_OBJECTS) $(omnicored_LDADD) =
+$(LIBS)</div><div><br/></div><div>libtool=E7=BC=96=E8=AF=91=E5=BA=93=E6=9C=
+=89=E9=97=AE=E9=A2=98=EF=BC=88=E5=8F=82=E8=80=83=E4=BA=86=C2=A0<a =
+href=3D"https://www.cnblogs.com/xmphoenix/p/4065950.html">refer</a>=EF=BC=
+=89=EF=BC=8C=E6=89=80=E4=BB=A5=E6=94=B9=E7=94=A8a)=E6=89=80=E7=A4=BA=E7=9A=
+=84=E7=9B=B4=E6=8E=A5=E8=B0=83=E7=94=A8ar;</div><div>libtool=E7=BC=96=E8=AF=
+=91=E7=94=9F=E6=88=90=E7=9A=84.a=E6=96=87=E4=BB=B6=C2=A0=E5=9C=A8=E5=AF=B9=
+=E5=BA=94=E7=9B=AE=E5=BD=95=E7=9A=84 <span style=3D"font-weight: =
+bold;">.libs</span>=E7=9B=AE=E5=BD=95</div><div>c)</div><div>=E5=90=8E=E9=
+=9D=A2=E5=A6=82=E6=9E=9Comnicored=E5=A2=9E=E5=8A=A0=E6=96=87=E4=BB=B6=EF=BC=
+=8C=E5=BA=94=E8=AF=A5=E8=A6=81=E5=9C=A8src=E7=9B=AE=E5=BD=95=E7=9A=84 =
+Makefile.am=E4=B8=8E=C2=A0Makefile.omnicore.include=E5=AF=B9=E5=BA=94=E5=9C=
+=B0=E6=96=B9=E5=A2=9E=E5=8A=A0=E6=96=87=E4=BB=B6=EF=BC=9B</div><div>Makef=
+ile.am=C2=A0=E6=9C=89=E4=B8=80=E8=A1=8C include =
+Makefile.omnicore.include=EF=BC=8C=E6=89=80=E4=BB=A5=E6=98=AF=E5=8C=85=E5=
+=90=AB=E5=85=B3=E7=B3=BB;=E5=BA=94=E8=AF=A5=E5=8F=AF=E4=BB=A5=E5=8F=AA=E6=
+=94=B9=C2=A0Makefile.omnicore.include</div><div>(<span =
+style=3D"font-weight: =
+bold;">=E7=BC=96=E8=BE=91</span>=E6=96=87=E4=BB=B6=E6=96=B9=E6=B3=95=EF=BC=
+=8C<span style=3D"font-weight: =
+bold;">xftp</span>=E4=B8=AD=E5=8F=B3=E5=87=BB=E5=AF=B9=E5=BA=94=E6=96=87=E4=
+=BB=B6=EF=BC=8C=E6=89=93=E5=BC=80/=E9=80=89notepad++,=E7=BC=96=E8=BE=91=E5=
+=90=8E=E4=BF=9D=E5=AD=98=EF=BC=8C=E6=94=B9=E5=8F=98=E5=90=8E=E7=9A=84=E6=96=
+=87=E4=BB=B6=E5=B0=B1=E7=9B=B4=E6=8E=A5=E4=BC=A0=E5=88=B0linux=E6=9C=8D=E5=
+=8A=A1=E5=99=A8=E4=B8=8A=E4=BA=86=EF=BC=8C=E8=BF=99=E4=B8=AA=E5=8F=AF=E8=83=
+=BD=E4=B8=8D=E5=8F=AF=E9=9D=A0=EF=BC=8C=E8=A6=81=E5=A4=8D=E6=9F=A5)</div>=
+<div><br/></div><div>d)=E5=8F=98=E5=8C=96=E6=96=87=E4=BB=B6,=E4=B8=8B=E9=9D=
+=A2=E8=BF=99=E4=BA=9B=E6=96=87=E4=BB=B6=E8=A6=86=E7=9B=96=E5=8E=9F=E6=9D=A5=
+linux=E7=89=88=E6=9C=AC=E7=9A=84omnicore-0.3.1,src/Makefile.am=E7=9A=84om=
+nicored_SOURCES=E5=90=8E=E5=8A=A0 =
+comniapi.cpp=E6=88=90=E4=B8=BAomnicored_SOURCES =3D bitcoind.cpp =
+omnicoreApi.cpp=C2=A0 =
+=C2=A0</div><div>Makefile.omnicore.include=C2=A0=E5=AF=B9=E5=BA=94=E5=9C=B0=
+=E6=96=B9=E5=A2=9E=E5=8A=A0 =
+omnicore/dbTxHistory.cpp=C2=A0omnicore/dbTxHistory.h</div><div>//=E7=94=9F=
+=E6=88=90.a=E6=96=87=E4=BB=B6=E6=97=B6,=E6=B3=A8=E9=87=8A=E6=8E=89 =
+bitcoind.cpp=C2=A0=E7=9A=84main=E5=87=BD=E6=95=B0,=E5=90=8E=E9=9D=A2main=E6=
+=94=BE=E5=88=B0=E5=8D=95=E7=8B=AC=E6=96=87=E4=BB=B6bitcoindmain.cpp=E9=87=
+=8C=E4=BA=86;</div><div>=E9=87=8D=E6=96=B0=E9=85=8D=E7=BD=AE=E7=BC=96=E8=AF=
+=91=E4=B8=80=E9=81=8D</div><div>chmod =
+777=C2=A0autogen.sh</div><div>chmod 777 share/genbuild.sh</div><div>$ =
+./autogen.sh</div><div>$ ./configure =
+--with-incompatible-bdb=C2=A0--disable-tests=C2=A0--disable-bench</div><d=
+iv>$ make clean</div><div>$ =
+make</div><div>=E7=94=9F=E6=88=90src/omnicored</div><div>=E5=86=8D=E7=94=9F=
+=E6=88=90 libomnicored.a =
+=E6=96=87=E4=BB=B6=C2=A0</div><div><br/></div><div>/*</div><div>src=C2=A0=
+=E7=9B=AE=E5=BD=95=E5=86=85 =
+omniapi.cpp=C2=A0omniapi.h=C2=A0httprpc.cpp=C2=A0httprpc.h;</div><div>src=
+/bitcoind.cpp=C2=A0 =C2=A0 =
+//=E8=BF=99=E4=B8=AA=E6=9A=82=E6=97=B6=E4=B8=8D=E8=A6=86=E7=9B=96=E5=88=B0=
+linux=E7=89=88=E6=9C=AC?</div><div>src/omnicore/omnicore.cpp</div><div>sr=
+c/omnicore/omnicore.h</div><div>src/omnicore/rpc.cpp</div><div>src/omnico=
+re/rpctx.cpp</div><div>src/omnicore/tx.h</div><div>*/</div><div><br/></di=
+v><div>=E5=9C=A8=C2=A0src=E7=9B=AE=E5=BD=95</div><div>cd =
+src</div><div>ar rc libomnicored.a omnicored-bitcoind.o =
+omnicored-omnicoreApi.o=C2=A0</div><div>cp univalue/.libs/libunivalue.a =
+.</div><div>cp crypto/libbitcoin_crypto.a .</div><div>cp =
+leveldb/libleveldb.a .</div><div>cp leveldb/libmemenv.a .</div><div>cp =
+secp256k1/.libs/libsecp256k1.a .</div><div>cp =
+*.a=C2=A0=C2=A0/home/helloworld/goproject/src/github.com/HcashOrg/hcwalle=
+t/omnilib=C2=A0 =C2=A0 //cp =
+*.a=C2=A0=E5=88=B0=C2=A0hcwallet/omnilib</div><div>hcwallet/omnilib/omniS=
+ubCall.go=E9=87=8C=E9=9D=A2,=E5=8A=A0=E5=A4=9A=E4=B8=AA=E5=AF=B9=E5=BA=94=
+ -l=C2=A0</div><div><span style=3D"color: rgb(128, 128, 128);">//#cgo =
+LDFLAGS:-L./ -lomnicored -lbitcoin_server -lbitcoin_common -lunivalue =
+-lbitcoin_util -lbitcoin_wallet -lbitcoin_consensus -lbitcoin_crypto =
+-lleveldb -lmemenv -lsecp256k1 -lboost_system -lboost_filesystem =
+-lboost_program_options -lboost_thread -lboost_chrono -ldb_cxx -lssl =
+-lcrypto -levent_pthreads -levent -lm =
+-lstdc++</span></div><div><br/></div><div>f)20180929</div><div>=E7=BC=96=E8=
+=AF=91=E6=8F=90=E7=A4=BA unreferenced=C2=A0<span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">CScript</span> <span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">inner =3D =
+_createmultisig_redeemScript(</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(128, 128, 128); font-family: =
+NSimSun;">params</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">);</span></div><div><span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">UniValue</span> <span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">addmultisigaddress(</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">const</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">UniValue</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">&amp;</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(128, 128, 128); font-family: =
+NSimSun;">params</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">,</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">bool</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(128, 128, 128); font-family: NSimSun;">fHelp</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">)=E7=9A=84=E5=AE=9E=E7=8E=B0=C2=A0=E6=9A=82=E6=97=B6=E6=B3=A8=E9=
+=87=8A</span></div><div><br/></div><div>g) =
+linux=E5=91=BD=E4=BB=A4=EF=BC=9A=E6=9F=A5=E6=89=BE=E5=BA=93=E4=B8=AD=E7=9A=
+=84=E6=8E=A5=E5=8F=A3=E5=87=BD=E6=95=B0=EF=BC=8Cnm=E5=91=BD=E4=BB=A4; =
+refer:<a =
+href=3D"http://blog.chinaunix.net/uid-28458801-id-4543993.html">http://bl=
+og.chinaunix.net/uid-28458801-id-4543993.html</a></div><div>=E6=9F=A5=E6=89=
+=BE libzbar.a =E5=BA=93=E4=B8=AD=E6=98=AF=E5=90=A6=E6=9C=89 =
+jxjzbar_scan_image_test =
+=E5=87=BD=E6=95=B0</div><div>=C2=A0=C2=A0=C2=A0=C2=A0nm libzbar.a | grep =
+jxjzbar_scan_image_test</div><div>h) =
+linux=E7=BC=96=E7=A8=8B=E5=90=88=E5=B9=B6=E5=A4=9A=E4=B8=AA=E9=9D=99=E6=80=
+=81=E5=BA=93.a=E4=B8=BA=E4=B8=80=E4=B8=AA.a;=C2=A0 refer:=C2=A0<a =
+href=3D"https://www.cnblogs.com/fnlingnzb-learner/p/8127456.html">https:/=
+/www.cnblogs.com/fnlingnzb-learner/p/8127456.html</a></div><div>mkdir =
+temp</div><div>cd temp</div><div>ar x libtest1.a</div><div>ar x =
+libtest2.a</div><div>ar rc liball.a =
+*.o</div><div><br/></div><div><br/></div><div>7 =
+msvc2017=C2=A0=E7=BC=96=E8=AF=91=C2=A0bitcoin-0.16.2 /clone =
+master=E7=89=88=E6=9C=AC</div><div>=E6=8C=89=C2=A0=E9=87=8C=E9=9D=A2=E7=9B=
+=AE=E5=BD=95 =
+build_msvc/README.md=C2=A0=E7=BC=96=E8=AF=91</div><div>1)=C2=A0=E6=8C=89 =
+=E7=BB=B4=E6=8A=A4=C2=A0=E6=96=87=E6=A1=A3=C2=A0=E8=A3=85 =
+vs2017=C2=A0</div><div>cmake</div><div>vcpkg</div><div>2)</div><div>3=EF=BC=
+=89</div><div>python=E8=A6=81=E4=BD=BF=E7=94=A83=E7=82=B9=E5=87=A0=E7=89=88=
+=E6=9C=AC=EF=BC=8Cmsys2/mingw64=E8=BF=90=E8=A1=8C=E4=B8=8B=E9=9D=A2=E5=91=
+=BD=E4=BB=A4=E5=90=8E=EF=BC=8C</div><div><span style=3D"min-height: 9pt; =
+font-size: 9pt; color: rgb(1, 1, 1); font-family: &quot;Lucida =
+Console&quot;;">$ Pacman -S =
+mingw-w64-x86_64-python3</span></div><div><br/></div><div>powershell=E4=B8=
+=8B=EF=BC=8C=E5=9C=A8=C2=A0bitcoin/build_msvc=C2=A0=E8=BF=90=E8=A1=8C</di=
+v><div><span style=3D"min-height: 9pt; font-size: 9pt; color: rgb(1, 1, =
+1); font-family: &quot;Lucida Console&quot;;">$=C2=A0</span>python3 =
+msvc-autogen.py</div><div>2=EF=BC=89</div><div><br/></div><div>8=C2=A0<sp=
+an style=3D"font-size: 12pt; font-weight: bold;">=C2=A0</span><span =
+style=3D"font-size: 12pt; font-weight: =
+bold;">omnicore=C2=A0vs2017</span></div><div><span style=3D"font-size: =
+10pt;">1)</span></div><div><span style=3D"font-size: =
+10pt;">a)</span></div><div>=E5=88=A0=E9=99=A4=E4=B8=A4=E4=B8=AA=C2=A0test=
+_=E5=BC=80=E5=A4=B4=E7=9A=84=E9=A1=B9=E7=9B=AE=EF=BC=9B=E5=88=A0=E9=99=A4=
+bench</div><div><br/></div><div>=E7=BC=96=E8=AF=91sln;src/config/=E7=9B=AE=
+=E5=BD=95=E4=BC=9A=E5=A2=9E=E5=8A=A0 =
+bitcoin-config.h</div><div>=E5=9C=A8=E8=BF=99=E4=B8=AA=E6=96=87=E4=BB=B6=E7=
+=AC=AC3=E8=A1=8C=E5=A2=9E=E5=8A=A0</div><div>#ifdef =
+_WIN64</div><div>typedef long long =
+ssize_t;</div><div>#else</div><div>typedef int =
+ssize_t;</div><div>#endif</div><div><br/></div><div>=E5=B9=B6=E4=B8=94=E6=
+=8A=8A=E8=BF=99=E4=B8=AA=E6=96=87=E4=BB=B6=E5=A4=8D=E5=88=B6=E5=88=B0=C2=A0=
+src/</div><div><br/></div><div>b)</div><div><span style=3D"font-size: =
+9pt; font-family: =
+NSimSun;">=E6=89=80=E6=9C=89=E6=8F=90=E7=A4=BA=EF=BC=8Cerror C4146: =
+=E4=B8=80=E5=85=83=E8=B4=9F=E8=BF=90=E7=AE=97=E7=AC=A6=E5=BA=94=E7=94=A8=E4=
+=BA=8E=E6=97=A0=E7=AC=A6=E5=8F=B7=E7=B1=BB=E5=9E=8B=EF=BC=8C=E7=BB=93=E6=9E=
+=9C=E4=BB=8D=E4=B8=BA=E6=97=A0=E7=AC=A6=E5=8F=B7=E7=B1=BB=E5=9E=8B</span>=
+</div><div>=E5=AF=B9=E5=BA=94=E8=A1=8C=E7=9A=84-=E6=94=B9=E4=B8=BA =
+0-</div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">c)</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">=E4=BF=AE=E6=94=B9 =
+src/init.cpp</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">extern void CheckWalletUpdate(bool forceUpdate =
+=3D false);//by ycj extern int CheckWalletUpdate(bool forceUpdate =3D =
+false);</span></div><div><br style=3D"font-family: NSimSun; font-size: =
+9pt;"/></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E4=BF=AE=E6=94=B9 src/main.cpp</span></div><div>//int =
+mastercore_handler_tx(const CTransaction&amp; tx, int nBlock, unsigned =
+int idx, CBlockIndex const* pBlockIndex);</div><div>bool =
+mastercore_handler_tx(const CTransaction&amp; tx, int nBlock, unsigned =
+int idx, CBlockIndex const* =
+pBlockIndex);</div><div><br/></div><div>2=EF=BC=89</div><div><span =
+style=3D"font-size: 10pt;">project=C2=A0=E7=9A=84 =
+libunivalue=C2=A0=E4=B8=AD</span><span style=3D"font-size: =
+10pt;">=E6=A0=B9=E6=8D=AE</span><span style=3D"font-size: =
+10pt;">=E7=BC=96=E8=AF=91=E9=94=99=E8=AF=AF=E6=8F=90=E7=A4=BA=EF=BC=8C=E5=
+=88=A0=E9=99=A4 =
+univalue_get.cpp</span></div><div>libbitcoin_consensus=C2=A0=C2=A0<span =
+style=3D"font-size: =
+10pt;">=E5=88=A0=E9=99=A4=C2=A0</span>chacha20.cpp,sha256_sse4.cpp</div><=
+div><br/></div><div>libbitcoin_consensu=E9=A1=B9=E7=9B=AE=E9=87=8C=C2=A0=E4=
+=BF=AE=E6=94=B9=E5=87=A0=E5=A4=84=EF=BC=8C<span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: =
+NSimSun;">(CCheckpointData)=E5=8E=BB=E6=8E=89</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">checkpointData</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">=3D</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">{</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">//(CCheckpointData) =
+{</span></div><div><br/></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">libbitcoin_consensus<span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E9=A1=B9=E7=9B=AE</span></span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">c++/=E9=A2=84=E5=A4=84=E7=90=86=E5=99=A8/</span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E9=A2=84=E5=A4=84=E7=90=86=E5=99=A8=E5=AE=9A=E4=B9=89/ =
+=E5=A2=9E=E5=8A=A0=C2=A0</span><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">_CRT_SECURE_NO_WARNINGS</span></div><div><br/></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">libbitcoin_wallet</span><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">=E9=A1=B9=E7=9B=AE</span><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">=C2=A0</span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">c++/=E9=A2=84=E5=A4=84=E7=90=86=E5=99=A8/</span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E9=A2=84=E5=A4=84=E7=90=86=E5=99=A8=E5=AE=9A=E4=B9=89/ =
+=E5=A2=9E=E5=8A=A0=C2=A0</span><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">_CRT_SECURE_NO_WARNINGS</span></div><div><br/></div><div><span =
+style=3D"font-size: 10pt;">3)=C2=A0=C2=A0<span style=3D"font-size: 9pt; =
+font-family: NSimSun;">libbitcoin_server</span><span style=3D"font-size: =
+9pt; font-family: =
+NSimSun;">=E9=A1=B9=E7=9B=AE,=E9=97=AE=E9=A2=98=E8=BE=83=E5=A4=9A</span><=
+/span></div><div><span style=3D"font-size: 9pt;"><span =
+style=3D"font-size: 9pt;"><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">=C2=A0<span style=3D"font-size: 9pt; font-family: =
+NSimSun;">#ifdef _WIN64</span></span></span></span></div><div><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">typedef long long =
+ssize_t;</span></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">#else</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">typedef int ssize_t;</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">#endif</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">// Increase with every consensus affecting =
+change</span></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">#define =
+OMNICORE_VERSION_MAJOR=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00</span><=
+/div><div><span style=3D"font-size: 9pt; font-family: NSimSun;">// =
+Increase with every non-consensus affecting =
+feature</span></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">#define =
+OMNICORE_VERSION_MINOR=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A03</span><=
+/div><div><span style=3D"font-size: 9pt; font-family: NSimSun;">// =
+Increase with every patch, which is not a feature or consensus =
+affecting</span></div><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">#define =
+OMNICORE_VERSION_PATCH=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A01</span><=
+/div><div><span style=3D"font-size: 9pt; font-family: NSimSun;">// =
+Non-public build number/revision (usually zero)</span></div><div><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">#define =
+OMNICORE_VERSION_BUILD=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00</span><=
+/div><div><br/></div><div><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">=C2=A0</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">uint64_t</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">nGenerationMask1 =3D 0 - (</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">uint64_t</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">)(nGeneration &amp; 1);</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">//by ycj uint64_t =
+nGenerationMask1 =3D - (uint64_t)(nGeneration &amp; =
+1);</span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">=C2=A0 =C2=A0</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">uint64_t</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">nGenerationMask2 =3D 0 - (</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">uint64_t</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">)(nGeneration &gt;&gt; 1);</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">//by ycj uint64_t =
+nGenerationMask2 =3D 0 - (uint64_t)(nGeneration &gt;&gt; =
+1);</span></div><div><br/></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;"><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: =
+NSimSun;">=E4=BF=AE=E6=94=B9</span>validationinterface.h</span></div><div=
+><span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">//class CTransaction;//by ycj</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">#include</span> <span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">&lt;primitives/transaction.h&gt;</span> =
+<span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">// =
+CTransaction(Ref)</span></div><div><br/></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=E4=BF=AE=E6=94=B9src/script/script.h</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=E5=8F=82=E7=85=A7bitcoin0.16=E5=88=A0=E9=99=A4GetOp2,=E5=9C=A8=
+script.cpp=E4=B8=AD=E5=A2=9E=E5=8A=A0=C2=A0<span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: =
+NSimSun;">GetScriptOp=E5=87=BD=E6=95=B0=E5=AE=9E=E7=8E=B0</span></span></=
+div><div><span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">GetOp=E5=81=9A=E4=B8=8B=E9=9D=A2=E4=BF=AE=E6=94=B9,core_write.c=
+pp=E4=B9=9F=E8=A6=81=E4=BF=AE=E6=94=B9<span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">GetOp2=E4=B8=BA<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">GetScriptOp</span></span></span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">bool</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">GetOp(</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">const_iterator</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">&amp;</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">pc</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">,</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">opcodetype</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">&amp;</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">opcodeRet</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">)</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">const</span></div><div style=3D"min-height: 11pt;"><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0 {</span></div><div style=3D"min-height: =
+11pt;"><span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">//return GetOp2(pc, opcodeRet, NULL);</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">return</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">GetScriptOp(</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">pc</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: NSimSun;">, =
+end(),</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">opcodeRet</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">nullptr</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">);</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">//by ycj</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0 }</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">//=E5=8A=A0const</span></div><div><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">struct</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">IteratorComparator</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">{</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">=C2=A0=C2=A0=C2=A0</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">template</span> <span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">&lt;</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">typename</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">I</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">&gt;</span></div><div style=3D"min-height: =
+11pt;"><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">=C2=A0 =C2=A0 //bool</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">operator()(</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">const</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">I</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">&amp;</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">a</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">const</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">I</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">&amp;</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">b</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">)</span></div></div><div style=3D"min-height: =
+11pt;"><span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">bool</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">operator()(</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">const</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">I</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">&amp;</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">a</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">const</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">I</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">&amp;</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">b</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">)</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">const</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">=C2=A0=C2=A0=C2=A0 {</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">return</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">&amp;(*</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">a</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: NSimSun;">) &lt; =
+&amp;(*</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">b</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">);</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">=C2=A0=C2=A0=C2=A0 }</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">};</span></div><div><br/></div><div><span style=3D"font-size: =
+9pt; font-family: NSimSun;">error C1128: =
+=E8=8A=82=E6=95=B0=E8=B6=85=E8=BF=87=E5=AF=B9=E8=B1=A1=E6=96=87=E4=BB=B6=E6=
+=A0=BC=E5=BC=8F=E9=99=90=E5=88=B6: =E8=AF=B7=E4=BD=BF=E7=94=A8 /bigobj =
+=E8=BF=9B=E8=A1=8C=E7=BC=96=E8=AF=91</span></div><div><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">=E5=9C=A8 Visual Studio =
+=E5=BC=80=E5=8F=91=E7=8E=AF=E5=A2=83=E4=B8=AD=E8=AE=BE=E7=BD=AE=E6=AD=A4=E7=
+=BC=96=E8=AF=91=E5=99=A8=E9=80=89=E9=A1=B9,</span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E6=89=93=E5=BC=80=E8=AF=A5=E9=A1=B9=E7=9B=AE=E7=9A=84=E2=80=9C=
+=E5=B1=9E=E6=80=A7=E9=A1=B5=E2=80=9D=E5=AF=B9=E8=AF=9D=E6=A1=86</span></d=
+iv><div><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E5=8D=95=E5=87=BB=E2=80=9CC/C++=E2=80=9D=E9=A1=B9 =
+/=C2=A0</span><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E5=8D=95=E5=87=BB=E2=80=9C=E5=91=BD=E4=BB=A4=E8=A1=8C=E2=80=9D=
+=E5=B1=9E=E6=80=A7=E9=A1=B5=E3=80=82/=C2=A0</span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">=E5=9C=A8=E2=80=9C=E9=99=84=E5=8A=A0=E9=80=89=E9=A1=B9=E2=80=9D=
+=E6=A1=86=E4=B8=AD=E9=94=AE=E5=85=A5=E7=BC=96=E8=AF=91=E5=99=A8=E9=80=89=E9=
+=A1=B9,=E6=B7=BB=E5=8A=A0/bigobj=E3=80=82</span></div><div><br =
+style=3D"font-family: NSimSun; font-size: 9pt; color: rgb(0, 128, =
+0);"/></div><div>5=EF=BC=89bitcoind=C2=A0=E9=A1=B9=E7=9B=AE</div><div>=E5=
+=A2=9E=E5=8A=A0=E6=89=80=E6=9C=89src/ominicore/=E9=87=8C=E7=9A=84.cpp=E6=96=
+=87=E4=BB=B6=E5=88=B0=E9=A1=B9=E7=9B=AE</div><div><br/></div><div>=E5=A2=9E=
+=E5=8A=A0=C2=A0src/<span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">primitives/transaction.cpp =
+=E5=88=B0=E9=A1=B9=E7=9B=AE</span></div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">TxBuilder</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">&amp;</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">TxBuilder</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">::addChange=C2=A0=E5=87=BD=E6=95=B0=E5=86=85 =
+=E6=8F=90=E7=A4=BA=C2=A0<span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">CTransaction::<span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">CTransaction=E7=9B=B8=E5=85=B3=E9=94=99=E8=AF=AF</span></span><=
+/span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;"><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">src/</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">primitives/</span>transaction.h=E5=A2=9E=E5=8A=A0 =
+CTransaction(</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">CMutableTransaction</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">&amp;</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">tx</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">);</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: NSimSun;">//add =
+by ycj</span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">src/</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">primitives/</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">transaction.cpp=E5=A2=9E=E5=8A=A0 :</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: NSimSun;"><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">CTransaction</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">::CTransaction(</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">CMutableTransaction</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">&amp;</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">tx</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">) : nVersion(</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">tx</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">.nVersion), vin(</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">tx</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: NSimSun;">.vin), =
+vout(</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">tx</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">.vout), wit(</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">tx</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">.wit), nLockTime(</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">tx</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">.nLockTime) {</span></span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">=C2=A0=C2=A0=C2=A0 =
+UpdateHash();</span></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">}</span></div><div><br/></div><div>9=C2=A0 =
+msys=E4=B8=8A=E7=BC=96=E8=AF=91 =
+//=E8=BF=98=E6=B2=A1=E6=9C=89=E5=AE=8C=E6=88=90</div><div><span =
+style=3D"min-height: 9pt; font-size: 9pt; color: rgb(1, 1, 1); =
+font-family: &quot;Lucida Console&quot;;">Pacman -S=C2=A0 =
+libtool=C2=A0</span></div><div><span style=3D"min-height: 9pt; =
+font-size: 9pt; color: rgb(1, 1, 1); font-family: &quot;Lucida =
+Console&quot;;">Pacman -S=C2=A0 =
+libdb-devel</span></div><div><br/></div><div><span style=3D"min-height: =
+9pt;"><font style=3D"font-size: 12pt;"><span style=3D"font-size: 12pt; =
+color: rgb(1, 1, 1); font-family: &quot;Lucida Console&quot;; =
+font-weight: bold;">15 hc=C2=A0with =
+omni</span></font></span></div><div><span style=3D"min-height: =
+9pt;"><span style=3D"font-size: 10pt; color: rgb(1, 1, 1); font-family: =
+&quot;Lucida Console&quot;;">1) =
+hcwallet=E9=87=8C=E5=8A=A0opreturn</span></span></div><div><span =
+style=3D"font-size: 9pt; color: rgb(1, 1, 1); font-family: &quot;Lucida =
+Console&quot;;">=C2=A0 =C2=A0func =
+handleCreateRawTransaction</span></div><div><span style=3D"font-size: =
+9pt; color: rgb(1, 1, 1); font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0-------------------------------</=
+span></div><div><span style=3D"font-size: 9pt; color: rgb(1, 1, 1); =
+font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0standardCoinbaseOpReturn</span></=
+div><div><span style=3D"font-size: 9pt; color: rgb(1, 1, 1); =
+font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0GenerateProvablyPruneableOut =
+OP_RETURN</span></div><div><br style=3D"font-family: Lucida Console; =
+font-size: 9pt; color: rgb(1, 1, 1);"/></div><div><span =
+style=3D"font-size: 9pt; color: rgb(1, 1, 1); font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0coinbaseOpReturn, err :=3D =
+standardCoinbaseOpReturn(uint32(blockHeight),extraNonces)</span></div><di=
+v><span style=3D"font-size: 9pt; color: rgb(1, 1, 1); font-family: =
+&quot;Lucida Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0if err !=3D nil =
+{</span></div><div><span style=3D"font-size: 9pt; color: rgb(1, 1, 1); =
+font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return =
+err</span></div><div><span style=3D"font-size: 9pt; color: rgb(1, 1, 1); =
+font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0}</span></div><div><span =
+style=3D"font-size: 9pt; color: rgb(1, 1, 1); font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0msgBlock.Transactions[0].TxOut[1]=
+.PkScript =3D coinbaseOpReturn</span></div><div><span =
+style=3D"font-size: 9pt; color: rgb(1, 1, 1); font-family: &quot;Lucida =
+Console&quot;;">=C2=A0=C2=A0=C2=A0=C2=A0GetOmMarker</span></div><div><br/=
+></div><div><br/></div><div><br/></div><div>19</div><div>1)vs =
+code=C2=A0c++=E6=8F=92=E4=BB=B6=EF=BC=9B=E5=8F=AF=E4=BB=A5=E6=89=93=E5=BC=
+=80=E7=9B=AE=E5=BD=95=EF=BC=8Cctrl+=E9=BC=A0=E6=A0=87=E7=82=B9=E5=87=BB=E5=
+=8F=98=E9=87=8F=EF=BC=8C=E5=8F=AF=E4=BB=A5=E7=9C=8B=E5=88=B0=E5=AE=9A=E4=B9=
+=89;</div><div><br/></div><div><img =
+src=3D"Omnicore-btc=E6=BA=90=E7=A0=81&=E7=BC=96=E8=AF=91=E7=AD=89_files/I=
+mage.png" type=3D"image/png" data-filename=3D"Image.png" =
+width=3D"485"/></div><div>//<a =
+href=3D"https://www.cnblogs.com/tsfh/p/8900700.html">https://www.cnblogs.=
+com/tsfh/p/8900700.html</a></div></span>=0A</div></body></html>
+
+------=_NextPart_0002_0944_B3B3ECEE.9FFA43AC
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: Omnicore-btc源码&编译等_files/Image.png
+
+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
+
+------=_NextPart_0002_0944_B3B3ECEE.9FFA43AC--
+ 

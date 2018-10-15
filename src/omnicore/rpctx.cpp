@@ -182,6 +182,7 @@ UniValue omni_sendrawtx(const UniValue& params, bool fHelp)
 
 UniValue omni_clear(const UniValue& params, bool fHelp)
 {
+	return "";
     if (fHelp || params.size() != 0)
         throw runtime_error("omni_clear ()");
 
@@ -1552,20 +1553,15 @@ UniValue omni_rollback(const UniValue& params, bool fHelp)
             "\nExamples:\n" +
             HelpExampleCli("omni_sendalert", "") + HelpExampleRpc("omni_sendalert", ""));
 
-
     int height = params[0].get_int();
     UniValue hashArray = params[1].get_array();
-
-	
     for (int i = 0; i < hashArray.size(); i++) {
         std::string hash = hashArray[i].get_str();
         _my_sps->popBlock(uint256S(hash));
     }
 	
-    RewindDBsAndState(height, 0, true);
-    
-    std::string retStr = "";
-    return retStr;
+    RewindDBs(height);
+    return "";
 }
 
 UniValue omni_txexodus_fundraiser(const UniValue& params, bool fHelp)

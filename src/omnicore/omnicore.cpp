@@ -6,6 +6,7 @@
 
 #include "omnicore/omnicore.h"
 #include "omnicore/dbTxHistory.h"
+#include "omnicore/dbBlockHistory.h"
 
 #include "omnicore/activation.h"
 #include "omnicore/consensushash.h"
@@ -147,6 +148,9 @@ COmniFeeCache* mastercore::p_feecache;
 COmniFeeHistory* mastercore::p_feehistory;
 //! LevelDB based storage for the TxHistory
 COmniTxHistory* mastercore::p_txhistory;
+
+//! LevelDB based storage for the TxHistory
+COmniBlockHistory* mastercore::p_blockhistory;
 
 int mastercore::_LatestBlock = -1;
 uint256 mastercore::_LatestBlockHash;
@@ -1554,8 +1558,56 @@ void clear_all_state()
     p_feecache->Clear();
     p_feehistory->Clear();
 	p_txhistory->Clear();
+	p_blockhistory->Clear();
     assert(p_txlistdb->setDBVersion() == DB_VERSION); // new set of databases, set DB version
     exodus_prev = 0;
+}
+
+void RewindDBs(int nHeight, bool fInitialParse)
+{
+	if(nHeight <=0)
+		clear_all_state();
+
+	bool reorgContainsFreeze = p_txlistdb->CheckForFreezeTxs(nHeight);
+	int count0 = p_txlistdb->getMPTransactionCountTotal();
+	p_txlistdb->printAll();
+	p_txlistdb->isMPinBlockRange(nHeight, reorgRecoveryMaxHeight, true);
+	p_txlistdb->printAll();
+	int count1 = p_txlistdb->getMPTransactionCountTotal();
+
+	count0 = t_tradelistdb->getMPTradeCountTotal();
+	t_tradelistdb->printAll();
+    t_tradelistdb->deleteAboveBlock(nHeight);
+	t_tradelistdb->printAll();
+	count1 = t_tradelistdb->getMPTradeCountTotal();
+
+    s_stolistdb->deleteAboveBlock(nHeight);
+
+    p_feecache->RollBackCache(nHeight);
+    p_feehistory->RollBackHistory(nHeight);
+	p_txhistory->RollBackHistory(nHeight);
+
+	count0 = p_blockhistory->CountRecords();
+	p_blockhistory->printAll();
+	p_blockhistory->RollBackHistory(nHeight);
+	p_blockhistory->printAll();
+	count1 = p_blockhistory->CountRecords();
+	
+
+    reorgRecoveryMaxHeight = 0;
+
+	if (reorgContainsFreeze && !fInitialParse) {
+       PrintToConsole("Reorganization containing freeze related transactions detected, forcing a reparse...\n");
+       clear_all_state(); // unable to reorg freezes safely, clear state and reparse
+    } else {
+        int best_state_block = LoadMostRelevantInMemoryStateEx();
+        if (best_state_block < 0) {
+            // unable to recover easily, remove stale stale state bits and reparse from the beginning.
+            clear_all_state();
+        } else {
+            nWaterlineBlock = best_state_block;
+        }
+    }
 }
 
 void RewindDBsAndState(int nHeight, int nBlockPrev , bool fInitialParse)
@@ -1667,8 +1719,8 @@ int mastercore_init()
     p_feecache = new COmniFeeCache(GetDataDir() / "OMNI_feecache", fReindex);
     p_feehistory = new COmniFeeHistory(GetDataDir() / "OMNI_feehistory", fReindex);
 	p_txhistory = new COmniTxHistory(GetDataDir() / "OMNI_txhistory", fReindex);
+	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
 	
-
     MPPersistencePath = GetDataDir() / "MP_persist";
     TryCreateDirectory(MPPersistencePath);
 
@@ -1812,21 +1864,27 @@ int mastercore_init_ex()
     p_txlistdb = new CMPTxList(GetDataDir() / "MP_txlist", fReindex);
 
 	_my_sps = new CMPSPInfo(GetDataDir() / "MP_spinfo", fReindex);
+	_my_sps->printAll();
     p_OmniTXDB = new COmniTransactionDB(GetDataDir() / "Omni_TXDB", fReindex);
     p_feecache = new COmniFeeCache(GetDataDir() / "OMNI_feecache", fReindex);
     p_feehistory = new COmniFeeHistory(GetDataDir() / "OMNI_feehistory", fReindex);
 	p_txhistory = new COmniTxHistory(GetDataDir() / "OMNI_txhistory", fReindex);
-
+	p_txhistory->printAll();
+	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
+	p_blockhistory->printAll();
     MPPersistencePath = GetDataDir() / "MP_persist";
     TryCreateDirectory(MPPersistencePath);
 
     ++mastercoreInitialized;
 
-	clear_all_state();
+	//clear_all_state();
+
+	
+    nWaterlineBlock = LoadMostRelevantInMemoryStateEx();
+	if(nWaterlineBlock <=0)
+		clear_all_state();
 
 	/*
-    nWaterlineBlock = LoadMostRelevantInMemoryState();
-	
     if (nWaterlineBlock > 0 && nWaterlineBlock < GetHeight()) {
         RewindDBsAndState(nWaterlineBlock + 1, 0, true);
     }
@@ -1937,6 +1995,11 @@ int mastercore_shutdown()
         delete p_txhistory;
         p_txhistory = NULL;
     }
+	if (p_blockhistory) {
+        delete p_blockhistory;
+        p_blockhistory = NULL;
+    }
+
     mastercoreInitialized = 0;
 
     PrintToLog("\nOmni Core shutdown completed\n");
@@ -2060,7 +2123,7 @@ bool mastercore_handler_mptx(const UniValue &root)
         txobj.push_back(Pair("type", mp_obj.getTypeString()));
     }
 */
-	p_txhistory->PutHistory(value.write());
+	p_txhistory->PutHistory(Block, HexStr(value.write()));
     if (!mastercoreInitialized) {
         mastercore_init();
     }

@@ -1,5 +1,5 @@
-#ifndef OMNICORE_TXHISTORY_H
-#define OMNICORE_TXHISTORY_H
+#ifndef OMNICORE_BLOCK_HISTORY_H
+#define OMNICORE_BLOCK_HISTORY_H
 
 #include "omnicore/dbbase.h"
 #include "omnicore/log.h"
@@ -17,11 +17,11 @@ typedef std::pair<std::string, int64_t> feeHistoryItem;
 
 /** LevelDB based storage for the TxHistory.
  */
-class COmniTxHistory : public CDBBase
+class COmniBlockHistory : public CDBBase
 {
 public:
-    COmniTxHistory(const boost::filesystem::path& path, bool fWipe);
-    virtual ~COmniTxHistory();
+    COmniBlockHistory(const boost::filesystem::path& path, bool fWipe);
+    virtual ~COmniBlockHistory();
 
     /** Show Fee History DB statistics */
     void printStats();
@@ -41,16 +41,16 @@ public:
     /** Populate data about a fee distribution */
     bool GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total);
 
-	std::string GetHistory(int index);
-	std::string GetEndHistory();
+	bool GetBlockHistory(int index, int& height, std::string& hash);
+	bool GetEndHistory(int& height, std::string& hash);
 
-	bool PutHistory(int block, const std::string& history);
+	bool PutBlockHistory(int height, const std::string& hash);
 };
 
 namespace mastercore
 {
 	//! LevelDB based storage for the MetaDEx fee distributions
-    extern COmniTxHistory* p_txhistory;
+    extern COmniBlockHistory* p_blockhistory;
 }
 
-#endif // OMNICORE_TXHISTORY_H
+#endif // OMNICORE_BLOCK_HISTORY_H

@@ -4,14 +4,13 @@
  * This file contains code for handling Omni fees.
  */
 
-#include "omnicore/dbTxHistory.h"
+#include "omnicore/dbBlockHistory.h"
 
 #include "omnicore/log.h"
 #include "omnicore/omnicore.h"
 #include "omnicore/rules.h"
 #include "omnicore/sp.h"
 #include "omnicore/sto.h"
-#include "utilstrencodings.h"
 
 #include "main.h"
 
@@ -30,25 +29,25 @@
 
 using namespace mastercore;
 
-COmniTxHistory::COmniTxHistory(const boost::filesystem::path& path, bool fWipe)
+COmniBlockHistory::COmniBlockHistory(const boost::filesystem::path& path, bool fWipe)
 {
     leveldb::Status status = Open(path, fWipe);
     PrintToConsole("Loading Tx history database: %s\n", status.ToString());
 }
 
-COmniTxHistory::~COmniTxHistory()
+COmniBlockHistory::~COmniBlockHistory()
 {
     if (msc_debug_fees) PrintToLog("COmniTxHistory closed\n");
 }
     
 // Show Fee History DB statistics
-void COmniTxHistory::printStats()
+void COmniBlockHistory::printStats()
 {
     PrintToConsole("COmniTxHistory stats: nWritten= %d , nRead= %d\n", nWritten, nRead);
 }
 
 // Show Fee History DB records
-void COmniTxHistory::printAll()
+void COmniBlockHistory::printAll()
 {
     int count = 0;
     leveldb::Iterator* it = NewIterator();
@@ -61,7 +60,7 @@ void COmniTxHistory::printAll()
 }
 
 // Count Fee History DB records
-int COmniTxHistory::CountRecords()
+int COmniBlockHistory::CountRecords()
 {
     // No faster way to count than to iterate - "There is no way to implement Count more efficiently inside leveldb than outside."
     int count = 0;
@@ -74,7 +73,7 @@ int COmniTxHistory::CountRecords()
 }
 
 // Roll back history in event of reorg, block is inclusive
-void COmniTxHistory::RollBackHistory(int block)
+void COmniBlockHistory::RollBackHistory(int block)
 {
     assert(pdb);
 
@@ -84,7 +83,7 @@ void COmniTxHistory::RollBackHistory(int block)
         std::string strValue = it->value().ToString();
         std::string strKey = it->key().ToString();
         std::vector<std::string> vFeeHistoryDetail;
-        boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":="), boost::token_compress_on);
+        boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
         if (2 != vFeeHistoryDetail.size()) {
             PrintToLog("ERROR: vFeeHistoryDetail has unexpected number of elements: %d !\n", vFeeHistoryDetail.size());
             continue; // bad data
@@ -99,7 +98,7 @@ void COmniTxHistory::RollBackHistory(int block)
 }
 
 // Retrieve fee distributions for a property
-std::set<int> COmniTxHistory::GetDistributionsForProperty(const uint32_t &propertyId)
+std::set<int> COmniBlockHistory::GetDistributionsForProperty(const uint32_t &propertyId)
 {
     assert(pdb);
 
@@ -126,7 +125,7 @@ std::set<int> COmniTxHistory::GetDistributionsForProperty(const uint32_t &proper
 }
 
 // Populate data about a fee distribution
-bool COmniTxHistory::GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total)
+bool COmniBlockHistory::GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total)
 {
     assert(pdb);
 
@@ -151,7 +150,7 @@ bool COmniTxHistory::GetDistributionData(int id, uint32_t *propertyId, int *bloc
 }
 
 // Retrieve the recipients for a fee distribution
-std::set<feeHistoryItem> COmniTxHistory::GetFeeDistribution(int id)
+std::set<feeHistoryItem> COmniBlockHistory::GetFeeDistribution(int id)
 {
     assert(pdb);
 
@@ -188,7 +187,7 @@ std::set<feeHistoryItem> COmniTxHistory::GetFeeDistribution(int id)
 }
 
 // Record a fee distribution
-void COmniTxHistory::RecordFeeDistribution(const uint32_t &propertyId, int block, int64_t total, std::set<feeHistoryItem> feeRecipients)
+void COmniBlockHistory::RecordFeeDistribution(const uint32_t &propertyId, int block, int64_t total, std::set<feeHistoryItem> feeRecipients)
 {
     assert(pdb);
 
@@ -211,19 +210,8 @@ void COmniTxHistory::RecordFeeDistribution(const uint32_t &propertyId, int block
     if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
 }
 
-bool COmniTxHistory::PutHistory(int block, const std::string& history)
-{
-	assert(pdb);
 
-    int count = CountRecords() + 1;
-    std::string key = strprintf("%d", count);
-	std::string value = strprintf("%d:%s", block, history);
-	leveldb::Status status = pdb->Put(writeoptions, key, value);
-    if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
-	return true;
-}
-
-std::string COmniTxHistory::GetHistory(int index)
+bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& hash)
 {
 	const std::string key = strprintf("%d", index);
     std::set<feeHistoryItem> sFeeHistoryItems;
@@ -236,12 +224,48 @@ std::string COmniTxHistory::GetHistory(int index)
     boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
 	if(vHistoryDetail.size() != 2)
 		return "";
-	std::vector<unsigned char> vecRet = ParseHex(vHistoryDetail[1]);
-	//if(vecRet)
-	return std::string(vecRet.begin(), vecRet.end());
+
+	height = atoi(vHistoryDetail[0].c_str());
+	hash = vHistoryDetail[1];
+	return true;
 }
 
-std::string COmniTxHistory::GetEndHistory()
+bool COmniBlockHistory::GetEndHistory(int& height, std::string& hash)
 {
-	return GetHistory(CountRecords());
+	return GetBlockHistory(CountRecords()-1, height, hash);
+}
+
+bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash)
+{
+	assert(pdb);
+
+	int lastHeight = -1;
+	std::string lastHash;
+	GetEndHistory(lastHeight, lastHash);
+	if(lastHeight == -1)
+	{
+		printAll();
+	}
+	if(lastHeight >=0)
+	{
+//		assert(height == lastHeight + 1);
+		if(height != lastHeight + 1)
+		{
+			int tempHeight = -1;
+			std::string tempHash;
+			GetBlockHistory(height, tempHeight, tempHash);
+			PrintToConsole("tempHeight = %d, tempHash = %s, height = %d, hash = %s", tempHeight, tempHash, height, hash);
+		}
+	}
+	//if(lastHeight >=height)
+	//{
+	//	RollBackHistory(height);
+	//}
+//	int count = CountRecords() + 1;
+	std::string key = strprintf("%d", height);
+	std::string value = strprintf("%d:%s", height, hash);
+	leveldb::Status status = pdb->Put(writeoptions, key, value);
+	if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
+	
+	return true;
 }

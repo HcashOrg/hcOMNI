@@ -36,6 +36,8 @@
 #include "omnicore/walletfetchtxs.h"
 #include "omnicore/walletutils.h"
 #include "omnicore/pending.h"
+#include "omnicore/persistence.h"
+#include "omnicore/dbBlockHistory.h"
 
 #include "amount.h"
 #include "base58.h"
@@ -2689,6 +2691,20 @@ UniValue omni_processtx(const UniValue& params, bool fHelp)
     return "fail";
 }
 
+UniValue omni_getblockcount(const UniValue& params, bool fHelp)
+{
+    //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
+    int len = params.size();
+
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "omni_getblockcount\n"
+            "\nExamples:\n" +
+            HelpExampleCli("omni_getblockcount", ""));
+
+	return UniValue(p_blockhistory->CountRecords());
+}
+
 UniValue omni_processpayment(const UniValue& params, bool fHelp)
 {
     //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
@@ -2724,11 +2740,13 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 	mastercore::_LatestBlock = params[0].get_int();
     mastercore::_LatestBlockHash = uint256S(params[1].get_str());
 	mastercore::_LatestBlockTime = params[2].get_int64();
-
+	_my_sps->setWatermark(mastercore::_LatestBlockHash);
 	//PrintToConsole("omni_onblockconnected : %d\t%s\t%I64d\n", mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString(), mastercore::_LatestBlockTime);
 
 	eraseExpiredAccepts(mastercore::_LatestBlock);
 	calculate_and_update_devmsc(mastercore::_LatestBlockTime, mastercore::_LatestBlock);
+	PersistInMemoryStateEx(mastercore::_LatestBlockHash);
+	p_blockhistory->PutBlockHistory(mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString());
 	return "";
 }
 
@@ -2765,6 +2783,7 @@ static const CRPCCommand commands[] =
     { "omni layer (data retrieval)", "omni_getbalanceshash",           &omni_getbalanceshash,            false },
     { "omni layer (data retrieval)", "omni_dealopreturn",              &omni_dealopreturn,               false },
 	{ "omni layer (data retrieval)", "omni_processtx",                 &omni_processtx,					 false },
+	{ "omni layer (data retrieval)", "omni_getblockcount",             &omni_getblockcount,				 false },
 	{ "omni layer (data retrieval)", "omni_processpayment",            &omni_processpayment,			 false },
 	{ "omni layer (data retrieval)", "omni_onblockconnected",          &omni_onblockconnected,			 false },
 #ifdef ENABLE_WALLET

@@ -45,7 +45,7 @@ OMNICORE_H = \
   omnicore/walletfetchtxs.h \
   omnicore/wallettxbuilder.h \
   omnicore/walletutils.h \
-  omnicore/dbTxHistory.cpp
+  omnicore/dbTxHistory.h
   
 OMNICORE_CPP = \
   omnicore/activation.cpp \

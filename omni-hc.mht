@@ -1,0 +1,490 @@
+Date: Wed, 10 Oct 2018 14:01:19 +0800
+Message-ID: <00010944$81aad180$8d38536a$EverNote>
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_NextPart_0001_0944_A822F9CE.FCAE541A"
+X-Mailer: Evernote® v6.15.4.7934
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_0001_0944_A822F9CE.FCAE541A
+Content-Type: text/html; 
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+  <title>Evernote Export</title>
+  <basefont face=3D"=E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91" size=3D"2" />
+  <meta http-equiv=3D"Content-Type" =
+content=3D"text/html;charset=3Dutf-8" />
+  <meta name=3D"exporter-version" content=3D"Evernote Windows/307934 =
+(zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: =E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name=3D"2023"/>
+
+<div>=0A<span><div><br/></div><div>1</div><div>1)=C2=A0</div><div>=E9=A1=B9=
+=E7=9B=AEgithub:=C2=A0<a =
+href=3D"https://github.com/hcTokens">https://github.com/hcTokens</a></div=
+><div><br/></div><div>3</div><div>1)=C2=A0</div><div>a) go=E4=B8=8Ec =
+,cpp =
+c++=E4=BA=92=E7=9B=B8=E8=B0=83=E7=94=A8</div><div>=E6=9C=80=E5=90=8E=E5=90=
+=A7 omni=E7=9B=B8=E5=85=B3=E4=BB=A3=E7=A0=81=E6=94=BE=E5=88=B0=C2=A0 =
+hcwallet/rpc/legacyrpc=E7=9A=84legacyrpc=E5=8C=85=EF=BC=8C=E8=BF=99=E6=A0=
+=B7=E7=9B=B8=E4=BA=92=E8=B0=83=E7=94=A8=E6=97=A0=E9=97=AE=E9=A2=98=EF=BC=9B=
+</div><div>=E5=A6=82=E6=9E=9C.c=E6=96=87=E4=BB=B6=E6=94=BE=E5=88=B0=E6=9C=
+=89.go=E6=96=87=E4=BB=B6=E7=9A=84=E7=9B=AE=E5=BD=95=EF=BC=8C=E5=AF=B9=E5=BA=
+=94=E4=BB=A3=E7=A0=81=E4=BC=9A=E7=BC=96=E8=AF=91=E8=BF=9Bgo,=E4=B8=8D=E9=9C=
+=80=E8=A6=81=E7=B1=BB=E4=BC=BC// #cgo LDFLAGS:=C2=A0=C2=A0-L./libomni =
+-lomni</div><div>=E5=A6=82=E6=9E=9C.c=E7=9A=84=E7=9B=AE=E5=BD=95=E6=B2=A1=
+=E6=9C=89.go=E6=96=87=E4=BB=B6=EF=BC=8C.c=E6=96=87=E4=BB=B6=E5=8F=AA=E8=83=
+=BD=E5=85=88=E7=94=9F=E6=88=90.a=E6=96=87=E4=BB=B6=EF=BC=8C=E5=85=B6=E4=BB=
+=96go=E6=96=87=E4=BB=B6=E5=8F=AA=E8=83=BD=E9=80=9A=E8=BF=87=E9=93=BE=E6=8E=
+=A5.a=E6=96=87=E4=BB=B6=EF=BC=8C=E7=BC=96=E8=AF=91=E8=BF=9B.go=E9=A1=B9=E7=
+=9B=AE</div><div>=C2=A0// #cgo CFLAGS: -I./libomni</div><div>// #cgo =
+LDFLAGS:=C2=A0=C2=A0-L./libomni -lomni</div><div><br/></div><div>go =
+build=C2=A0=C2=A0-gcflags &quot;all=3D-N -l&quot;=C2=A0 =
+,=E5=9C=A8BUILDARGS=E6=B7=BB=E5=8A=A0-gcflags &quot;-N =
+-l&quot;=EF=BC=8C=E7=9B=AE=E7=9A=84=E6=98=AF=E5=8E=BB=E6=8E=89=E7=BC=96=E8=
+=AF=91=E4=BC=98=E5=8C=96;=E4=B8=8D=E8=AE=A9go=E4=BC=98=E5=8C=96=E6=97=B6=EF=
+=BC=8C=E5=88=A0=E9=99=A4=E5=9B=9E=E8=B0=83=E5=87=BD=E6=95=B0</div><div><b=
+r/></div><div>2)=C2=A0</div><div>a)20180917</div><div>methods.go=E9=87=8C=
+=E9=9D=A2=E7=9A=84=C2=A0func sendPairs(w *wallet.Wallet, amounts =
+map[string]hcutil.Amount,</div><div>txSha, err :=3D =
+w.SendOutputs(outputs, account, minconf, changeAddr,[]byte{})=C2=A0 =
+//=E6=9C=80=E5=90=8E=E4=B8=AA=E5=8F=82=E6=95=B0=E6=98=AF=E6=96=B0=E5=8A=A0=
+=E7=9A=84</div><div><br/></div><div>3)hcctl</div><div>=E4=BC=9A=E8=B0=83=E7=
+=94=A8 =
+hcd\hcjson\chainsvrcmds.go=E7=9A=84init,=E5=88=9D=E5=A7=8B=E5=8C=96 =
+=E5=91=BD=E4=BB=A4=EF=BC=8C</div><div>=E6=A8=A1=E4=BB=BF=E5=8E=9F=E6=9D=A5=
+=E7=9A=84=E5=9C=A8=E9=87=8C=E9=9D=A2=E6=B3=A8=E5=86=8C =
+&quot;omni_getinfo&quot; =
+=E7=AD=89=E5=91=BD=E4=BB=A4</div><div><br/></div><div><br/></div><div>7 =
+hcwallet</div><div>1)</div><div>=E4=B8=BA=E4=BA=86=E4=BD=BF=E7=94=A8=E6=9C=
+=AC=E5=9C=B0=E7=9A=84hcd=E7=9B=AE=E5=BD=95=E6=96=B0=E4=BF=AE=E6=94=B9=E5=86=
+=85=E5=AE=B9,vendor=E7=9B=AE=E5=BD=95=E9=87=8C=E7=9A=84hcd=C2=A0=E7=9B=AE=
+=E5=BD=95=E6=94=B9=E5=90=8D(=E6=9A=82=E6=97=B6=E4=BD=9C=E5=BA=9F)=EF=BC=9B=
+</div><div>=E4=BF=AE=E6=94=B9 =
+rpcHandlers=C2=A0=E5=8A=A0=E5=91=BD=E4=BB=A4=C2=A0omni_getinfo =
+=C2=A0</div><div>=E5=91=BD=E4=BB=A4=E8=BF=94=E5=9B=9E=E7=BB=93=E6=9E=9C=E6=
+=A0=BC=E5=BC=8F=E5=AE=9A=E4=B9=89=E5=9C=A8 =
+hcd\hcjson\walletsvrresults.go</div><div>2)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+handleCreateRawTransaction =E5=87=BD=E6=95=B0=E5=86=85=E5=8A=A0 =
+OP_RETURN , =
+=E5=A2=9E=E5=8A=A0=E5=A6=82=E4=B8=8B=E4=BB=A3=E7=A0=81;</div><div>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 if c.PayLoad!=3Dnil &amp;&amp; =
+(*c.PayLoad)!=3D&quot;&quot; =
+{</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0payLoad,_:=3D=
+hex.DecodeString(*c.PayLoad)</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0payLoadScript, err :=3D =
+txscript.GenerateProvablyPruneableOut(payLoad)</div><div>=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if err =3D=3D nil =
+{</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0payLoadTx :=3D =
+&amp;wire.TxOut{</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Value:=C2=A0=C2=A0=C2=A0=C2=
+=A0int64(0),</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0PkScript: =
+payLoadScript,</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0}</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0mtx.AddTxOut(payLoadTx)</div><div>=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0//unsig=
+nedTransaction.TxOut =3D append(unsignedTransaction.TxOut, =
+payLoadTx)</div><div>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}</d=
+iv><div>3) 20180920</div><div>func (w *Wallet) SendOutputs(outputs =
+[]*wire.TxOut, account uint32,=C2=A0 =C2=A0 minconf int32, changeAddr =
+string, fromAddress =
+string)</div><div>SendOutputs=E6=AF=94=E5=8E=9F=E6=9D=A5=E5=A2=9E=E5=8A=A0=
+fromAddress,outputs =
+[]*wire.TxOut=E5=8F=AF=E4=BB=A5=E5=A2=9E=E5=8A=A0OP_RETURN,</div><div><br=
+/></div><div>5)20180921</div><div>onBlockConnected=3D&gt;</div><div>func =
+(w *Wallet) extendMainChain =
+=3D&gt;w.processOminiTransaction(serializedTx, =
+header)</div><div>=3D&gt;=EF=BD=9Bcmd, err :=3D =
+hcjson.NewCmd(&quot;<span style=3D"font-weight: =
+bold;">omni_processtx</span>&quot;, params...)=EF=BC=9B // =
+=E5=9C=A8c++=E6=90=9C=E7=B4=A2omni_processtx =3D&gt;<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">mastercore_handler_mptx</span>=C2=A0</div><div>omnilib.JsonCmdR=
+eqHcToOm(string(marshalledJSON))=EF=BC=9B</div><div>=EF=BD=9D</div><div><=
+br/></div><div>func recoverOmniData(w *wallet.Wallet) =
+=3D&gt;=C2=A0w.ProcessPayLoadTransaction</div><div><br/></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(47, 79, 79); =
+font-family: =
+NSimSun;">c++=E4=B8=AD=E7=9A=84=E6=93=8D=E4=BD=9C=E4=BB=A3=E7=A0=81:=C2=A0=
+<span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(47, 79, 79); =
+font-family: NSimSun;">MSC_TYPE_METADEX_TRADE=C2=A0</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(47, 79, 79); =
+font-family: NSimSun;">=3D =
+25,</span></span></div><div><br/></div><div><br/></div><div>9 =
+omni</div><div>1)20180925,<span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: =
+NSimSun;">DEx=E5=88=86=E5=B8=83=E5=BC=8F=E4=BA=A4=E6=98=93? distributed =
+exchange?</span></div><div><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">HandleDExPayments=3D&gt;<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">DEx_payment =3D&gt;=C2=A0<span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">calculateDExPurchase</span></span></span></div><div><br/></div>=
+<div><span style=3D"font-size: 9pt; min-height: 11pt; font-family: =
+NSimSun;">WalletTxBuilder=3D&gt;</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: NSimSun;">if</span> =
+<span style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">(!UseEncodingClassC(</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(128, 128, 128); font-family: =
+NSimSun;">payload</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">.size())) omniTxClass =3D</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(111, 0, 138); =
+font-family: NSimSun;">OMNI_CLASS_B</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">;</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0//payload.size()&gt;83,=E7=94=A8<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: NSimSun; color: =
+rgb(111, 0, =
+138);">OMNI_CLASS_B?</span></span></div><div>=C2=A0</div><div>2)20180926<=
+/div><div>a)</div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;"><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">sendtrade</span>=E5=91=BD=E4=BB=A4 =
+=E7=9B=B8=E5=85=B3=E7=9A=84=E5=87=BD=E6=95=B0=C2=A0<span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">x_Trade,=E4=B8=BB=E8=A6=81=E8=B0=83=E7=94=A8=E6=A0=88=E5=A6=82=E4=
+=B8=8B:</span></span></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;"><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;"><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;"><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;"><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;"><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">omni_processtx=3D&gt;</span>mastercore_handler_mptx=3D&gt;</spa=
+n>interpretPacket=3D&gt;</span>logicMath_MetaDExTrade=3D&gt;</span>master=
+core::MetaDEx_ADD=3D&gt;</span>x_Trade</span></div><div>b)</div><div><spa=
+n style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">int</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(43, 145, 175); font-family: =
+NSimSun;">CMPTransaction</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: =
+NSimSun;">::logicMath_CreatePropertyVariable()</span></div><div><img =
+src=3D"omni-hc_files/Image.png" type=3D"image/png" =
+data-filename=3D"Image.png"/></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">=E5=AF=B9=E6=AF=94 =
+logicMath_CreatePropertyFixed=C2=A0=E6=B3=A8=E9=87=8A=E6=8E=89</span></di=
+v><div><br/></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(0, 128, 0); font-family: NSimSun;"><span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">logicMath_CreatePropertyVariable=E5=87=BD=E6=95=B0=E5=86=85</sp=
+an>blockHash=E6=94=B9=E4=B8=BA _<span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">blockHash;<span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(0, 128, 0); font-family: NSimSun;">_</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 128, 0); =
+font-family: =
+NSimSun;">blockHash=E6=9C=80=E7=BB=88=E6=98=AF=E4=BB=8E</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 128, 0); =
+font-family: =
+NSimSun;">mastercore_handler_mptx=E5=87=BD=E6=95=B0hcwallet=E4=BC=A0=E8=BF=
+=87=E6=9D=A5=E7=9A=84=E5=BD=93=E5=89=8DBlock=E6=95=B0=E6=8D=AE;</span></s=
+pan></span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(0, 128, 0); font-family: NSimSun;">/** Tx 51 =
+*/</span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(0, 0, 255); font-family: NSimSun;">int</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">CMPTransaction</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: =
+NSimSun;">::logicMath_CreatePropertyVariable()</span></div><div><span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">=C2=A0</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(0, 128, 0); font-family: NSimSun;">/*</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; color: rgb(0, 128, 0); font-family: NSimSun;">=C2=A0=C2=A0=C2=A0 =
+uint256 blockHash;</span></div><div style=3D"min-height: 11pt;"><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 128, 0); =
+font-family: NSimSun;">=C2=A0=C2=A0=C2=A0 {</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+LOCK(cs_main);</span></div><div style=3D"min-height: 11pt;"><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 128, 0); =
+font-family: NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+CBlockIndex* pindex =3D chainActive[block];</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (pindex =3D=3D =
+NULL) {</span></div><div style=3D"min-height: 11pt;"><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 128, 0); =
+font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 PrintToLog(&quot;%s(): ERROR: block %d not in the active =
+chain\n&quot;, __func__, block);</span></div><div style=3D"min-height: =
+11pt;"><span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, =
+128, 0); font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 return (PKT_ERROR_SP -20);</span></div><div style=3D"min-height: =
+11pt;"><span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, =
+128, 0); font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }</span></div><div =
+style=3D"min-height: 11pt;"><span style=3D"min-height: 11pt; font-size: =
+9pt; color: rgb(0, 128, 0); font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 blockHash =3D =
+pindex-&gt;GetBlockHash();</span></div><div style=3D"min-height: =
+11pt;"><span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, =
+128, 0); font-family: NSimSun;">=C2=A0=C2=A0=C2=A0 =
+}</span></div><div><span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(0, 128, 0); font-family: =
+NSimSun;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0*/</span></div><div><=
+br/></div><div><span style=3D"min-height: 11pt; font-size: 9pt; color: =
+rgb(0, 128, 0); font-family: =
+NSimSun;">c)=E6=96=B0=E5=9D=97=E9=80=9A=E7=9F=A5hcwallet=E5=A4=84=E7=90=86=
+</span></div><div><span style=3D"font-size: 9pt;"><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">processTransactionRecord=3D&gt;</span></span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;"><b>ProcessOminiTransaction</b></span><span style=3D"font-size: =
+9pt; font-family: NSimSun;">=3D&gt;=C2=A0<span style=3D"font-size: 9pt; =
+font-family: NSimSun;">cmd, err :=3D =
+hcjson.NewCmd(&quot;omni_processpayment&quot;, =
+params...)</span></span></div><div><span style=3D"font-size: 9pt; =
+font-family: =
+NSimSun;">omni_processpayment=E4=B8=BAHc=E5=B8=81=E4=B8=8EOmni=E5=B8=81=E5=
+=87=86=E5=A4=87</span></div><div><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">d) rescan</span></div><div><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">func (w *Wallet) Rescan =
+=3D&gt;</span><span style=3D"font-size: 9pt; font-family: =
+NSimSun;">processSerializedTransaction=3D&gt;</span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">processTransactionRecord=3D&gt;</span><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;"><b>ProcessOminiTransaction</b>=3D&gt;</span></div><div><span =
+style=3D"font-size: 9pt; font-family: NSimSun;">{</span> =
+omniTXExodusFundraiser,<span style=3D"font-size: 9pt; font-family: =
+NSimSun;">omniProcessPayment=C2=A0</span><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">;</span><span style=3D"font-size: 9pt; =
+font-family: NSimSun;">omni_processtx }</span></div><div><span =
+style=3D"font-size: 9pt; font-family: =
+NSimSun;">f)=E4=B8=BB=E9=93=BE=E5=B8=81=E5=88=B0omni=E5=B8=81(propertyid=3D=
+1)=E5=85=91=E6=8D=A2</span></div><div><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">static</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(0, 0, 255); font-family: NSimSun;">bool</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; font-family: =
+NSimSun;">HandleExodusPurchase(</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: =
+NSimSun;">const</span> <span style=3D"min-height: 11pt; font-size: 9pt; =
+color: rgb(43, 145, 175); font-family: =
+NSimSun;">CTransaction</span><span style=3D"min-height: 11pt; font-size: =
+9pt; font-family: NSimSun;">&amp;</span> <span style=3D"min-height: =
+11pt; font-size: 9pt; color: rgb(128, 128, 128); font-family: =
+NSimSun;">tx</span><span style=3D"min-height: 11pt; font-size: 9pt; =
+font-family: NSimSun;">,</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: NSimSun;">int</span> =
+<span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(128, 128, =
+128); font-family: NSimSun;">nBlock</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">const</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">std::</span><span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(43, 145, 175); =
+font-family: NSimSun;">string</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">&amp;</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(128, 128, 128); =
+font-family: NSimSun;">strSender</span><span style=3D"min-height: 11pt; =
+font-size: 9pt; font-family: NSimSun;">,</span> <span =
+style=3D"min-height: 11pt; font-size: 9pt; color: rgb(0, 0, 255); =
+font-family: NSimSun;">unsigned</span> <span style=3D"min-height: 11pt; =
+font-size: 9pt; color: rgb(0, 0, 255); font-family: NSimSun;">int</span> =
+<span style=3D"min-height: 11pt; font-size: 9pt; color: rgb(128, 128, =
+128); font-family: NSimSun;">nTime</span><span style=3D"min-height: =
+11pt; font-size: 9pt; font-family: =
+NSimSun;">)</span></div><div><br/></div></span>=0A</div></body></html>
+
+------=_NextPart_0001_0944_A822F9CE.FCAE541A
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: omni-hc_files/Image.png
+
+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
+D1VxMxv6KQeFAAAAAElFTkSuQmCC
+
+------=_NextPart_0001_0944_A822F9CE.FCAE541A--
+ 

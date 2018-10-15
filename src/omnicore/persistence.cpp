@@ -14,6 +14,7 @@
 #include "omnicore/sp.h"
 #include "omnicore/tally.h"
 #include "omnicore/utilsbitcoin.h"
+#include "omnicore/dbBlockHistory.h"
 
 #include "chain.h"
 #include "main.h"
@@ -451,6 +452,57 @@ static int write_state_file(const CBlockIndex* pBlockIndex, int what)
     return result;
 }
 
+static int write_state_fileEx(const uint256& hash, int what)
+{
+    boost::filesystem::path path = MPPersistencePath / strprintf("%s-%s.dat", statePrefix[what], hash.ToString());
+    const std::string strFile = path.string();
+
+    std::ofstream file;
+    file.open(strFile.c_str());
+
+    SHA256_CTX shaCtx;
+    SHA256_Init(&shaCtx);
+
+    int result = 0;
+
+    switch (what) {
+        case FILETYPE_BALANCES:
+            result = write_msc_balances(file, &shaCtx);
+            break;
+
+        case FILETYPE_OFFERS:
+            result = write_mp_offers(file, &shaCtx);
+            break;
+
+        case FILETYPE_ACCEPTS:
+            result = write_mp_accepts(file, &shaCtx);
+            break;
+
+        case FILETYPE_GLOBALS:
+            result = write_globals_state(file, &shaCtx);
+            break;
+
+        case FILETYPE_CROWDSALES:
+            result = write_mp_crowdsales(file, &shaCtx);
+            break;
+
+        case FILETYPE_MDEXORDERS:
+            result = write_mp_metadex(file, &shaCtx);
+            break;
+    }
+
+    // generate and wite the double hash of all the contents written
+    uint256 hash1;
+    SHA256_Final((unsigned char*) &hash1, &shaCtx);
+    uint256 hash2;
+    SHA256((unsigned char*) &hash1, sizeof (hash1), (unsigned char*) &hash2);
+    file << "!" << hash2.ToString() << std::endl;
+
+    file.flush();
+    file.close();
+    return result;
+}
+
 static void prune_state_files(const CBlockIndex* topIndex)
 {
     // build a set of blockHashes for which we have any state files
@@ -539,6 +591,28 @@ int PersistInMemoryState(const CBlockIndex* pBlockIndex)
 
     return 0;
 }
+
+/**
+ * Stores the in-memory state in files.
+ */
+int PersistInMemoryStateEx(const uint256& hash)
+{
+    // write the new state as of the given block
+    write_state_fileEx(hash, FILETYPE_BALANCES);
+    write_state_fileEx(hash, FILETYPE_OFFERS);
+    write_state_fileEx(hash, FILETYPE_ACCEPTS);
+    write_state_fileEx(hash, FILETYPE_GLOBALS);
+    write_state_fileEx(hash, FILETYPE_CROWDSALES);
+    write_state_fileEx(hash, FILETYPE_MDEXORDERS);
+
+    // clean-up the directory
+    //prune_state_files(pBlockIndex);
+
+    _my_sps->setWatermark(hash);
+
+    return 0;
+}
+
 
 /**
  * Loads and retrieves state from a file.
@@ -763,6 +837,61 @@ int LoadMostRelevantInMemoryState()
     if (persistedBlocks.size() == 0) {
         // trigger a reparse if we exhausted the persistence files without success
         return -1;
+    }
+
+    // return the height of the block we settled at
+    return res;
+}
+
+
+/**
+ * Loads and restores the latest state. Returns -1 if reparse is required.
+ */
+
+int LoadMostRelevantInMemoryStateEx()
+{
+    int res = -1;
+    // check the SP database and roll it back to its latest valid state
+    // according to the active chain
+    uint256 spWatermark;
+    if (!_my_sps->getWatermark(spWatermark)) {
+        //trigger a full reparse, if the SP database has no watermark
+        return -1;
+    }
+
+	int Count = mastercore::p_blockhistory->CountRecords();
+
+	int height = 0;
+	std::string hash;
+    for(int k = Count; k>=0; k--) {
+		p_blockhistory->GetBlockHistory(k,height, hash);
+		if(hash.empty())
+		{
+			continue;
+			
+		}
+		_my_sps->setWatermark(uint256S(hash));
+        int success = -1;
+        for (int i = 0; i < NUM_FILETYPES; ++i) {
+            boost::filesystem::path path = MPPersistencePath / strprintf("%s-%s.dat", statePrefix[i], hash);
+            const std::string strFile = path.string();
+            success = RestoreInMemoryState(strFile, i, true);
+            if (success < 0) {
+                PrintToConsole("error LoadMostRelevantInMemoryStateEx.\n");
+                break;
+            }
+        }
+
+        if (success >= 0) {
+            res = height;
+            break;
+        }
+
+        // go to the previous block
+        if (_my_sps->popBlock(uint256S(hash)) <= 0) {
+            // trigger a full reparse, if the levelDB cannot roll back
+            return -1;
+        }
     }
 
     // return the height of the block we settled at

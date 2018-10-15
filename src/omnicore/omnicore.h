@@ -152,7 +152,7 @@ int mastercore_init_ex();
 /** Global handler to shut down Omni Core. */
 int mastercore_shutdown();
 
-
+void RewindDBs(int nHeight, bool fInitialParse = false);
 void RewindDBsAndState(int nHeight, int nBlockPrev = 0, bool fInitialParse = false);
 
 /** Block and transaction handlers. */
