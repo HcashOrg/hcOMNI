@@ -1569,30 +1569,14 @@ void RewindDBs(int nHeight, bool fInitialParse)
 		clear_all_state();
 
 	bool reorgContainsFreeze = p_txlistdb->CheckForFreezeTxs(nHeight);
-	int count0 = p_txlistdb->getMPTransactionCountTotal();
-	p_txlistdb->printAll();
+
 	p_txlistdb->isMPinBlockRange(nHeight, reorgRecoveryMaxHeight, true);
-	p_txlistdb->printAll();
-	int count1 = p_txlistdb->getMPTransactionCountTotal();
-
-	count0 = t_tradelistdb->getMPTradeCountTotal();
-	t_tradelistdb->printAll();
     t_tradelistdb->deleteAboveBlock(nHeight);
-	t_tradelistdb->printAll();
-	count1 = t_tradelistdb->getMPTradeCountTotal();
-
     s_stolistdb->deleteAboveBlock(nHeight);
-
     p_feecache->RollBackCache(nHeight);
     p_feehistory->RollBackHistory(nHeight);
 	p_txhistory->RollBackHistory(nHeight);
-
-	count0 = p_blockhistory->CountRecords();
-	p_blockhistory->printAll();
 	p_blockhistory->RollBackHistory(nHeight);
-	p_blockhistory->printAll();
-	count1 = p_blockhistory->CountRecords();
-	
 
     reorgRecoveryMaxHeight = 0;
 
@@ -1864,14 +1848,11 @@ int mastercore_init_ex()
     p_txlistdb = new CMPTxList(GetDataDir() / "MP_txlist", fReindex);
 
 	_my_sps = new CMPSPInfo(GetDataDir() / "MP_spinfo", fReindex);
-	_my_sps->printAll();
     p_OmniTXDB = new COmniTransactionDB(GetDataDir() / "Omni_TXDB", fReindex);
     p_feecache = new COmniFeeCache(GetDataDir() / "OMNI_feecache", fReindex);
     p_feehistory = new COmniFeeHistory(GetDataDir() / "OMNI_feehistory", fReindex);
 	p_txhistory = new COmniTxHistory(GetDataDir() / "OMNI_txhistory", fReindex);
-	p_txhistory->printAll();
 	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
-	p_blockhistory->printAll();
     MPPersistencePath = GetDataDir() / "MP_persist";
     TryCreateDirectory(MPPersistencePath);
 

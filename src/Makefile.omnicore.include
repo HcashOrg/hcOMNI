@@ -45,8 +45,9 @@ OMNICORE_H = \
   omnicore/walletfetchtxs.h \
   omnicore/wallettxbuilder.h \
   omnicore/walletutils.h \
-  omnicore/dbTxHistory.h
-  
+  omnicore/dbTxHistory.h \
+  omnicore/dbBlockHistory.h
+
 OMNICORE_CPP = \
   omnicore/activation.cpp \
   omnicore/consensushash.cpp \
@@ -92,7 +93,8 @@ OMNICORE_CPP = \
   omnicore/walletfetchtxs.cpp \
   omnicore/wallettxbuilder.cpp \
   omnicore/walletutils.cpp \
-  omnicore/dbTxHistory.cpp
+  omnicore/dbTxHistory.cpp \
+  omnicore/dbBlockHistory.cpp
   
 libbitcoin_server_a_SOURCES += \
   $(OMNICORE_CPP) \
