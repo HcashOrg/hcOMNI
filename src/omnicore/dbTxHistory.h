@@ -41,10 +41,11 @@ public:
     /** Populate data about a fee distribution */
     bool GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total);
 
+	std::string GetHistory(const std::string& key);
 	std::string GetHistory(int index);
 	std::string GetEndHistory();
 
-	bool PutHistory(int block, const std::string& history);
+	bool PutHistory(const std::string& Key, int nBlock, const std::string& history);
 };
 
 namespace mastercore

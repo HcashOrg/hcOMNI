@@ -84,7 +84,7 @@ void COmniTxHistory::RollBackHistory(int block)
         std::string strValue = it->value().ToString();
         std::string strKey = it->key().ToString();
         std::vector<std::string> vFeeHistoryDetail;
-        boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":="), boost::token_compress_on);
+        boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
         if (2 != vFeeHistoryDetail.size()) {
             PrintToLog("ERROR: vFeeHistoryDetail has unexpected number of elements: %d !\n", vFeeHistoryDetail.size());
             continue; // bad data
@@ -211,21 +211,19 @@ void COmniTxHistory::RecordFeeDistribution(const uint32_t &propertyId, int block
     if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
 }
 
-bool COmniTxHistory::PutHistory(int block, const std::string& history)
+bool COmniTxHistory::PutHistory(const std::string& key, int nBlock, const std::string& history)
 {
 	assert(pdb);
 
-    int count = CountRecords() + 1;
-    std::string key = strprintf("%d", count);
-	std::string value = strprintf("%d:%s", block, history);
+	std::string value = strprintf("%d:%s", nBlock, history);
 	leveldb::Status status = pdb->Put(writeoptions, key, value);
     if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
 	return true;
 }
 
-std::string COmniTxHistory::GetHistory(int index)
+std::string COmniTxHistory::GetHistory(const std::string& key)
 {
-	const std::string key = strprintf("%d", index);
+	//const std::string key = strprintf("%d", index);
     std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
@@ -239,6 +237,25 @@ std::string COmniTxHistory::GetHistory(int index)
 	std::vector<unsigned char> vecRet = ParseHex(vHistoryDetail[1]);
 	//if(vecRet)
 	return std::string(vecRet.begin(), vecRet.end());
+}
+
+std::string COmniTxHistory::GetHistory(int index)
+{
+	std::string key;
+	int count = 0;
+    leveldb::Iterator* it = NewIterator();
+    for(it->SeekToFirst(); it->Valid(); it->Next()) {
+		if(index == count)
+		{
+			key = it->key().ToString();
+			break;
+		}
+        ++count;
+    }
+    delete it;
+	if(key.empty())
+		return "";
+	return GetHistory(key);
 }
 
 std::string COmniTxHistory::GetEndHistory()

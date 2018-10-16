@@ -89,65 +89,25 @@ UniValue omni_decodetransaction(const UniValue& params, bool fHelp)
 
 	UniValue txobj(UniValue::VOBJ);
 	UniValue result(UniValue::VOBJ);
-	std::string history;
-	int i=1;
-//	int blockHeight = mastercore::GetHeight();
 
-	do {
-		history = mastercore::p_txhistory->GetHistory(i++);
-		if(!txobj.read(history))
-			break;
-		if(uint256S(txobj["TxHash"].getValStr()) == (txid))
-		{
-			std::string ScriptEncode = txobj["PayLoad"].get_str();
-			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
-
-			CMPTransaction mp_obj;
-			mp_obj.unlockLogic();
-			mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
-			mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
-			mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
-				0, uint256S(txobj["TxHash"].getValStr()),
-				txobj["Block"].get_int(), txobj["Idx"].get_int(),
-				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
-			Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight);
-			break;
-		}
-	} while (!history.empty());
-    return result;
-
-	//std::string history;
-	//int i=1;
-	//UniValue txobj;
-	//do {
-	//	history = mastercore::p_txhistory->GetHistory(i++);
-	//	txobj.read(history);
-	//	if(uint256S(txobj["TxHash"].getValStr()) == txid)
-	//	{
-	//		break;
-	//	}
-	//} while (!history.empty());
-
-	//return txobj;
-	/*
+	std::string history = mastercore::p_txhistory->GetHistory(txid.ToString());
+	if(history.empty() || !txobj.read(history))
+	{
+		return result;
+	}
 	std::string ScriptEncode = txobj["PayLoad"].get_str();
-    std::vector<unsigned char> Script = ParseHex(ScriptEncode);
+	std::vector<unsigned char> Script = ParseHex(ScriptEncode);
 
 	CMPTransaction mp_obj;
 	mp_obj.unlockLogic();
-    mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
-    mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
-    mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
-		txobj["Block"].get_int(), uint256S(txobj["TxHash"].getValStr()),
+	mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+	mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+	mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
+		0, uint256S(txobj["TxHash"].getValStr()),
 		txobj["Block"].get_int(), txobj["Idx"].get_int(),
 		&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
-
-    UniValue payloadObj(UniValue::VOBJ);
-    payloadObj.push_back(Pair("payload", mp_obj.getPayload()));
-    payloadObj.push_back(Pair("payloadsize", mp_obj.getPayloadSize()));
-
-    return txObj;
-	*/
+	Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight);
+    return result;
 }
 
 UniValue omni_createrawtx_opreturn(const UniValue& params, bool fHelp)

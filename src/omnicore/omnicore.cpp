@@ -2123,7 +2123,7 @@ bool mastercore_handler_mptx(const UniValue &root)
         txobj.push_back(Pair("type", mp_obj.getTypeString()));
     }
 */
-	p_txhistory->PutHistory(Block, HexStr(value.write()));
+	p_txhistory->PutHistory(vecTxHash.ToString(), Block, HexStr(value.write()));
     if (!mastercoreInitialized) {
         mastercore_init();
     }
