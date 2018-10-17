@@ -180,6 +180,8 @@ std::map<uint32_t, int64_t> global_balance_reserved;
 //! Vector containing a list of properties relative to the wallet
 std::set<uint32_t> global_wallet_property_list;
 
+CDllDataHandler g_data_handler;
+
 std::string mastercore::strMPProperty(uint32_t propertyId)
 {
     std::string str = "*unknown*";
@@ -1802,7 +1804,6 @@ int mastercore_init_ex()
 
     InitDebugLogLevels();
     ShrinkDebugLog();
-
     if (isNonMainNet()) {
         exodus_address = exodus_testnet;
     }

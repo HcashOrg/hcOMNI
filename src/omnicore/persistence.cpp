@@ -452,9 +452,9 @@ static int write_state_file(const CBlockIndex* pBlockIndex, int what)
     return result;
 }
 
-static int write_state_fileEx(const uint256& hash, int what)
+static int write_state_fileEx(const std::string& hash, int what)
 {
-    boost::filesystem::path path = MPPersistencePath / strprintf("%s-%s.dat", statePrefix[what], hash.ToString());
+    boost::filesystem::path path = MPPersistencePath / strprintf("%s-%s.dat", statePrefix[what], hash);
     const std::string strFile = path.string();
 
     std::ofstream file;
@@ -501,6 +501,18 @@ static int write_state_fileEx(const uint256& hash, int what)
     file.flush();
     file.close();
     return result;
+}
+
+int write_files(const std::string& hash)
+{
+	  // write the new state as of the given block
+    write_state_fileEx(hash, FILETYPE_BALANCES);
+    write_state_fileEx(hash, FILETYPE_OFFERS);
+    write_state_fileEx(hash, FILETYPE_ACCEPTS);
+    write_state_fileEx(hash, FILETYPE_GLOBALS);
+    write_state_fileEx(hash, FILETYPE_CROWDSALES);
+    write_state_fileEx(hash, FILETYPE_MDEXORDERS);
+	return 0;
 }
 
 static void prune_state_files(const CBlockIndex* topIndex)
@@ -597,13 +609,9 @@ int PersistInMemoryState(const CBlockIndex* pBlockIndex)
  */
 int PersistInMemoryStateEx(const uint256& hash)
 {
-    // write the new state as of the given block
-    write_state_fileEx(hash, FILETYPE_BALANCES);
-    write_state_fileEx(hash, FILETYPE_OFFERS);
-    write_state_fileEx(hash, FILETYPE_ACCEPTS);
-    write_state_fileEx(hash, FILETYPE_GLOBALS);
-    write_state_fileEx(hash, FILETYPE_CROWDSALES);
-    write_state_fileEx(hash, FILETYPE_MDEXORDERS);
+	CDataNotify notify(CDataNotify::ON_BLOCK_CONNECTED_NOTIFY, hash.ToString());
+	g_data_handler.Put(notify);
+
 
     // clean-up the directory
     //prune_state_files(pBlockIndex);

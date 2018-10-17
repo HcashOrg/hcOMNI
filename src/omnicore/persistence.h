@@ -23,4 +23,6 @@ int LoadMostRelevantInMemoryStateEx();
 
 int PersistInMemoryStateEx(const uint256& hash);
 
+int write_files(const std::string& hash);
+
 #endif // OMNICORE_PERSISTENCE_H

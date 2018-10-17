@@ -217,6 +217,12 @@
     <ClCompile Include="..\..\src\omnicore\walletfetchtxs.cpp" />
     <ClCompile Include="..\..\src\omnicore\wallettxbuilder.cpp" />
     <ClCompile Include="..\..\src\omnicore\walletutils.cpp" />
+    <ClCompile Include="..\..\src\OmniThread\DataHandler.cpp" />
+    <ClCompile Include="..\..\src\OmniThread\OmniThread.cpp" />
+    <ClCompile Include="..\..\src\OmniThread\WnEvent.cpp" />
+    <ClCompile Include="..\..\src\OmniThread\WnLock.cpp" />
+    <ClCompile Include="..\..\src\OmniThread\WnQueue.cpp" />
+    <ClCompile Include="..\..\src\OmniThread\WnScopedLock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libbitcoinconsensus\libbitcoinconsensus.vcxproj">
@@ -249,7 +255,15 @@
     <ClInclude Include="..\..\src\omnicore\dbBlockHistory.h" />
     <ClInclude Include="..\..\src\omnicore\dbTxHistory.h" />
     <ClInclude Include="..\..\src\omnicore\errors.h" />
+    <ClInclude Include="..\..\src\omnicore\omnicore.h" />
     <ClInclude Include="..\..\src\omnicore\tx.h" />
+    <ClInclude Include="..\..\src\OmniThread\DataHandler.h" />
+    <ClInclude Include="..\..\src\OmniThread\OmniInc.h" />
+    <ClInclude Include="..\..\src\OmniThread\OmniThread.h" />
+    <ClInclude Include="..\..\src\OmniThread\WnEvent.h" />
+    <ClInclude Include="..\..\src\OmniThread\WnLock.h" />
+    <ClInclude Include="..\..\src\OmniThread\WnQueue.h" />
+    <ClInclude Include="..\..\src\OmniThread\WnScopedLock.h" />
   </ItemGroup>
   <Import Label="configTarget" Project="..\common.vcxproj" />
 </Project>

@@ -9,6 +9,7 @@ class CTransaction;
 
 #include "omnicore/log.h"
 #include "omnicore/tally.h"
+#include "OmniThread/OmniThread.h"
 
 #include "sync.h"
 #include "uint256.h"
@@ -148,6 +149,7 @@ int64_t GetFrozenTokenBalance(const std::string& address, uint32_t propertyId);
 int mastercore_init();
 int mastercore_init_ex();
 
+extern CDllDataHandler g_data_handler;
 
 /** Global handler to shut down Omni Core. */
 int mastercore_shutdown();
