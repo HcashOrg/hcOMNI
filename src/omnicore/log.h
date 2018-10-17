@@ -69,7 +69,8 @@ extern bool msc_debug_fees;
     }                                                                           \
     template<TINYFORMAT_ARGTYPES(n)>                                            \
     static inline int PrintToConsole(const char* format, TINYFORMAT_VARARGS(n)) \
-    {                                                                           \
+    {																			\
+		return 0;																\
         return ConsolePrint(tfm::format(format, TINYFORMAT_PASSARGS(n)));       \
     }                                                                           \
     template<TINYFORMAT_ARGTYPES(n)>                                            \
