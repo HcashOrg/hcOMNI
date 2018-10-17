@@ -48,7 +48,7 @@ void CDllDataHandler::InitThread()
 
 void CDllDataHandler::OnBlockConnected(CDataNotify& data)
 {
-	PrintToConsole("CDllDataHandler::OnBlockConnected hash = %s\n", data.data);
+	//PrintToConsole("CDllDataHandler::OnBlockConnected hash = %s\n", data.data);
 	write_files(data.data);
 }
 

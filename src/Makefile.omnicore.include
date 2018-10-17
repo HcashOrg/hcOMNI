@@ -46,7 +46,14 @@ OMNICORE_H = \
   omnicore/wallettxbuilder.h \
   omnicore/walletutils.h \
   omnicore/dbTxHistory.h \
-  omnicore/dbBlockHistory.h
+  omnicore/dbBlockHistory.h \
+  OmniThread/DataHandler.h \
+  OmniThread/OmniInc.h \
+  OmniThread/OmniThread.h \
+  OmniThread/WnEvent.h \
+  OmniThread/WnLock.h \
+  OmniThread/WnQueue.h \
+  OmniThread/WnScopedLock.h
 
 OMNICORE_CPP = \
   omnicore/activation.cpp \
@@ -94,7 +101,13 @@ OMNICORE_CPP = \
   omnicore/wallettxbuilder.cpp \
   omnicore/walletutils.cpp \
   omnicore/dbTxHistory.cpp \
-  omnicore/dbBlockHistory.cpp
+  omnicore/dbBlockHistory.cpp \
+  omnicore/DataHandler.cpp \
+  omnicore/OmniThread.cpp \
+  omnicore/WnEvent.cpp \
+  omnicore/WnLock.cpp \
+  omnicore/WnQueue.cpp \
+  omnicore/WnScopedLock.cpp
   
 libbitcoin_server_a_SOURCES += \
   $(OMNICORE_CPP) \
