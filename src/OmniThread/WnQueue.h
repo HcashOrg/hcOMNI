@@ -21,7 +21,7 @@ public:
 	void push(const T& t)
   {
     CWnScopedLock lock(*m_ptr_mutex);
-    push_back(t);
+    std::deque<T>::push_back(t);
   }
 
 	bool get(T& t)
