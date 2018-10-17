@@ -230,6 +230,24 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
 	return true;
 }
 
+bool COmniBlockHistory::GetBlockHistory(const std::string& key, int& height, std::string& hash)
+{
+    std::set<feeHistoryItem> sFeeHistoryItems;
+    std::string strValue;
+    leveldb::Status status = pdb->Get(readoptions, key, &strValue);
+	if (status.IsNotFound()) {
+        return ""; // fee distribution not found, return empty set
+    }
+    std::vector<std::string> vHistoryDetail;
+    boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
+	if(vHistoryDetail.size() != 2)
+		return "";
+
+	height = atoi(vHistoryDetail[0].c_str());
+	hash = vHistoryDetail[1];
+	return true;
+}
+
 bool COmniBlockHistory::GetEndHistory(int& height, std::string& hash)
 {
 	return GetBlockHistory(CountRecords()-1, height, hash);
@@ -239,24 +257,23 @@ bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash)
 {
 	assert(pdb);
 
-	int lastHeight = -1;
-	std::string lastHash;
-	GetEndHistory(lastHeight, lastHash);
-	if(lastHeight == -1)
-	{
-		printAll();
-	}
-	if(lastHeight >=0)
-	{
-//		assert(height == lastHeight + 1);
-		if(height != lastHeight + 1)
-		{
-			int tempHeight = -1;
-			std::string tempHash;
-			GetBlockHistory(height, tempHeight, tempHash);
-			PrintToConsole("tempHeight = %d, tempHash = %s, height = %d, hash = %s", tempHeight, tempHash, height, hash);
-		}
-	}
+//	int lastHeight = -1;
+//	std::string lastHash;
+	//GetEndHistory(lastHeight, lastHash);
+	//if(lastHeight == -1)
+	//{
+	//	printAll();
+	//}
+//	if(lastHeight >=0)
+//	{
+//		if(height != lastHeight + 1)
+//		{
+//			int tempHeight = -1;
+//			std::string tempHash;
+//			GetBlockHistory(height, tempHeight, tempHash);
+//			PrintToConsole("tempHeight = %d, tempHash = %s, height = %d, hash = %s", tempHeight, tempHash, height, hash);
+//		}
+//	}
 	//if(lastHeight >=height)
 	//{
 	//	RollBackHistory(height);
@@ -265,6 +282,7 @@ bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash)
 	std::string key = strprintf("%d", height);
 	std::string value = strprintf("%d:%s", height, hash);
 	leveldb::Status status = pdb->Put(writeoptions, key, value);
+	status = pdb->Put(writeoptions, hash, value);
 	if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
 	
 	return true;

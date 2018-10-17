@@ -93,7 +93,8 @@
       <AdditionalLibraryDirectories>F:\Coins2018\Coins\omnicore-0.3.1-addmsvc\build_msvc\x64\Debug</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\src\github.com\HcashOrg\hcwallet"</Command>
+      <Command>XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\src\github.com\HcashOrg\hcwallet"
+XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -256,6 +257,7 @@
     <ClInclude Include="..\..\src\omnicore\dbTxHistory.h" />
     <ClInclude Include="..\..\src\omnicore\errors.h" />
     <ClInclude Include="..\..\src\omnicore\omnicore.h" />
+    <ClInclude Include="..\..\src\omnicore\persistence.h" />
     <ClInclude Include="..\..\src\omnicore\tx.h" />
     <ClInclude Include="..\..\src\OmniThread\DataHandler.h" />
     <ClInclude Include="..\..\src\OmniThread\OmniInc.h" />

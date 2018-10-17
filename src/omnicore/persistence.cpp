@@ -503,18 +503,6 @@ static int write_state_fileEx(const std::string& hash, int what)
     return result;
 }
 
-int write_files(const std::string& hash)
-{
-	  // write the new state as of the given block
-    write_state_fileEx(hash, FILETYPE_BALANCES);
-    write_state_fileEx(hash, FILETYPE_OFFERS);
-    write_state_fileEx(hash, FILETYPE_ACCEPTS);
-    write_state_fileEx(hash, FILETYPE_GLOBALS);
-    write_state_fileEx(hash, FILETYPE_CROWDSALES);
-    write_state_fileEx(hash, FILETYPE_MDEXORDERS);
-	return 0;
-}
-
 static void prune_state_files(const CBlockIndex* topIndex)
 {
     // build a set of blockHashes for which we have any state files
@@ -570,6 +558,78 @@ static void prune_state_files(const CBlockIndex* topIndex)
     }
 }
 
+
+static void prune_state_filesEx(const std::string& hash)
+{
+    // build a set of blockHashes for which we have any state files
+    std::set<uint256> statefulBlockHashes;
+
+    boost::filesystem::directory_iterator dIter(MPPersistencePath);
+    boost::filesystem::directory_iterator endIter;
+    for (; dIter != endIter; ++dIter) {
+        std::string fName = dIter->path().empty() ? "<invalid>" : (*--dIter->path().end()).string();
+        if (false == boost::filesystem::is_regular_file(dIter->status())) {
+            // skip funny business
+            PrintToLog("Non-regular file found in persistence directory : %s\n", fName);
+            continue;
+        }
+
+        std::vector<std::string> vstr;
+        boost::split(vstr, fName, boost::is_any_of("-."), boost::token_compress_on);
+        if (vstr.size() == 3 &&
+                is_state_prefix(vstr[0]) &&
+                boost::equals(vstr[2], "dat")) {
+            uint256 blockHash;
+            blockHash.SetHex(vstr[1]);
+            statefulBlockHashes.insert(blockHash);
+        } else {
+            PrintToLog("None state file found in persistence directory : %s\n", fName);
+        }
+    }
+
+	int nTopHeight = -1;
+	std::string temp;
+	p_blockhistory->GetBlockHistory(hash, nTopHeight, temp);
+	int nCurHeight = -1;
+    // for each blockHash in the set, determine the distance from the given block
+    std::set<uint256>::const_iterator iter;
+    for (iter = statefulBlockHashes.begin(); iter != statefulBlockHashes.end(); ++iter) {
+        // look up the CBlockIndex for height info
+		p_blockhistory->GetBlockHistory(iter->ToString(), nCurHeight, temp);
+//        CBlockIndex const *curIndex = GetBlockIndex(*iter);
+		
+        // if we have nothing int the index, or this block is too old..
+        if ((((nTopHeight - nCurHeight) > MAX_STATE_HISTORY)
+                && (nCurHeight % STORE_EVERY_N_BLOCK != 0))) {
+            if (msc_debug_persistence) {
+				PrintToLog("State from Block:%s is no longer need, removing files (age-from-tip: %d)\n", (*iter).ToString(), nTopHeight - nCurHeight);
+            }
+
+            // destroy the associated files!
+            std::string strBlockHash = iter->ToString();
+            for (int i = 0; i < NUM_FILETYPES; ++i) {
+                boost::filesystem::path path = MPPersistencePath / strprintf("%s-%s.dat", statePrefix[i], strBlockHash);
+                boost::filesystem::remove(path);
+            }
+        }
+    }
+}
+
+
+int write_files(const std::string& hash, int height)
+{
+	  // write the new state as of the given block
+    write_state_fileEx(hash, FILETYPE_BALANCES);
+    write_state_fileEx(hash, FILETYPE_OFFERS);
+    write_state_fileEx(hash, FILETYPE_ACCEPTS);
+    write_state_fileEx(hash, FILETYPE_GLOBALS);
+    write_state_fileEx(hash, FILETYPE_CROWDSALES);
+    write_state_fileEx(hash, FILETYPE_MDEXORDERS);
+
+	prune_state_filesEx(hash);
+	return 0;
+}
+
 /**
  * Indicates whether persistence is enabled and the state is stored.
  */
@@ -607,9 +667,12 @@ int PersistInMemoryState(const CBlockIndex* pBlockIndex)
 /**
  * Stores the in-memory state in files.
  */
-int PersistInMemoryStateEx(const uint256& hash)
+int PersistInMemoryStateEx(int height, const uint256& hash)
 {
-	CDataNotify notify(CDataNotify::ON_BLOCK_CONNECTED_NOTIFY, hash.ToString());
+	CDataNotify notify(CDataNotify::ON_BLOCK_CONNECTED_NOTIFY, hash.ToString(), height);
+
+	//int size = g_data_handler.BufferSize();
+	//printf("PersistInMemoryStateEx size: %d \n", size);
 	g_data_handler.Put(notify);
 
 

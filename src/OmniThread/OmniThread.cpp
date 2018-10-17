@@ -4,12 +4,12 @@
 #include "omnicore/log.h"
 
 CDataNotify::CDataNotify() :
-	type(0), data("")
+	type(0), data(""),height(0)
 {
 
 }
-CDataNotify::CDataNotify(int tp, const std::string& dt):
-	type(tp), data(dt)
+CDataNotify::CDataNotify(int tp, const std::string& dt, int h):
+	type(tp), data(dt),height(h)
 {
 }
 
@@ -49,7 +49,7 @@ void CDllDataHandler::InitThread()
 void CDllDataHandler::OnBlockConnected(CDataNotify& data)
 {
 	//PrintToConsole("CDllDataHandler::OnBlockConnected hash = %s\n", data.data);
-	write_files(data.data);
+	write_files(data.data, data.height);
 }
 
   

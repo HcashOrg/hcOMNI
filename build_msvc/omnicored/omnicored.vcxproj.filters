@@ -96,6 +96,7 @@
       <Filter>OmniThread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\omnicore\omnicore.h" />
+    <ClInclude Include="..\..\src\omnicore\persistence.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="OmniThread">

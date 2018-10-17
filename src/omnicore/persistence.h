@@ -21,8 +21,8 @@ int LoadMostRelevantInMemoryState();
 /** Loads and restores the latest state. Returns -1 if reparse is required. */
 int LoadMostRelevantInMemoryStateEx();
 
-int PersistInMemoryStateEx(const uint256& hash);
+int PersistInMemoryStateEx(int height, const uint256& hash);
 
-int write_files(const std::string& hash);
+int write_files(const std::string& hash, int height);
 
 #endif // OMNICORE_PERSISTENCE_H

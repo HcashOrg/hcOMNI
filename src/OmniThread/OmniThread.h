@@ -7,11 +7,12 @@ class CDataNotify {
 public:
 	//constructor
 	CDataNotify();
-	CDataNotify(int tp, const std::string& dt);
+	CDataNotify(int tp, const std::string& dt, int h);
 
 	enum { INIT_THREAD = 3, ON_BLOCK_CONNECTED_NOTIFY};
 	int type;
 	std::string data;
+	int height;
 };
 
 class CDllDataHandler : public CDataHandler<CDataNotify>

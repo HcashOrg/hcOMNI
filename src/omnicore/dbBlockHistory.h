@@ -41,6 +41,9 @@ public:
     /** Populate data about a fee distribution */
     bool GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total);
 
+	//key euqal hash
+	bool GetBlockHistory(const std::string& key, int& height, std::string& hash);
+
 	bool GetBlockHistory(int index, int& height, std::string& hash);
 	bool GetEndHistory(int& height, std::string& hash);
 
