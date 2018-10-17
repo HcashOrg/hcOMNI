@@ -29,8 +29,8 @@ public:
     CWnScopedLock lock(*m_ptr_mutex);
     if(!std::deque<T>::empty())
     {
-      t = std::deque<T>front();
-      std::deque<T>pop_front(); 
+      t = std::deque<T>::front();
+      std::deque<T>::pop_front(); 
       return true;
     }
     return false;
@@ -39,7 +39,7 @@ public:
 	void clear()
   {
     CWnScopedLock lock(*m_ptr_mutex);
-    std::deque<T>clear();
+    std::deque<T>::clear();
   }
 
 protected:
