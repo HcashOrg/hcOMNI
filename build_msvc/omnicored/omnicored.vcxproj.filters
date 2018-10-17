@@ -49,16 +49,10 @@
     <ClCompile Include="..\..\src\omnicore\walletfetchtxs.cpp" />
     <ClCompile Include="..\..\src\omnicore\wallettxbuilder.cpp" />
     <ClCompile Include="..\..\src\omnicore\walletutils.cpp" />
-    <ClCompile Include="..\..\src\OmniThread\DataHandler.cpp">
-      <Filter>OmniThread</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\OmniThread\WnEvent.cpp">
       <Filter>OmniThread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\OmniThread\WnLock.cpp">
-      <Filter>OmniThread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\OmniThread\WnQueue.cpp">
       <Filter>OmniThread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\OmniThread\WnScopedLock.cpp">

@@ -2690,7 +2690,7 @@ UniValue omni_getblockcount(const UniValue& params, bool fHelp)
             "\nExamples:\n" +
             HelpExampleCli("omni_getblockcount", ""));
 
-	return UniValue(p_blockhistory->CountRecords());
+	return UniValue(p_blockhistory->CountRecords()/2);
 }
 
 UniValue omni_processpayment(const UniValue& params, bool fHelp)

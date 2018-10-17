@@ -218,11 +218,9 @@ XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"</Command>
     <ClCompile Include="..\..\src\omnicore\walletfetchtxs.cpp" />
     <ClCompile Include="..\..\src\omnicore\wallettxbuilder.cpp" />
     <ClCompile Include="..\..\src\omnicore\walletutils.cpp" />
-    <ClCompile Include="..\..\src\OmniThread\DataHandler.cpp" />
     <ClCompile Include="..\..\src\OmniThread\OmniThread.cpp" />
     <ClCompile Include="..\..\src\OmniThread\WnEvent.cpp" />
     <ClCompile Include="..\..\src\OmniThread\WnLock.cpp" />
-    <ClCompile Include="..\..\src\OmniThread\WnQueue.cpp" />
     <ClCompile Include="..\..\src\OmniThread\WnScopedLock.cpp" />
   </ItemGroup>
   <ItemGroup>

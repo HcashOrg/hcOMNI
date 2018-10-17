@@ -930,7 +930,7 @@ int LoadMostRelevantInMemoryStateEx()
         return -1;
     }
 
-	int Count = mastercore::p_blockhistory->CountRecords();
+	int Count = mastercore::p_blockhistory->CountRecords()/2;
 
 	int height = 0;
 	std::string hash;

@@ -2105,6 +2105,10 @@ bool mastercore_handler_mptx(const UniValue &root)
         txobj.push_back(Pair("type", mp_obj.getTypeString()));
     }
 */
+	//if(Block >= 86279)
+	//{
+	//	int j=0;
+	//}
 	p_txhistory->PutHistory(vecTxHash.ToString(), Block, HexStr(value.write()));
     if (!mastercoreInitialized) {
         mastercore_init();
@@ -2113,6 +2117,7 @@ bool mastercore_handler_mptx(const UniValue &root)
     bool fFoundTx = false;
 
     int interp_ret = mp_obj.interpretPacket();
+	if(interp_ret == -83055) return false;
     if (interp_ret)
         PrintToLog("!!! interpretPacket() returned %d !!!\n", interp_ret);
 
