@@ -27,10 +27,10 @@ public:
 	bool get(T& t)
   {
     CWnScopedLock lock(*m_ptr_mutex);
-    if(!empty())
+    if(!std::deque<T>::empty())
     {
-      t = front();
-      pop_front(); 
+      t = std::deque<T>front();
+      std::deque<T>pop_front(); 
       return true;
     }
     return false;
@@ -39,7 +39,7 @@ public:
 	void clear()
   {
     CWnScopedLock lock(*m_ptr_mutex);
-    clear();
+    std::deque<T>clear();
   }
 
 protected:
