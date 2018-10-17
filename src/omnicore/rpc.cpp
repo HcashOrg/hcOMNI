@@ -2734,7 +2734,7 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 	eraseExpiredAccepts(mastercore::_LatestBlock);
 	calculate_and_update_devmsc(mastercore::_LatestBlockTime, mastercore::_LatestBlock);
 	p_blockhistory->PutBlockHistory(mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString());
-	if (IsPersistenceEnabled(mastercore::_LatestBlock) && mastercore::_LatestBlock >= ConsensusParams().GENESIS_BLOCK) {
+	if (mastercore::_LatestBlock >= ConsensusParams().GENESIS_BLOCK) {
 		PersistInMemoryStateEx(mastercore::_LatestBlock, mastercore::_LatestBlockHash);
 	}
 	return "";

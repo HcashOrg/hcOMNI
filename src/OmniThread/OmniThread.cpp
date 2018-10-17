@@ -2,6 +2,7 @@
 #include "OmniThread.h"
 #include "omnicore/persistence.h"
 #include "omnicore/log.h"
+#include "omnicore/omnicore.h"
 
 CDataNotify::CDataNotify() :
 	type(0), data(""),height(0)
@@ -35,6 +36,10 @@ void CDllDataHandler::DataFunc(CDataNotify& data)
 	break;
 	case CDataNotify::ON_BLOCK_CONNECTED_NOTIFY:
 	{
+		if(BufferSize() > 50 && data.height % STORE_EVERY_N_BLOCK != 0)
+		{
+			break;
+		}
 		OnBlockConnected(data);
 	} 
 	break;
