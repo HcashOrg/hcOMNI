@@ -101,7 +101,7 @@ OMNICORE_CPP = \
   omnicore/wallettxbuilder.cpp \
   omnicore/walletutils.cpp \
   omnicore/dbTxHistory.cpp \
-  OmniThread/dbBlockHistory.cpp \
+  omnicore/dbBlockHistory.cpp \
   OmniThread/OmniThread.cpp \
   OmniThread/WnEvent.cpp \
   OmniThread/WnLock.cpp \
