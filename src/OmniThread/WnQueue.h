@@ -21,16 +21,16 @@ public:
 	void push(const T& t)
   {
     CWnScopedLock lock(*m_ptr_mutex);
-    __super::push_back(t);
+    push_back(t);
   }
 
 	bool get(T& t)
   {
     CWnScopedLock lock(*m_ptr_mutex);
-    if(!__super::empty())
+    if(!empty())
     {
-      t = __super::front();
-      __super::pop_front(); 
+      t = front();
+      pop_front(); 
       return true;
     }
     return false;
@@ -39,7 +39,7 @@ public:
 	void clear()
   {
     CWnScopedLock lock(*m_ptr_mutex);
-    __super::clear();
+    clear();
   }
 
 protected:
