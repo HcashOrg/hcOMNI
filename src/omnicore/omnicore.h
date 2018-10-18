@@ -154,7 +154,7 @@ extern CDllDataHandler g_data_handler;
 /** Global handler to shut down Omni Core. */
 int mastercore_shutdown();
 
-void RewindDBs(int nHeight, bool fInitialParse = false);
+void RewindDBs(int nHeight, int top, bool fInitialParse = false);
 void RewindDBsAndState(int nHeight, int nBlockPrev = 0, bool fInitialParse = false);
 
 /** Block and transaction handlers. */

@@ -1560,7 +1560,7 @@ UniValue omni_rollback(const UniValue& params, bool fHelp)
         _my_sps->popBlock(uint256S(hash));
     }
 	
-    RewindDBs(height);
+    RewindDBs(height, mastercore::_LatestBlock);
     return "";
 }
 
