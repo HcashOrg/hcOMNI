@@ -1565,7 +1565,7 @@ void clear_all_state()
     exodus_prev = 0;
 }
 
-void RewindDBs(int nHeight, bool fInitialParse)
+void RewindDBs(int nHeight, int top, bool fInitialParse)
 {
 	if(nHeight <=0)
 		clear_all_state();
@@ -1578,7 +1578,7 @@ void RewindDBs(int nHeight, bool fInitialParse)
     p_feecache->RollBackCache(nHeight);
     p_feehistory->RollBackHistory(nHeight);
 	p_txhistory->RollBackHistory(nHeight);
-	p_blockhistory->RollBackHistory(nHeight);
+	p_blockhistory->RollBackHistory(nHeight, top);
 
     reorgRecoveryMaxHeight = 0;
 
@@ -1861,10 +1861,24 @@ int mastercore_init_ex()
 
 	//clear_all_state();
 
-	
     nWaterlineBlock = LoadMostRelevantInMemoryStateEx();
 	if(nWaterlineBlock <=0)
 		clear_all_state();
+
+	// load feature activation messages from txlistdb and process them accordingly
+    p_txlistdb->LoadActivations(nWaterlineBlock);
+
+    // load all alerts from levelDB (and immediately expire old ones)
+    p_txlistdb->LoadAlerts(nWaterlineBlock);
+
+    // load the state of any freeable properties and frozen addresses from levelDB
+    if (!p_txlistdb->LoadFreezeState(nWaterlineBlock)) {
+        std::string strShutdownReason = "Failed to load freeze state from levelDB.  It is unsafe to continue.\n";
+        PrintToLog(strShutdownReason);
+        if (!GetBoolArg("-overrideforcedshutdown", false)) {
+            AbortNode(strShutdownReason, strShutdownReason);
+        }
+    }
 
 	/*
     if (nWaterlineBlock > 0 && nWaterlineBlock < GetHeight()) {

@@ -29,18 +29,10 @@ public:
     void printAll();
 
     /** Roll back history in event of reorg */
-    void RollBackHistory(int block);
+    void RollBackHistory(int block, int top);
     /** Count Fee History DB records */
     int CountRecords();
-    /** Record a fee distribution */
-    void RecordFeeDistribution(const uint32_t &propertyId, int block, int64_t total, std::set<feeHistoryItem> feeRecipients);
-    /** Retrieve the recipients for a fee distribution */
-    std::set<feeHistoryItem> GetFeeDistribution(int id);
-    /** Retrieve fee distributions for a property */
-    std::set<int> GetDistributionsForProperty(const uint32_t &propertyId);
-    /** Populate data about a fee distribution */
-    bool GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total);
-
+   
 	//key euqal hash
 	bool GetBlockHistory(const std::string& key, int& height, std::string& hash);
 

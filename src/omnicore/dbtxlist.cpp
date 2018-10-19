@@ -8,6 +8,7 @@
 #include "omnicore/omnicore.h"
 #include "omnicore/tx.h"
 #include "omnicore/utilsbitcoin.h"
+#include "omnicore/dbTxHistory.h"
 
 #include "chain.h"
 #include "chainparams.h"
@@ -688,7 +689,9 @@ bool CMPTxList::LoadFreezeState(int blockHeight)
         uint256 hash = (*it).second;
         uint256 blockHash;
         CTransaction wtx;
+
         CMPTransaction mp_obj;
+		/*
         if (!GetTransaction(hash, wtx, Params().GetConsensus(), blockHash, true)) {
             PrintToLog("ERROR: While loading freeze transaction %s: tx in levelDB but does not exist.\n", hash.GetHex());
             return false;
@@ -711,6 +714,22 @@ bool CMPTxList::LoadFreezeState(int blockHeight)
             PrintToLog("ERROR: While loading freeze transaction %s: failed ParseTransaction.\n", hash.GetHex());
             return false;
         }
+		*/
+		UniValue txobj;
+		std::string history = mastercore::p_txhistory->GetHistory(hash.ToString());
+		if(history.empty() || !txobj.read(history))
+			continue;
+
+		std::string ScriptEncode = txobj["PayLoad"].get_str();
+		std::vector<unsigned char> Script = ParseHex(ScriptEncode);
+
+		mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+		mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+		mp_obj.Set(txobj["Sender"].getValStr(),	txobj["Reference"].getValStr(),
+			txobj["Block"].get_int(), uint256S(txobj["TxHash"].getValStr()),
+			txobj["Block"].get_int(), txobj["Idx"].get_int(),
+			&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
+
         if (!mp_obj.interpret_Transaction()) {
             PrintToLog("ERROR: While loading freeze transaction %s: failed interpret_Transaction.\n", hash.GetHex());
             return false;
@@ -722,6 +741,7 @@ bool CMPTxList::LoadFreezeState(int blockHeight)
         }
         mp_obj.unlockLogic();
         if (0 != mp_obj.interpretPacket()) {
+			assert(0);
             PrintToLog("ERROR: While loading freeze transaction %s: non-zero return from interpretPacket\n", hash.GetHex());
             return false;
         }

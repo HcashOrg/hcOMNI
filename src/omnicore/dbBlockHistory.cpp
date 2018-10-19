@@ -73,10 +73,25 @@ int COmniBlockHistory::CountRecords()
 }
 
 // Roll back history in event of reorg, block is inclusive
-void COmniBlockHistory::RollBackHistory(int block)
+void COmniBlockHistory::RollBackHistory(int block, int top)
 {
     assert(pdb);
 
+	int height = -1;
+	std::string hash;
+	int index = block;
+	GetBlockHistory(index, height, hash);
+	while (index <= top )
+	{
+		if (height >= block) {
+			const std::string key = strprintf("%d", height);
+            pdb->Delete(writeoptions, key);
+			pdb->Delete(writeoptions, hash);
+        }
+		index++;
+		GetBlockHistory(index, height, hash);
+	}
+	/*
     std::set<int> sDistributions;
     leveldb::Iterator* it = NewIterator();
     for (it->SeekToFirst(); it->Valid(); it->Next()) {
@@ -95,121 +110,8 @@ void COmniBlockHistory::RollBackHistory(int block)
         }
     }
     delete it;
+	*/
 }
-
-// Retrieve fee distributions for a property
-std::set<int> COmniBlockHistory::GetDistributionsForProperty(const uint32_t &propertyId)
-{
-    assert(pdb);
-
-    std::set<int> sDistributions;
-    leveldb::Iterator* it = NewIterator();
-    for (it->SeekToFirst(); it->Valid(); it->Next()) {
-        std::string strValue = it->value().ToString();
-        std::vector<std::string> vFeeHistoryDetail;
-        boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
-        if (4 != vFeeHistoryDetail.size()) {
-            PrintToConsole("ERROR: vFeeHistoryDetail has unexpected number of elements: %d !\n", vFeeHistoryDetail.size());
-            printAll();
-            continue; // bad data
-        }
-        uint32_t prop = boost::lexical_cast<uint32_t>(vFeeHistoryDetail[1]);
-        if (prop == propertyId) {
-            std::string key = it->key().ToString();
-            int id = boost::lexical_cast<int>(key);
-            sDistributions.insert(id);
-        }
-    }
-    delete it;
-    return sDistributions;
-}
-
-// Populate data about a fee distribution
-bool COmniBlockHistory::GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total)
-{
-    assert(pdb);
-
-    const std::string key = strprintf("%d", id);
-    std::string strValue;
-    leveldb::Status status = pdb->Get(readoptions, key, &strValue);
-    if (status.IsNotFound()) {
-        return false; // fee distribution not found
-    }
-    assert(status.ok());
-    std::vector<std::string> vFeeHistoryDetail;
-    boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
-    if (4 != vFeeHistoryDetail.size()) {
-        PrintToConsole("ERROR: vFeeHistoryDetail has unexpected number of elements: %d !\n", vFeeHistoryDetail.size());
-        printAll();
-        return false; // bad data
-    }
-    *block = boost::lexical_cast<int>(vFeeHistoryDetail[0]);
-    *propertyId = boost::lexical_cast<uint32_t>(vFeeHistoryDetail[1]);
-    *total = boost::lexical_cast<int64_t>(vFeeHistoryDetail[2]);
-    return true;
-}
-
-// Retrieve the recipients for a fee distribution
-std::set<feeHistoryItem> COmniBlockHistory::GetFeeDistribution(int id)
-{
-    assert(pdb);
-
-    const std::string key = strprintf("%d", id);
-    std::set<feeHistoryItem> sFeeHistoryItems;
-    std::string strValue;
-    leveldb::Status status = pdb->Get(readoptions, key, &strValue);
-    if (status.IsNotFound()) {
-        return sFeeHistoryItems; // fee distribution not found, return empty set
-    }
-    assert(status.ok());
-    std::vector<std::string> vFeeHistoryDetail;
-    boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
-    if (4 != vFeeHistoryDetail.size()) {
-        PrintToConsole("ERROR: vFeeHistoryDetail has unexpected number of elements: %d !\n", vFeeHistoryDetail.size());
-        printAll();
-        return sFeeHistoryItems; // bad data, return empty set
-    }
-    std::vector<std::string> vFeeHistoryItems;
-    boost::split(vFeeHistoryItems, vFeeHistoryDetail[3], boost::is_any_of(","), boost::token_compress_on);
-    for (std::vector<std::string>::iterator it = vFeeHistoryItems.begin(); it != vFeeHistoryItems.end(); ++it) {
-        std::vector<std::string> vFeeHistoryItem;
-        boost::split(vFeeHistoryItem, *it, boost::is_any_of("="), boost::token_compress_on);
-        if (2 != vFeeHistoryItem.size()) {
-            PrintToConsole("ERROR: vFeeHistoryItem has unexpected number of elements: %d (raw %s)!\n", vFeeHistoryItem.size(), *it);
-            printAll();
-            continue;
-        }
-        int64_t feeHistoryItemAmount = boost::lexical_cast<int64_t>(vFeeHistoryItem[1]);
-        sFeeHistoryItems.insert(std::make_pair(vFeeHistoryItem[0], feeHistoryItemAmount));
-    }
-
-    return sFeeHistoryItems;
-}
-
-// Record a fee distribution
-void COmniBlockHistory::RecordFeeDistribution(const uint32_t &propertyId, int block, int64_t total, std::set<feeHistoryItem> feeRecipients)
-{
-    assert(pdb);
-
-    int count = CountRecords() + 1;
-    std::string key = strprintf("%d", count);
-    std::string feeRecipientsStr;
-
-    if (!feeRecipients.empty()) {
-        for (std::set<feeHistoryItem>::iterator it = feeRecipients.begin(); it != feeRecipients.end(); it++) {
-            feeHistoryItem tempRecipient = *it;
-            feeRecipientsStr += strprintf("%s=%d,", tempRecipient.first, tempRecipient.second);
-        }
-        if (feeRecipientsStr.size() > 0) {
-            feeRecipientsStr.resize(feeRecipientsStr.size() - 1);
-        }
-    }
-
-    std::string value = strprintf("%d:%d:%d:%s", block, propertyId, total, feeRecipientsStr);
-    leveldb::Status status = pdb->Put(writeoptions, key, value);
-    if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
-}
-
 
 bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& hash)
 {
@@ -218,12 +120,12 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 	if (status.IsNotFound()) {
-        return ""; // fee distribution not found, return empty set
+        return false; // fee distribution not found, return empty set
     }
     std::vector<std::string> vHistoryDetail;
     boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
 	if(vHistoryDetail.size() != 2)
-		return "";
+		return false;
 
 	height = atoi(vHistoryDetail[0].c_str());
 	hash = vHistoryDetail[1];
@@ -236,12 +138,12 @@ bool COmniBlockHistory::GetBlockHistory(const std::string& key, int& height, std
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 	if (status.IsNotFound()) {
-        return ""; // fee distribution not found, return empty set
+        return false; // fee distribution not found, return empty set
     }
     std::vector<std::string> vHistoryDetail;
     boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
 	if(vHistoryDetail.size() != 2)
-		return "";
+		return false;
 
 	height = atoi(vHistoryDetail[0].c_str());
 	hash = vHistoryDetail[1];
