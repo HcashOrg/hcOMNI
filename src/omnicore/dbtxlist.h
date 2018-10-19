@@ -24,7 +24,7 @@ public:
     void recordPaymentTX(const uint256& txid, bool fValid, int nBlock, unsigned int vout, unsigned int propertyId, uint64_t nValue, std::string buyer, std::string seller);
     void recordMetaDExCancelTX(const uint256 &txidMaster, const uint256& txidSub, bool fValid, int nBlock, unsigned int propertyId, uint64_t nValue);
     /** Records a "send all" sub record. */
-    void recordSendAllSubRecord(const uint256& txid, int subRecordNumber, uint32_t propertyId, int64_t nvalue);
+    void recordSendAllSubRecord(const uint256& txid, int subRecordNumber, uint32_t propertyId, int block, int64_t nvalue);
 
     std::string getKeyValue(std::string key);
     uint256 findMetaDExCancel(const uint256 txid);

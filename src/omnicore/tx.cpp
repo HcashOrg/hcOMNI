@@ -1234,7 +1234,7 @@ int CMPTransaction::logicMath_SendAll()
             ++numberOfPropertiesSent;
             assert(update_tally_map(sender, propertyId, -moneyAvailable, BALANCE));
             assert(update_tally_map(receiver, propertyId, moneyAvailable, BALANCE));
-            p_txlistdb->recordSendAllSubRecord(txid, numberOfPropertiesSent, propertyId, moneyAvailable);
+            p_txlistdb->recordSendAllSubRecord(txid, numberOfPropertiesSent, propertyId, getCurrentBlock(), moneyAvailable);
         }
     }
 

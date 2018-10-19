@@ -169,11 +169,10 @@ void CMPTxList::recordMetaDExCancelTX(const uint256& txidMaster, const uint256& 
 /**
  * Records a "send all" sub record.
  */
-void CMPTxList::recordSendAllSubRecord(const uint256& txid, int subRecordNumber, uint32_t propertyId, int64_t nValue)
+void CMPTxList::recordSendAllSubRecord(const uint256& txid, int subRecordNumber, uint32_t propertyId, int block, int64_t nValue)
 {
     std::string strKey = strprintf("%s-%d", txid.ToString(), subRecordNumber);
-    std::string strValue = strprintf("%d:%d", propertyId, nValue);
-
+    std::string strValue = strprintf("%d:%d:%d", propertyId, block, nValue);
     leveldb::Status status = pdb->Put(writeoptions, strKey, strValue);
     ++nWritten;
     if (msc_debug_txdb) PrintToLog("%s(): store: %s=%s, status: %s\n", __func__, strKey, strValue, status.ToString());
@@ -289,9 +288,9 @@ bool CMPTxList::getSendAllDetails(const uint256& txid, int subSend, uint32_t& pr
     if (status.ok()) {
         std::vector<std::string> vstr;
         boost::split(vstr, strValue, boost::is_any_of(":"), boost::token_compress_on);
-        if (2 == vstr.size()) {
+        if (3 == vstr.size()) {
             propertyId = boost::lexical_cast<uint32_t>(vstr[0]);
-            amount = boost::lexical_cast<int64_t>(vstr[1]);
+            amount = boost::lexical_cast<int64_t>(vstr[2]);
             return true;
         }
     }
@@ -829,10 +828,9 @@ bool CMPTxList::isMPinBlockRange(int starting_block, int ending_block, bool bDel
         if (2 <= vstr.size()) {
             block = atoi(vstr[1]);
 
-            if (starting_block <= block) {
+            if ((starting_block <= block) && (block <= ending_block)) {
                 ++n_found;
-                PrintToLog("%s() DELETING: %s=%s, blk height:%d\n", __func__, skey.ToString(), svalue.ToString(), block);
-                printf("%s() DELETING: %s=%s£¬blk height:%d\n", __func__, skey.ToString().c_str(), svalue.ToString().c_str(), block);
+                PrintToLog("%s() DELETING: %s=%s\n", __func__, skey.ToString(), svalue.ToString());
                 if (bDeleteFound) pdb->Delete(writeoptions, skey);
             }
         }

@@ -1567,6 +1567,9 @@ void clear_all_state()
 
 void RewindDBs(int nHeight, int top, bool fInitialParse)
 {
+	reorgRecoveryMaxHeight = 1;
+	reorgRecoveryMaxHeight = (top > reorgRecoveryMaxHeight) ? top: reorgRecoveryMaxHeight;
+
 	if(nHeight <=0)
 		clear_all_state();
 
