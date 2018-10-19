@@ -38,7 +38,7 @@ public:
 
 	bool GetBlockHistory(int index, int& height, std::string& hash);
 	bool GetEndHistory(int& height, std::string& hash);
-
+	int GetTopBlock();
 	bool PutBlockHistory(int height, const std::string& hash);
 };
 

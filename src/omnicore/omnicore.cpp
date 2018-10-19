@@ -1710,6 +1710,7 @@ int mastercore_init()
 	p_txhistory = new COmniTxHistory(GetDataDir() / "OMNI_txhistory", fReindex);
 	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
 	
+	_LatestBlock = p_blockhistory->GetTopBlock();
     MPPersistencePath = GetDataDir() / "MP_persist";
     TryCreateDirectory(MPPersistencePath);
 
@@ -1857,6 +1858,7 @@ int mastercore_init_ex()
     p_feehistory = new COmniFeeHistory(GetDataDir() / "OMNI_feehistory", fReindex);
 	p_txhistory = new COmniTxHistory(GetDataDir() / "OMNI_txhistory", fReindex);
 	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
+	_LatestBlock = p_blockhistory->GetTopBlock();
     MPPersistencePath = GetDataDir() / "MP_persist";
     TryCreateDirectory(MPPersistencePath);
 

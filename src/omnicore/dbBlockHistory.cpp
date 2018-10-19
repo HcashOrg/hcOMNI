@@ -189,3 +189,33 @@ bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash)
 	
 	return true;
 }
+
+
+int COmniBlockHistory::GetTopBlock()
+{
+	assert(pdb);
+
+	int left = 0;
+	int right = CountRecords();
+	int curHeight = -1;
+	int index = 0;
+	std::string hash;
+	while (left != right)
+	{
+		index = (left + right) >>1;
+		GetBlockHistory(index, curHeight, hash);
+		if(curHeight == -1)
+		{
+			right = index - 1;
+		}else{
+			left = index + 1;
+		}
+	}
+	GetBlockHistory(left, curHeight, hash);
+	if(curHeight == -1)
+	{
+		return index;
+	}else{
+		return curHeight;
+	}
+}
