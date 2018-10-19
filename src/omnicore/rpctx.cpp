@@ -1554,11 +1554,11 @@ UniValue omni_rollback(const UniValue& params, bool fHelp)
             HelpExampleCli("omni_sendalert", "") + HelpExampleRpc("omni_sendalert", ""));
 
     int height = params[0].get_int();
-    UniValue hashArray = params[1].get_array();
-    for (int i = 0; i < hashArray.size(); i++) {
-        std::string hash = hashArray[i].get_str();
-        _my_sps->popBlock(uint256S(hash));
-    }
+    //UniValue hashArray = params[1].get_array();
+    //for (int i = 0; i < hashArray.size(); i++) {
+    //    std::string hash = hashArray[i].get_str();
+    //    _my_sps->popBlock(uint256S(hash));
+    //}
 	
     RewindDBs(height, mastercore::_LatestBlock);
     return "";
