@@ -740,7 +740,6 @@ bool CMPTxList::LoadFreezeState(int blockHeight)
         }
         mp_obj.unlockLogic();
         if (0 != mp_obj.interpretPacket()) {
-			assert(0);
             PrintToLog("ERROR: While loading freeze transaction %s: non-zero return from interpretPacket\n", hash.GetHex());
             return false;
         }

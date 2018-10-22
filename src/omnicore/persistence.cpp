@@ -948,7 +948,7 @@ int LoadMostRelevantInMemoryStateEx()
             const std::string strFile = path.string();
             success = RestoreInMemoryState(strFile, i, true);
             if (success < 0) {
-                PrintToConsole("error LoadMostRelevantInMemoryStateEx.\n");
+                PrintToConsole("LoadMostRelevantInMemoryStateEx. block = %d \n", height);
                 break;
             }
         }

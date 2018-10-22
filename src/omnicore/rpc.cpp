@@ -2113,9 +2113,11 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 				0, uint256S(txobj["TxHash"].getValStr()),
 				txobj["Block"].get_int(), txobj["Idx"].get_int(),
 				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
-			Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight, addressParam);
-			response.push_back(result);
-			nCount--;
+			if(Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight, addressParam) == 0)
+			{
+				response.push_back(result);
+				nCount--;
+			}
 		}
 		nFrom--;
 	} while (!history.empty());
@@ -2679,18 +2681,21 @@ UniValue omni_processtx(const UniValue& params, bool fHelp)
     return "fail";
 }
 
-UniValue omni_getblockcount(const UniValue& params, bool fHelp)
+UniValue omni_getwaterline(const UniValue& params, bool fHelp)
 {
     //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
     int len = params.size();
 
     if (fHelp || params.size() != 0)
         throw runtime_error(
-            "omni_getblockcount\n"
+            "omni_getwaterline\n"
             "\nExamples:\n" +
-            HelpExampleCli("omni_getblockcount", ""));
-
-	return UniValue(p_blockhistory->CountRecords()/2);
+            HelpExampleCli("omni_getwaterline", ""));
+	int waterLine = GetWaterlineBlock();
+	if(waterLine <= 0)
+		return UniValue(waterLine);
+	else
+		return UniValue(waterLine + 1);
 }
 
 UniValue omni_processpayment(const UniValue& params, bool fHelp)
@@ -2773,7 +2778,7 @@ static const CRPCCommand commands[] =
     { "omni layer (data retrieval)", "omni_getbalanceshash",           &omni_getbalanceshash,            false },
     { "omni layer (data retrieval)", "omni_dealopreturn",              &omni_dealopreturn,               false },
 	{ "omni layer (data retrieval)", "omni_processtx",                 &omni_processtx,					 false },
-	{ "omni layer (data retrieval)", "omni_getblockcount",             &omni_getblockcount,				 false },
+	{ "omni layer (data retrieval)", "omni_getwaterline",              &omni_getwaterline,				 false },
 	{ "omni layer (data retrieval)", "omni_processpayment",            &omni_processpayment,			 false },
 	{ "omni layer (data retrieval)", "omni_onblockconnected",          &omni_onblockconnected,			 false },
 #ifdef ENABLE_WALLET

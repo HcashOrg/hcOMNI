@@ -166,6 +166,8 @@ bool mastercore_handler_tx(const CTransaction& tx, int nBlock, unsigned int idx,
 bool mastercore_handler_mptx(const UniValue &root);
 void clear_all_state();
 
+int GetWaterlineBlock();
+
 bool TXExodusFundraiser(const std::string& hash, const std::string& sender, int64_t amountInvested, int nBlock, unsigned int nTime);
 
 /** Global handler to total wallet balances. */

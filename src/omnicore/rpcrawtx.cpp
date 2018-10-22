@@ -112,7 +112,7 @@ UniValue omni_decodetransaction(const UniValue& params, bool fHelp)
 
 UniValue omni_createrawtx_opreturn(const UniValue& params, bool fHelp)
 {
-	throw std::runtime_error("not implement");
+//	throw std::runtime_error("not implement");
     if (fHelp || params.size() != 2)
         throw std::runtime_error(
             "omni_createrawtx_opreturn \"rawtx\" \"payload\"\n"
@@ -135,15 +135,16 @@ UniValue omni_createrawtx_opreturn(const UniValue& params, bool fHelp)
             + HelpExampleRpc("omni_createrawtx_opreturn", "\"01000000000000000000\", \"00000000000000020000000006dac2c0\"")
         );
 
-    CMutableTransaction tx = ParseMutableTransaction(params[0]);
-    std::vector<unsigned char> payload = ParseHexV(params[1], "payload");
+    //CMutableTransaction tx = ParseMutableTransaction(params[0]);
+    std::vector<unsigned char> payload = ParseHexV(params[0], "payload");
+	return PayLoadWrap(payload);
 
-    // extend the transaction
-    tx = OmniTxBuilder(tx)
-            .addOpReturn(payload)
-            .build();
+    //// extend the transaction
+    //tx = OmniTxBuilder(tx)
+    //        .addOpReturn(payload)
+    //        .build();
 
-    return EncodeHexTx(tx);
+    //return EncodeHexTx(tx);
 }
 
 UniValue omni_createrawtx_multisig(const UniValue& params, bool fHelp)
@@ -216,6 +217,7 @@ UniValue omni_createrawtx_input(const UniValue& params, bool fHelp)
     CMutableTransaction tx = ParseMutableTransaction(params[0]);
     uint256 txid = ParseHashV(params[1], "txid");
     uint32_t nOut = ParseOutputIndex(params[2]);
+
 
     // extend the transaction
     tx = OmniTxBuilder(tx)

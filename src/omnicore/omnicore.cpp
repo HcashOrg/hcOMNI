@@ -1588,6 +1588,7 @@ void RewindDBs(int nHeight, int top, bool fInitialParse)
 	if (reorgContainsFreeze && !fInitialParse) {
        PrintToConsole("Reorganization containing freeze related transactions detected, forcing a reparse...\n");
        clear_all_state(); // unable to reorg freezes safely, clear state and reparse
+	   nWaterlineBlock = 0;
     } else {
         int best_state_block = LoadMostRelevantInMemoryStateEx();
         if (best_state_block < 0) {
@@ -2347,4 +2348,9 @@ std::string PayLoadWrap(const std::vector<unsigned char>& payload){
     vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
     vchData.insert(vchData.end(), payload.begin(), payload.end());
     return HexStr(vchData.begin(), vchData.end());
+}
+
+int GetWaterlineBlock()
+{
+	return nWaterlineBlock;
 }
