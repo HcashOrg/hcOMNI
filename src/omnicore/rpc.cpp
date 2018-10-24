@@ -2751,6 +2751,26 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 	return "";
 }
 
+UniValue omni_getblockinfo(const UniValue& params, bool fHelp)
+{
+    //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
+    int len = params.size();
+
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "omni_getblockinfo\n"
+            "\nExamples:\n" +
+            HelpExampleCli("omni_getblockinfo", ""));
+
+	int curHeight = params[0].get_int();
+	std::string hash;
+	if(p_blockhistory)
+	{
+		p_blockhistory->GetBlockHistory(curHeight, curHeight, hash);
+	}
+	return hash;
+}
+
 UniValue omni_stop(const UniValue& params, bool fHelp)
 {
     //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
@@ -2803,6 +2823,7 @@ static const CRPCCommand commands[] =
 	{ "omni layer (data retrieval)", "omni_getwaterline",              &omni_getwaterline,				 false },
 	{ "omni layer (data retrieval)", "omni_processpayment",            &omni_processpayment,			 false },
 	{ "omni layer (data retrieval)", "omni_onblockconnected",          &omni_onblockconnected,			 false },
+	{ "omni layer (data retrieval)", "omni_getblockinfo",			   &omni_getblockinfo,			 false },
 	{ "omni layer (data retrieval)", "omni_stop",					   &omni_stop,						 false },
 #ifdef ENABLE_WALLET
     { "omni layer (data retrieval)", "omni_listtransactions",          &omni_listtransactions,           false },

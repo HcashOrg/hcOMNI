@@ -158,29 +158,6 @@ bool COmniBlockHistory::GetEndHistory(int& height, std::string& hash)
 bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash)
 {
 	assert(pdb);
-
-//	int lastHeight = -1;
-//	std::string lastHash;
-	//GetEndHistory(lastHeight, lastHash);
-	//if(lastHeight == -1)
-	//{
-	//	printAll();
-	//}
-//	if(lastHeight >=0)
-//	{
-//		if(height != lastHeight + 1)
-//		{
-//			int tempHeight = -1;
-//			std::string tempHash;
-//			GetBlockHistory(height, tempHeight, tempHash);
-//			PrintToConsole("tempHeight = %d, tempHash = %s, height = %d, hash = %s", tempHeight, tempHash, height, hash);
-//		}
-//	}
-	//if(lastHeight >=height)
-	//{
-	//	RollBackHistory(height);
-	//}
-//	int count = CountRecords() + 1;
 	std::string key = strprintf("%d", height);
 	std::string value = strprintf("%d:%s", height, hash);
 	leveldb::Status status = pdb->Put(writeoptions, key, value);
