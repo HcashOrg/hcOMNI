@@ -2715,7 +2715,9 @@ UniValue omni_processpayment(const UniValue& params, bool fHelp)
  	int64_t Amount = params[3].get_int64();
     int64_t Block = params[4].get_int64();
     int64_t Idx = params[5].get_int64();
-
+	if(mastercore::_LatestBlock + 1 != Block){
+		return "";
+	}
 	return DEx_payment(vecTxHash, Idx, Sender, Reference, Amount, Block)? "fail" :"success";
 }
 
@@ -2730,7 +2732,11 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
             "\nExamples:\n" +
             HelpExampleCli("omni_processpayment", "000000fff3d3322faddd"));
 
-	mastercore::_LatestBlock = params[0].get_int();
+
+	int curHeight = params[0].get_int();
+	if(curHeight - 1 != mastercore::_LatestBlock)return "";
+
+	mastercore::_LatestBlock = curHeight;
     mastercore::_LatestBlockHash = uint256S(params[1].get_str());
 	mastercore::_LatestBlockTime = params[2].get_int64();
 	_my_sps->setWatermark(mastercore::_LatestBlockHash);

@@ -1598,6 +1598,7 @@ void RewindDBs(int nHeight, int top, bool fInitialParse)
             nWaterlineBlock = best_state_block;
         }
     }
+	mastercore::_LatestBlock = nWaterlineBlock;
 }
 
 void RewindDBsAndState(int nHeight, int nBlockPrev , bool fInitialParse)
@@ -2096,6 +2097,9 @@ bool mastercore_handler_mptx(const UniValue &root)
     std::vector<unsigned char> Script = ParseHex(ScriptEncode);
     int64_t Fee = root[7].get_int64();
     int64_t Time = root[8].get_int64();
+	if(mastercore::_LatestBlock + 1 != Block){
+		return true;
+	}
    
 	PendingDelete(vecTxHash);
     CMPTransaction mp_obj;
@@ -2118,17 +2122,7 @@ bool mastercore_handler_mptx(const UniValue &root)
 	value.push_back(Pair("Version", (uint64_t)mp_obj.getVersion()));
 	value.push_back(Pair("Type_int", (uint64_t)mp_obj.getType()));
 	value.push_back(Pair("Type", mp_obj.getTypeString()));
-/*
-	txobj.push_back(Pair("version", (uint64_t)mp_obj.getVersion()));
-    txobj.push_back(Pair("type_int", (uint64_t)mp_obj.getType()));
-    if (mp_obj.getType() != MSC_TYPE_SIMPLE_SEND) { // Type 0 will add "Type" attribute during populateRPCTypeSimpleSend
-        txobj.push_back(Pair("type", mp_obj.getTypeString()));
-    }
-*/
-	//if(Block >= 86279)
-	//{
-	//	int j=0;
-	//}
+
 	p_txhistory->PutHistory(vecTxHash.ToString(), Block, HexStr(value.write()));
     if (!mastercoreInitialized) {
         mastercore_init();
