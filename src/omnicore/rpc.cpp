@@ -2762,6 +2762,8 @@ UniValue omni_stop(const UniValue& params, bool fHelp)
             "\nExamples:\n" +
             HelpExampleCli("omni_stop", ""));
 	g_data_handler.Stop();
+	//! Omni Core shutdown
+    mastercore_shutdown();
 	return "";
 }
 
