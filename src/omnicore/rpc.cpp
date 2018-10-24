@@ -2751,6 +2751,20 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 	return "";
 }
 
+UniValue omni_stop(const UniValue& params, bool fHelp)
+{
+    //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
+    int len = params.size();
+
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "omni_stop\n"
+            "\nExamples:\n" +
+            HelpExampleCli("omni_stop", ""));
+	g_data_handler.Stop();
+	return "";
+}
+
 static const CRPCCommand commands[] =
 { //  category                             name                            actor (function)               okSafeMode
   //  ------------------------------------ ------------------------------- ------------------------------ ----------
@@ -2787,6 +2801,7 @@ static const CRPCCommand commands[] =
 	{ "omni layer (data retrieval)", "omni_getwaterline",              &omni_getwaterline,				 false },
 	{ "omni layer (data retrieval)", "omni_processpayment",            &omni_processpayment,			 false },
 	{ "omni layer (data retrieval)", "omni_onblockconnected",          &omni_onblockconnected,			 false },
+	{ "omni layer (data retrieval)", "omni_stop",					   &omni_stop,						 false },
 #ifdef ENABLE_WALLET
     { "omni layer (data retrieval)", "omni_listtransactions",          &omni_listtransactions,           false },
     { "omni layer (data retrieval)", "omni_getfeeshare",               &omni_getfeeshare,                false },

@@ -714,10 +714,16 @@ bool CMPTxList::LoadFreezeState(int blockHeight)
             return false;
         }
 		*/
+		
 		UniValue txobj;
 		std::string history = mastercore::p_txhistory->GetHistory(hash.ToString());
 		if(history.empty() || !txobj.read(history))
 			continue;
+
+        if (txobj["Block"].get_int() > blockHeight) {
+            // skipping, because it's in the future
+            continue;
+        }
 
 		std::string ScriptEncode = txobj["PayLoad"].get_str();
 		std::vector<unsigned char> Script = ParseHex(ScriptEncode);

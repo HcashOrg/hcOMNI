@@ -26,20 +26,33 @@ public:
 
 	int BufferSize() { return m_record_set.size(); }
 
+	void Stop()
+	{
+		m_thread.interrupt();
+		m_thread.join();
+	}
+
 protected:
 	virtual void DataThread()
 	{
-		while(true)
-		{
-			m_event.wait();
-			while(!m_record_set.empty())
+		try  
+		{  
+			while(true)
 			{
-				T t;
-				if(m_record_set.get(t))
+				boost::this_thread::interruption_point();
+				m_event.wait();
+				while(!m_record_set.empty())
 				{
-					DataFunc(t);
+					T t;
+					if(m_record_set.get(t))
+					{
+						DataFunc(t);
+					}
 				}
 			}
+		}  
+		catch(...)  
+		{
 		}
 	}
 
@@ -49,7 +62,7 @@ protected:
 protected:
 	void Start()
 	{
-		boost::thread t(&CDataHandler::DataThread, this);
+		m_thread = boost::thread(&CDataHandler::DataThread, this);  
 	}
 
 protected:
@@ -58,6 +71,9 @@ protected:
 
 	// event
 	CWnEvent m_event;	
+	//thread
+	boost::thread m_thread;  
+
 };
 
 #endif //_DATAHANDLER_H
