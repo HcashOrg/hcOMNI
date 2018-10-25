@@ -930,6 +930,30 @@ int LoadMostRelevantInMemoryStateEx()
         return -1;
     }
 
+	// prepare a set of available files by block hash pruning any that are
+    // not in the active chain
+    std::set<uint256> persistedBlocks;
+    boost::filesystem::directory_iterator dIter(MPPersistencePath);
+    boost::filesystem::directory_iterator endIter;
+    for (; dIter != endIter; ++dIter) {
+        if (false == boost::filesystem::is_regular_file(dIter->status()) || dIter->path().empty()) {
+            // skip funny business
+            continue;
+        }
+
+        std::string fName = (*--dIter->path().end()).string();
+        std::vector<std::string> vstr;
+        boost::split(vstr, fName, boost::is_any_of("-."), boost::token_compress_on);
+        if (vstr.size() == 3 &&
+                boost::equals(vstr[2], "dat")) {
+            uint256 blockHash;
+            blockHash.SetHex(vstr[1]);
+
+            // this is a valid block in the active chain, store it
+            persistedBlocks.insert(blockHash);
+        }
+    }
+
 	int Count = mastercore::p_blockhistory->CountRecords()/2;
 
 	int height = 0;
@@ -939,25 +963,28 @@ int LoadMostRelevantInMemoryStateEx()
 		if(hash.empty())
 		{
 			continue;
-			
 		}
 		_my_sps->setWatermark(uint256S(hash));
-        int success = -1;
-        for (int i = 0; i < NUM_FILETYPES; ++i) {
-            boost::filesystem::path path = MPPersistencePath / strprintf("%s-%s.dat", statePrefix[i], hash);
-            const std::string strFile = path.string();
-            success = RestoreInMemoryState(strFile, i, true);
-            if (success < 0) {
-                PrintToConsole("LoadMostRelevantInMemoryStateEx. block = %d \n", height);
-                break;
-            }
-        }
+		 if (persistedBlocks.find(uint256S(hash)) != persistedBlocks.end()) {
+			int success = -1;
+			for (int i = 0; i < NUM_FILETYPES; ++i) {
+				boost::filesystem::path path = MPPersistencePath / strprintf("%s-%s.dat", statePrefix[i], hash);
+				const std::string strFile = path.string();
+				success = RestoreInMemoryState(strFile, i, true);
+				if (success < 0) {
+					PrintToConsole("LoadMostRelevantInMemoryStateEx. block = %d \n", height);
+					break;
+				}
+			}
 
-        if (success >= 0) {
-            res = height;
-            break;
-        }
+			if (success >= 0) {
+				res = height;
+				break;
+			}
+			// remove this from the persistedBlock Set
+			persistedBlocks.erase(uint256S(hash));
 
+		 }
         // go to the previous block
         if (_my_sps->popBlock(uint256S(hash)) <= 0) {
             // trigger a full reparse, if the levelDB cannot roll back
@@ -965,6 +992,10 @@ int LoadMostRelevantInMemoryStateEx()
         }
     }
 
+	if (persistedBlocks.size() == 0) {
+        // trigger a reparse if we exhausted the persistence files without success
+        return -1;
+    }
     // return the height of the block we settled at
     return res;
 }
