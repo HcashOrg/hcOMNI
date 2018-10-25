@@ -90,10 +90,10 @@ using namespace mastercore;
 CCriticalSection cs_tally;
 
 //! Exodus address (changes based on network)
-static std::string exodus_address = "HsXA4B34vrsJLyv3iSRJXMQjUXaCkANUQcB";
+static std::string exodus_address = "HsTJckn6hjhP4QYHF7CE87ok3y5TDA2gd6D";
 
 //! Mainnet Exodus address
-static const std::string exodus_mainnet = "HsXA4B34vrsJLyv3iSRJXMQjUXaCkANUQcB";
+static const std::string exodus_mainnet = "HsTJckn6hjhP4QYHF7CE87ok3y5TDA2gd6D";
 //! Testnet Exodus address
 static const std::string exodus_testnet = "TsSmoC9HdBhDhq4ut4TqJY7SBjPqJFAPkGK";
 //! Testnet Exodus crowdsale address
