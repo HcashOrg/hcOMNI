@@ -2693,7 +2693,7 @@ UniValue omni_getwaterline(const UniValue& params, bool fHelp)
             HelpExampleCli("omni_getwaterline", ""));
 	int waterLine = GetWaterlineBlock();
 	if(waterLine <= 0)
-		return UniValue(waterLine);
+		return UniValue(0);
 	else
 		return UniValue(waterLine + 1);
 }
