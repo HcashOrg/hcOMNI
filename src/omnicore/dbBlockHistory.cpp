@@ -32,7 +32,7 @@ using namespace mastercore;
 COmniBlockHistory::COmniBlockHistory(const boost::filesystem::path& path, bool fWipe)
 {
     leveldb::Status status = Open(path, fWipe);
-    PrintToConsole("Loading Tx history database: %s\n", status.ToString());
+    PrintToConsole("Loading Block history database: %s\n", status.ToString());
 }
 
 COmniBlockHistory::~COmniBlockHistory()
@@ -177,7 +177,7 @@ int COmniBlockHistory::GetTopBlock()
 	int curHeight = -1;
 	int index = 0;
 	std::string hash;
-	while (left != right)
+	while (left < right)
 	{
 		index = (left + right) >>1;
 		GetBlockHistory(index, curHeight, hash);
