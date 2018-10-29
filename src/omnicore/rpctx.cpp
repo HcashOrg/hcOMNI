@@ -1586,7 +1586,7 @@ UniValue omni_txexodus_fundraiser(const UniValue& params, bool fHelp)
     std::string strSender = ParseText(params[1]);
     uint32_t nBlock = params[2].get_int();
     int64_t amountInvested = params[3].get_int64();
-    int32_t nTime = params[2].get_int();
+    int32_t nTime = params[4].get_int();
 		
 	bool b = TXExodusFundraiser(hash, strSender, amountInvested, nBlock, nTime);
     PrintToConsole("omni_txexodus_fundraiser: deal:%s\n", b? "success" : "fail");

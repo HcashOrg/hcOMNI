@@ -166,15 +166,17 @@ CMainConsensusParams::CMainConsensusParams()
 {
     // Exodus related:
     exodusBonusPerWeek = 0.10;
-    exodusDeadline = 1377993600;
+    exodusDeadline = 1672416000; //2022-12-31 00:00:00 btc timestemp 1377993600 = 2013-09-01 08:00:00
     exodusReward = 100;
     GENESIS_BLOCK = 1;
-    LAST_EXODUS_BLOCK = 255365;
+    //LAST_EXODUS_BLOCK = 255365;
+	LAST_EXODUS_BLOCK = 877000; //according to  param exodusDeadline
     // Notice range for feature activations:
     MIN_ACTIVATION_BLOCKS = 2048;  // ~2 weeks
     MAX_ACTIVATION_BLOCKS = 12288; // ~12 weeks
     // Waiting period for enabling freezing
-    OMNI_FREEZE_WAIT_PERIOD = 4096; // ~4 weeks
+    //OMNI_FREEZE_WAIT_PERIOD = 4096; // ~4 weeks  for btc
+	OMNI_FREEZE_WAIT_PERIOD = 0; // immidiately for hc
     // Script related:
     PUBKEYHASH_BLOCK = 0;
     SCRIPTHASH_BLOCK = 322000;
@@ -192,10 +194,10 @@ CMainConsensusParams::CMainConsensusParams()
     MSC_BET_BLOCK = 999999;
     MSC_STOV1_BLOCK = 999999;
     // Other feature activations:
-    GRANTEFFECTS_FEATURE_BLOCK = 394500;
-    DEXMATH_FEATURE_BLOCK = 395000;
-    SPCROWDCROSSOVER_FEATURE_BLOCK = 395000;
-    TRADEALLPAIRS_FEATURE_BLOCK = 438500;
+    GRANTEFFECTS_FEATURE_BLOCK = 46000;
+    DEXMATH_FEATURE_BLOCK = 46000;
+    SPCROWDCROSSOVER_FEATURE_BLOCK = 46000;
+    TRADEALLPAIRS_FEATURE_BLOCK = 46000;
     FEES_FEATURE_BLOCK = 999999;
     FREEZENOTICE_FEATURE_BLOCK = 999999;
 }
@@ -207,7 +209,7 @@ CTestNetConsensusParams::CTestNetConsensusParams()
 {
     // Exodus related:
     exodusBonusPerWeek = 0.00;
-    exodusDeadline = 1377993600;
+    exodusDeadline = 1672416000;
     exodusReward = 100;
     GENESIS_BLOCK = 40000;
     LAST_EXODUS_BLOCK = std::numeric_limits<int>::max();
@@ -248,7 +250,7 @@ CRegTestConsensusParams::CRegTestConsensusParams()
 {
     // Exodus related:
     exodusBonusPerWeek = 0.00;
-    exodusDeadline = 1377993600;
+    exodusDeadline = 1672416000;
     exodusReward = 100;
     GENESIS_BLOCK = 1;//101 //by ycj 20180904
     LAST_EXODUS_BLOCK = std::numeric_limits<int>::max();
