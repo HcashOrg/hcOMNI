@@ -75,6 +75,26 @@ int COmniBlockHistory::CountRecords()
 // Roll back history in event of reorg, block is inclusive
 void COmniBlockHistory::RollBackHistory(int block, int top)
 {
+#ifdef _BLOCK_NIN_
+    std::set<int> sDistributions;
+    leveldb::Iterator* it = NewIterator();
+    for (it->SeekToFirst(); it->Valid(); it->Next()) {
+        std::string strValue = it->value().ToString();
+        std::string strKey = it->key().ToString();
+        std::vector<std::string> vBlockHistoryDetail;
+        boost::split(vBlockHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
+        if (3 != vBlockHistoryDetail.size()) {
+            PrintToLog("ERROR: vBlockHistoryDetail has unexpected number of elements: %d !\n", vBlockHistoryDetail.size());
+            continue; // bad data
+        }
+        int historyBlock = boost::lexical_cast<int>(vBlockHistoryDetail[0]);
+        if (historyBlock >= block) {
+            PrintToLog("%s() deleting from block history DB: %s %s\n", __FUNCTION__, strKey, strValue);
+            pdb->Delete(writeoptions, strKey);
+        }
+    }
+    delete it;
+#else
     assert(pdb);
 
 	int height = -1;
@@ -91,30 +111,32 @@ void COmniBlockHistory::RollBackHistory(int block, int top)
 		index++;
 		GetBlockHistory(index, height, hash);
 	}
-	/*
-    std::set<int> sDistributions;
-    leveldb::Iterator* it = NewIterator();
-    for (it->SeekToFirst(); it->Valid(); it->Next()) {
-        std::string strValue = it->value().ToString();
-        std::string strKey = it->key().ToString();
-        std::vector<std::string> vFeeHistoryDetail;
-        boost::split(vFeeHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
-        if (2 != vFeeHistoryDetail.size()) {
-            PrintToLog("ERROR: vFeeHistoryDetail has unexpected number of elements: %d !\n", vFeeHistoryDetail.size());
-            continue; // bad data
-        }
-        int historyBlock = boost::lexical_cast<int>(vFeeHistoryDetail[0]);
-        if (historyBlock >= block) {
-            PrintToLog("%s() deleting from fee history DB: %s %s\n", __FUNCTION__, strKey, strValue);
-            pdb->Delete(writeoptions, strKey);
-        }
-    }
-    delete it;
-	*/
+#endif
 }
 
-bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& hash)
+bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& hash, int64_t* pTime)
 {
+#ifdef _BLOCK_NIN_
+    leveldb::Iterator* it = NewIterator();
+	std::vector<std::string> vHistoryDetail;
+    for(it->SeekToFirst(); it->Valid(); it->Next()) {
+		boost::split(vHistoryDetail, it->value().ToString(), boost::is_any_of(":"), boost::token_compress_on);
+		if(vHistoryDetail.size() != 3)
+			break;
+		height = atoi(vHistoryDetail[0].c_str());
+		hash = vHistoryDetail[1];
+
+		if(index == height){
+			if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
+			return true;
+		}
+    }
+    delete it;
+	height = 0;
+	hash.clear();
+	return false;
+#else
+
 	const std::string key = strprintf("%d", index);
     std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
@@ -124,17 +146,18 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
     }
     std::vector<std::string> vHistoryDetail;
     boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
-	if(vHistoryDetail.size() != 2)
+	if(vHistoryDetail.size() != 3)
 		return false;
 
 	height = atoi(vHistoryDetail[0].c_str());
 	hash = vHistoryDetail[1];
+	if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
 	return true;
+#endif
 }
 
-bool COmniBlockHistory::GetBlockHistory(const std::string& key, int& height, std::string& hash)
-{
-    std::set<feeHistoryItem> sFeeHistoryItems;
+bool COmniBlockHistory::GetBlockHistory(const std::string& key, int& height, std::string& hash, int64_t* pTime)
+{    std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 	if (status.IsNotFound()) {
@@ -142,34 +165,85 @@ bool COmniBlockHistory::GetBlockHistory(const std::string& key, int& height, std
     }
     std::vector<std::string> vHistoryDetail;
     boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
-	if(vHistoryDetail.size() != 2)
+	if(vHistoryDetail.size() != 3)
 		return false;
 
 	height = atoi(vHistoryDetail[0].c_str());
 	hash = vHistoryDetail[1];
+	if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
 	return true;
 }
 
-bool COmniBlockHistory::GetEndHistory(int& height, std::string& hash)
+bool COmniBlockHistory::GetEndHistory(int& height, std::string& hash, int64_t* pTime)
 {
-	return GetBlockHistory(CountRecords()-1, height, hash);
+#ifdef _BLOCK_NIN_
+	leveldb::Iterator* it = NewIterator();
+	std::vector<std::string> vHistoryDetail;
+	int index = 0;
+	height = 0;
+    for(it->SeekToFirst(); it->Valid(); it->Next()) {
+		boost::split(vHistoryDetail, it->value().ToString(), boost::is_any_of(":"), boost::token_compress_on);
+		if(vHistoryDetail.size() != 3)
+			break;
+		height = atoi(vHistoryDetail[0].c_str());
+		if(index < height){
+			hash = vHistoryDetail[1];
+			if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
+			index = height;
+		}
+    }
+	
+    delete it;
+	if(height < index && index > 0){
+		height = index;
+		return true;
+	}
+	height = 0;
+	hash.clear();
+	return false;
+#else
+	return GetBlockHistory(GetTopBlock(), height, hash, pTime);
+#endif
 }
 
-bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash)
+bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash, int64_t blockTime)
 {
+#ifdef _BLOCK_NIN_
+	assert(pdb);
+	std::string value = strprintf("%d:%s:%lld", height, hash, blockTime);
+	leveldb::Status status = pdb->Put(writeoptions, hash, value);
+	if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", hash, value, status.ToString());
+#else
 	assert(pdb);
 	std::string key = strprintf("%d", height);
-	std::string value = strprintf("%d:%s", height, hash);
+	std::string value = strprintf("%d:%s:%lld", height, hash, blockTime);
 	leveldb::Status status = pdb->Put(writeoptions, key, value);
 	status = pdb->Put(writeoptions, hash, value);
 	if (msc_debug_fees) PrintToLog("Added fee distribution to feeCacheHistory - key=%s value=%s [%s]\n", key, value, status.ToString());
-	
+#endif
 	return true;
 }
 
 
 int COmniBlockHistory::GetTopBlock()
 {
+#ifdef _BLOCK_NIN_
+	leveldb::Iterator* it = NewIterator();
+	std::vector<std::string> vHistoryDetail;
+	int top = 0;
+	int height = 0;
+    for(it->SeekToFirst(); it->Valid(); it->Next()) {
+		boost::split(vHistoryDetail, it->value().ToString(), boost::is_any_of(":"), boost::token_compress_on);
+		if(vHistoryDetail.size() != 3)
+			break;
+		height = atoi(vHistoryDetail[0].c_str());
+		if(top < height){
+			top = height;
+		}
+    }
+    delete it;
+	return top;
+#else
 	assert(pdb);
 
 	int left = 0;
@@ -195,4 +269,5 @@ int COmniBlockHistory::GetTopBlock()
 	}else{
 		return curHeight;
 	}
+#endif
 }

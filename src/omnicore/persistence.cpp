@@ -595,7 +595,7 @@ static void prune_state_filesEx(const std::string& hash)
     std::set<uint256>::const_iterator iter;
     for (iter = statefulBlockHashes.begin(); iter != statefulBlockHashes.end(); ++iter) {
         // look up the CBlockIndex for height info
-		p_blockhistory->GetBlockHistory(iter->ToString(), nCurHeight, temp);
+		if(!p_blockhistory->GetBlockHistory(iter->ToString(), nCurHeight, temp))continue;
 //        CBlockIndex const *curIndex = GetBlockIndex(*iter);
 		
         // if we have nothing int the index, or this block is too old..
@@ -954,10 +954,9 @@ int LoadMostRelevantInMemoryStateEx()
         }
     }
 
-	int Count = mastercore::p_blockhistory->CountRecords()/2;
-
 	int height = 0;
 	std::string hash;
+	int Count = mastercore::p_blockhistory->GetTopBlock();
     for(int k = Count; k>=0; k--) {
 		p_blockhistory->GetBlockHistory(k,height, hash);
 		if(hash.empty())

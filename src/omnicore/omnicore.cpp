@@ -1594,6 +1594,7 @@ void RewindDBs(int nHeight, int top, bool fInitialParse)
         if (best_state_block < 0) {
             // unable to recover easily, remove stale stale state bits and reparse from the beginning.
             clear_all_state();
+			nWaterlineBlock = 0;
         } else {
             nWaterlineBlock = best_state_block;
         }

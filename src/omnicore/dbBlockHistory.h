@@ -1,6 +1,10 @@
 #ifndef OMNICORE_BLOCK_HISTORY_H
 #define OMNICORE_BLOCK_HISTORY_H
 
+//#ifndef _BLOCK_NIN_
+//#define _BLOCK_NIN_
+//#endif
+
 #include "omnicore/dbbase.h"
 #include "omnicore/log.h"
 
@@ -30,16 +34,19 @@ public:
 
     /** Roll back history in event of reorg */
     void RollBackHistory(int block, int top);
-    /** Count Fee History DB records */
-    int CountRecords();
+    
    
 	//key euqal hash
-	bool GetBlockHistory(const std::string& key, int& height, std::string& hash);
+	bool GetBlockHistory(const std::string& key, int& height, std::string& hash, int64_t* pTime = NULL);
 
-	bool GetBlockHistory(int index, int& height, std::string& hash);
-	bool GetEndHistory(int& height, std::string& hash);
+	bool GetBlockHistory(int index, int& height, std::string& hash, int64_t* pTime = NULL);
+	bool GetEndHistory(int& height, std::string& hash, int64_t* pTime = NULL);
 	int GetTopBlock();
-	bool PutBlockHistory(int height, const std::string& hash);
+	bool PutBlockHistory(int height, const std::string& hash, int64_t blockTime);
+
+private:
+	/** Count Fee History DB records */
+    int CountRecords();
 };
 
 namespace mastercore

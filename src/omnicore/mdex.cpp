@@ -10,6 +10,7 @@
 #include "omnicore/sp.h"
 #include "omnicore/tx.h"
 #include "omnicore/uint256_extensions.h"
+#include "omnicore/dbBlockHistory.h"
 
 #include "arith_uint256.h"
 #include "chain.h"
@@ -411,10 +412,19 @@ int64_t CMPMetaDEx::getAmountToFill() const
 
 int64_t CMPMetaDEx::getBlockTime() const
 {
-    CBlockIndex* pblockindex = chainActive[block];
-    if (pblockindex == NULL)
-        return 0;//new added 20180928
-    return pblockindex->GetBlockTime();
+	if (mastercore::p_blockhistory)
+	{
+		int height=0;
+		std::string hash;
+		int64_t time = 0;
+		mastercore::p_blockhistory->GetBlockHistory(block, height, hash, &time);
+		if(height >0)return time;
+	}
+	return 0;
+    //CBlockIndex* pblockindex = chainActive[block];
+    //if (pblockindex == NULL)
+    //    return 0;//new added 20180928
+    //return pblockindex->GetBlockTime();
 }
 
 void CMPMetaDEx::setAmountRemaining(int64_t amount, const std::string& label)

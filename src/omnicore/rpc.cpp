@@ -474,7 +474,7 @@ UniValue omni_getfeecache(const UniValue& params, bool fHelp)
 // generate a list of seed blocks based on the data in LevelDB
 UniValue omni_getseedblocks(const UniValue& params, bool fHelp)
 {
-	throw runtime_error("not implement");
+	//throw runtime_error("not implement");
     if (fHelp || params.size() != 2)
         throw runtime_error(
             "omni_getseedblocks startblock endblock\n"
@@ -2570,15 +2570,17 @@ UniValue omni_getmetadexhash(const UniValue& params, bool fHelp)
         RequireExistingProperty(propertyId);
     }
 
-    int block = GetHeight();
-    CBlockIndex* pblockindex = chainActive[block];
-    uint256 blockHash = pblockindex->GetBlockHash();
+    int block =0;// GetHeight();
+	std::string hash;
+	if(p_blockhistory)p_blockhistory->GetEndHistory(block, hash);
+    //CBlockIndex* pblockindex = chainActive[block];
+    //uint256 blockHash = pblockindex->GetBlockHash();
 
     uint256 metadexHash = GetMetaDExHash(propertyId);
 
     UniValue response(UniValue::VOBJ);
     response.push_back(Pair("block", block));
-    response.push_back(Pair("blockhash", blockHash.GetHex()));
+    response.push_back(Pair("blockhash", hash/*blockHash.GetHex()*/));
     response.push_back(Pair("propertyid", (uint64_t)propertyId));
     response.push_back(Pair("metadexhash", metadexHash.GetHex()));
 
@@ -2744,7 +2746,7 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 
 	eraseExpiredAccepts(mastercore::_LatestBlock);
 	calculate_and_update_devmsc(mastercore::_LatestBlockTime, mastercore::_LatestBlock);
-	p_blockhistory->PutBlockHistory(mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString());
+	p_blockhistory->PutBlockHistory(mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString(), mastercore::_LatestBlockTime);
 	if (mastercore::_LatestBlock >= ConsensusParams().GENESIS_BLOCK) {
 		PersistInMemoryStateEx(mastercore::_LatestBlock, mastercore::_LatestBlockHash);
 	}
