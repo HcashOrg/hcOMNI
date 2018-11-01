@@ -11,6 +11,7 @@
 #include "omnicore/rules.h"
 #include "omnicore/sp.h"
 #include "omnicore/sto.h"
+#include "utilstrencodings.h"
 
 #include "main.h"
 
@@ -127,7 +128,7 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
 		hash = vHistoryDetail[1];
 
 		if(index == height){
-			if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
+			if(pTime) *pTime = atoi64(vHistoryDetail[2].c_str());
 			return true;
 		}
     }
@@ -151,7 +152,7 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
 
 	height = atoi(vHistoryDetail[0].c_str());
 	hash = vHistoryDetail[1];
-	if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
+	if(pTime) *pTime = atoi64(vHistoryDetail[2].c_str());
 	return true;
 #endif
 }
@@ -170,7 +171,7 @@ bool COmniBlockHistory::GetBlockHistory(const std::string& key, int& height, std
 
 	height = atoi(vHistoryDetail[0].c_str());
 	hash = vHistoryDetail[1];
-	if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
+	if(pTime) *pTime = atoi64(vHistoryDetail[2].c_str());
 	return true;
 }
 
@@ -188,7 +189,7 @@ bool COmniBlockHistory::GetEndHistory(int& height, std::string& hash, int64_t* p
 		height = atoi(vHistoryDetail[0].c_str());
 		if(index < height){
 			hash = vHistoryDetail[1];
-			if(pTime) *pTime = _atoi64(vHistoryDetail[2].c_str());
+			if(pTime) *pTime = atoi64(vHistoryDetail[2].c_str());
 			index = height;
 		}
     }
