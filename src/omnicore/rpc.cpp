@@ -2095,12 +2095,17 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 		history = p_txhistory->GetHistory(i++);
 		if(history.empty())
 			break;
-		if (nFrom <= 0 && nCount > 0) {
-			txobj.read(history);
-			if(txobj["Block"].get_int() > nEndBlock ||
-				txobj["Block"].get_int() < nStartBlock)
-				continue;
+		txobj.read(history);
+		if(txobj["Block"].get_int() > nEndBlock ||
+			txobj["Block"].get_int() < nStartBlock)
+			continue;
 
+		if(!addressParam.empty())
+		{
+			if(txobj["Sender"].getValStr() != addressParam && txobj["Reference"].getValStr() != addressParam)
+				continue;
+		}
+		if (nFrom <= 0 && nCount > 0) {
 	//		response.push_back(txobj);
 			std::string ScriptEncode = txobj["PayLoad"].get_str();
 			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
