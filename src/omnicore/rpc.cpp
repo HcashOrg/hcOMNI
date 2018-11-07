@@ -2087,12 +2087,12 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 	UniValue response(UniValue::VARR);
 	
 	std::string history;
-	int i=0;
 	int blockHeight = mastercore::GetHeight();
+	int64_t top = p_txhistory->GetTop();
 	UniValue txobj;
 	do {
 		UniValue result(UniValue::VOBJ);
-		history = p_txhistory->GetHistory(i++);
+		history = p_txhistory->GetHistory(top--);
 		if(history.empty())
 			break;
 		txobj.read(history);
