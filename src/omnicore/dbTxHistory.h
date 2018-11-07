@@ -31,20 +31,13 @@ public:
     /** Roll back history in event of reorg */
     void RollBackHistory(int block);
     /** Count Fee History DB records */
-    int CountRecords();
-    /** Record a fee distribution */
-    void RecordFeeDistribution(const uint32_t &propertyId, int block, int64_t total, std::set<feeHistoryItem> feeRecipients);
-    /** Retrieve the recipients for a fee distribution */
-    std::set<feeHistoryItem> GetFeeDistribution(int id);
-    /** Retrieve fee distributions for a property */
-    std::set<int> GetDistributionsForProperty(const uint32_t &propertyId);
-    /** Populate data about a fee distribution */
-    bool GetDistributionData(int id, uint32_t *propertyId, int *block, int64_t *total);
-
+    int64_t CountRecords()const;
+   
 	std::string GetHistory(const std::string& key);
-	std::string GetHistory(int index);
+	std::string GetHistory(int64_t index);
 	std::string GetEndHistory();
-
+	int64_t GetTop()const;
+	bool IsExist(int64_t index)const;
 	bool PutHistory(const std::string& Key, int nBlock, const std::string& history);
 };
 
