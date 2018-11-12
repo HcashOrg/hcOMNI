@@ -11,6 +11,7 @@ chmod 777 autogen.sh
 sudo make clean
 sudo make
 cd src
-sudo ar rc libomnicored.a omnicored-bitcoind.o omnicored-omnicoreApi.o 
+sudo ar rc libomnicored.a omnicored-bitcoind.o omnicored-omnicoreApi.o
 cd ..
+
 source libsCopy.sh
