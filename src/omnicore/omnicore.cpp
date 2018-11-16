@@ -399,7 +399,7 @@ void mastercore::disableFreezing(uint32_t propertyId)
         }
     }
 
-    assert(!isFreezingEnabled(propertyId, liveBlock));
+    //assert(!isFreezingEnabled(propertyId, liveBlock));
 }
 
 bool mastercore::isFreezingEnabled(uint32_t propertyId, int block)
