@@ -2098,9 +2098,10 @@ bool mastercore_handler_mptx(const UniValue &root)
     std::vector<unsigned char> Script = ParseHex(ScriptEncode);
     int64_t Fee = root[7].get_int64();
     int64_t Time = root[8].get_int64();
-	if(mastercore::_LatestBlock + 1 != Block){
-		return true;
-	}
+
+//	if(mastercore::_LatestBlock + 1 != Block && mastercore::_LatestBlock > 0){
+//		return true;
+//	}
    
 	PendingDelete(vecTxHash);
     CMPTransaction mp_obj;

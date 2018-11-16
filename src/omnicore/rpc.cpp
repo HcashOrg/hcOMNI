@@ -2722,9 +2722,9 @@ UniValue omni_processpayment(const UniValue& params, bool fHelp)
  	int64_t Amount = params[3].get_int64();
     int64_t Block = params[4].get_int64();
     int64_t Idx = params[5].get_int64();
-	if(mastercore::_LatestBlock + 1 != Block){
-		return "";
-	}
+	//if(mastercore::_LatestBlock + 1 != Block  && mastercore::_LatestBlock > 0){
+	//	return "";
+	//}
 	return DEx_payment(vecTxHash, Idx, Sender, Reference, Amount, Block)? "fail" :"success";
 }
 
