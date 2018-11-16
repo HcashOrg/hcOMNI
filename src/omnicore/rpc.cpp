@@ -2096,6 +2096,8 @@ UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 		if(history.empty())
 			break;
 		txobj.read(history);
+		if(!txobj.exists("PayLoad")) continue;
+
 		if(txobj["Block"].get_int() > nEndBlock ||
 			txobj["Block"].get_int() < nStartBlock)
 			continue;
