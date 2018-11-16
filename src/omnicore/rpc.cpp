@@ -2725,6 +2725,9 @@ UniValue omni_processpayment(const UniValue& params, bool fHelp)
 	//if(mastercore::_LatestBlock + 1 != Block  && mastercore::_LatestBlock > 0){
 	//	return "";
 	//}
+	if(!p_txhistory)return "nil";
+	if(!p_txhistory->GetHistory(params[2].get_str()).empty()) return "exit tx";
+	p_txhistory->PutHistory(vecTxHash.ToString(), Block, HexStr(params.write()));
 	return DEx_payment(vecTxHash, Idx, Sender, Reference, Amount, Block)? "fail" :"success";
 }
 
