@@ -2741,12 +2741,13 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 
 
 	int curHeight = params[0].get_int();
-	if(curHeight - 1 != mastercore::_LatestBlock)return "";
+	if(curHeight - 1 != mastercore::_LatestBlock && mastercore::_LatestBlock > 0){mastercore::_LatestBlock = 0; return "";}
 
 	mastercore::_LatestBlock = curHeight;
     mastercore::_LatestBlockHash = uint256S(params[1].get_str());
 	mastercore::_LatestBlockTime = params[2].get_int64();
 	_my_sps->setWatermark(mastercore::_LatestBlockHash);
+	SetWaterline(curHeight);
 	//PrintToConsole("omni_onblockconnected : %d\t%s\t%I64d\n", mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString(), mastercore::_LatestBlockTime);
 
 	eraseExpiredAccepts(mastercore::_LatestBlock);

@@ -137,7 +137,8 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
 	hash.clear();
 	return false;
 #else
-
+	height = -1;
+	hash.clear();
 	const std::string key = strprintf("%d", index);
     std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
@@ -225,6 +226,45 @@ bool COmniBlockHistory::PutBlockHistory(int height, const std::string& hash, int
 	return true;
 }
 
+int COmniBlockHistory::GetRightNilBlock(int left)
+{
+	int right = left;
+	if(right <= 0)
+	{
+		right = 1;
+	}
+
+	int curHeight = -1;
+	std::string hash;
+	GetBlockHistory(right, curHeight, hash);
+
+	while(curHeight != -1)
+	{
+		right = right << 1;
+		GetBlockHistory(right, curHeight, hash);
+	}
+	return right;
+}
+
+int COmniBlockHistory::GetLeftTopBlock()
+{
+	int left = 0;
+    leveldb::Iterator* it = NewIterator();
+    for(it->SeekToFirst(); it->Valid(); it->Next()) {
+
+		std::vector<std::string> vHistoryDetail;
+		boost::split(vHistoryDetail, it->value().ToString(), boost::is_any_of(":"), boost::token_compress_on);
+		if(vHistoryDetail.size() != 3)
+		{
+			left = 0;
+			break;
+		}
+		left = atoi(vHistoryDetail[0].c_str());
+		break;
+    }
+    delete it;
+	return left;
+}
 
 int COmniBlockHistory::GetTopBlock()
 {
@@ -247,8 +287,8 @@ int COmniBlockHistory::GetTopBlock()
 #else
 	assert(pdb);
 
-	int left = 0;
-	int right = CountRecords();
+	int left = GetLeftTopBlock();
+	int right = GetRightNilBlock(left);
 	int curHeight = -1;
 	int index = 0;
 	std::string hash;

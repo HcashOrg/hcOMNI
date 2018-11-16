@@ -47,6 +47,8 @@ public:
 private:
 	/** Count Fee History DB records */
     int CountRecords();
+	int GetRightNilBlock(int left);
+	int GetLeftTopBlock();
 };
 
 namespace mastercore

@@ -2345,6 +2345,11 @@ std::string PayLoadWrap(const std::vector<unsigned char>& payload){
     return HexStr(vchData.begin(), vchData.end());
 }
 
+void SetWaterline(int water_line)
+{
+	nWaterlineBlock = water_line;
+}
+
 int GetWaterlineBlock()
 {
 	return nWaterlineBlock;
