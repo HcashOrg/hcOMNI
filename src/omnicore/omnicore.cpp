@@ -7,6 +7,7 @@
 #include "omnicore/omnicore.h"
 #include "omnicore/dbTxHistory.h"
 #include "omnicore/dbBlockHistory.h"
+#include "omnicore/dbLocalInfo.h"
 
 #include "omnicore/activation.h"
 #include "omnicore/consensushash.h"
@@ -148,9 +149,16 @@ COmniFeeCache* mastercore::p_feecache;
 COmniFeeHistory* mastercore::p_feehistory;
 //! LevelDB based storage for the TxHistory
 COmniTxHistory* mastercore::p_txhistory;
+//! LevelDB based storage for the p_paymenttxhistory
+COmniPaymentTxHistory* mastercore::p_paymenttxhistory = nullptr;
 
 //! LevelDB based storage for the TxHistory
 COmniBlockHistory* mastercore::p_blockhistory;
+
+CLocalBlockInfo* mastercore::p_localblockinfo = nullptr;
+
+//! LevelDB based storage for the LocalBlockInfo
+CLocalTxInfo* mastercore::p_localtxinfo = nullptr;
 
 int mastercore::_LatestBlock = -1;
 uint256 mastercore::_LatestBlockHash;
@@ -1560,7 +1568,11 @@ void clear_all_state()
     p_feecache->Clear();
     p_feehistory->Clear();
 	p_txhistory->Clear();
+	p_paymenttxhistory->Clear();
 	p_blockhistory->Clear();
+	p_localblockinfo->Clear();
+	p_localtxinfo->Clear();
+
     assert(p_txlistdb->setDBVersion() == DB_VERSION); // new set of databases, set DB version
     exodus_prev = 0;
 }
@@ -1581,7 +1593,10 @@ void RewindDBs(int nHeight, int top, bool fInitialParse)
     p_feecache->RollBackCache(nHeight);
     p_feehistory->RollBackHistory(nHeight);
 	p_txhistory->RollBackHistory(nHeight);
+	p_paymenttxhistory->RollBackHistory(nHeight);
 	p_blockhistory->RollBackHistory(nHeight, top);
+	p_localblockinfo->RollBackHistory(nHeight);
+	p_localtxinfo->RollBackHistory(nHeight);
 
     reorgRecoveryMaxHeight = 0;
 
@@ -1711,8 +1726,11 @@ int mastercore_init()
     p_feecache = new COmniFeeCache(GetDataDir() / "OMNI_feecache", fReindex);
     p_feehistory = new COmniFeeHistory(GetDataDir() / "OMNI_feehistory", fReindex);
 	p_txhistory = new COmniTxHistory(GetDataDir() / "OMNI_txhistory", fReindex);
+	p_paymenttxhistory = new COmniPaymentTxHistory(GetDataDir() / "OMNI_paymenttxhistory", fReindex);
 	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
-	
+	p_localblockinfo = new CLocalBlockInfo(GetDataDir() / "OMNI_localblockinfo", fReindex);
+	p_localtxinfo = new CLocalTxInfo(GetDataDir() / "OMNI_localtxinfo", fReindex);
+
 	_LatestBlock = p_blockhistory->GetTopBlock();
     MPPersistencePath = GetDataDir() / "MP_persist";
     TryCreateDirectory(MPPersistencePath);
@@ -1860,7 +1878,11 @@ int mastercore_init_ex()
     p_feecache = new COmniFeeCache(GetDataDir() / "OMNI_feecache", fReindex);
     p_feehistory = new COmniFeeHistory(GetDataDir() / "OMNI_feehistory", fReindex);
 	p_txhistory = new COmniTxHistory(GetDataDir() / "OMNI_txhistory", fReindex);
+	p_paymenttxhistory = new COmniPaymentTxHistory(GetDataDir() / "OMNI_paymenttxhistory", fReindex);
 	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
+	p_localblockinfo = new CLocalBlockInfo(GetDataDir() / "OMNI_localblockinfo", fReindex);
+	p_localtxinfo = new CLocalTxInfo(GetDataDir() / "OMNI_localtxinfo", fReindex);
+
 	_LatestBlock = p_blockhistory->GetTopBlock();
     MPPersistencePath = GetDataDir() / "MP_persist";
     TryCreateDirectory(MPPersistencePath);
@@ -1999,9 +2021,22 @@ int mastercore_shutdown()
         delete p_txhistory;
         p_txhistory = NULL;
     }
+	if (p_paymenttxhistory)
+	{
+		delete p_paymenttxhistory;
+        p_paymenttxhistory = NULL;
+	}
 	if (p_blockhistory) {
         delete p_blockhistory;
         p_blockhistory = NULL;
+    }
+	if (p_localblockinfo) {
+        delete p_localblockinfo;
+        p_localblockinfo = NULL;
+    }
+	if (p_localtxinfo) {
+        delete p_localtxinfo;
+        p_localtxinfo = NULL;
     }
 
     mastercoreInitialized = 0;
@@ -2099,11 +2134,17 @@ bool mastercore_handler_mptx(const UniValue &root)
     int64_t Fee = root[7].get_int64();
     int64_t Time = root[8].get_int64();
 
-	if(!p_txhistory->GetHistory(root[2].get_str()).empty()) return true;
+	if(mastercore::_LatestBlock + 1 != Block && mastercore::_LatestBlock > 0)
+	{//
+		p_localtxinfo->PutData(Block, root.write());
+		return true;
+	}
+
+	if(!p_txhistory->GetHistory(root[2].get_str()).empty()) {return true;}
 //	if(mastercore::_LatestBlock + 1 != Block && mastercore::_LatestBlock > 0){
 //		return true;
 //	}
-   
+
 	PendingDelete(vecTxHash);
     CMPTransaction mp_obj;
 

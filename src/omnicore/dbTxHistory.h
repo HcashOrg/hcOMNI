@@ -11,9 +11,6 @@
 #include <string>
 #include <utility>
 
-typedef std::pair<int, int64_t> feeCacheItem;
-typedef std::pair<std::string, int64_t> feeHistoryItem;
-
 
 /** LevelDB based storage for the TxHistory.
  */
@@ -41,10 +38,23 @@ public:
 	bool PutHistory(const std::string& Key, int nBlock, const std::string& history);
 };
 
+
+
+
+class COmniPaymentTxHistory : public COmniTxHistory
+{
+public:
+    COmniPaymentTxHistory(const boost::filesystem::path& path, bool fWipe);
+    virtual ~COmniPaymentTxHistory();
+};
+
 namespace mastercore
 {
 	//! LevelDB based storage for the MetaDEx fee distributions
     extern COmniTxHistory* p_txhistory;
+
+	//! LevelDB based storage for paymenttxhistory
+    extern COmniPaymentTxHistory* p_paymenttxhistory;
 }
 
 #endif // OMNICORE_TXHISTORY_H

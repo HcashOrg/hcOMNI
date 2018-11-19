@@ -15,9 +15,6 @@
 #include <string>
 #include <utility>
 
-typedef std::pair<int, int64_t> feeCacheItem;
-typedef std::pair<std::string, int64_t> feeHistoryItem;
-
 
 /** LevelDB based storage for the TxHistory.
  */

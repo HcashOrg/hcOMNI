@@ -78,21 +78,23 @@ void COmniTxHistory::RollBackHistory(int block)
 {
     assert(pdb);
 	int64_t index = GetTop();
-	std::string key_index = strprintf("%lld", index);
-	std::set<feeHistoryItem> sFeeHistoryItems;
-    std::string strValue;
-    leveldb::Status status = pdb->Get(readoptions, key_index, &strValue);
-	if (status.IsNotFound()) {
-        return ; // fee distribution not found, return empty set
-    }
-    std::vector<std::string> vHistoryDetail;
-    boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
-	if(vHistoryDetail.size() !=2)
-		return;
-	int historyBlock = boost::lexical_cast<int>(vHistoryDetail[1]);
-    if (historyBlock >= block) {
-		pdb->Delete(writeoptions, key_index);
-		pdb->Delete(writeoptions, vHistoryDetail[0]);
+	uint32_t historyBlock = -1 ;
+	while(historyBlock >= uint32_t(block)){
+		std::string key_index = strprintf("%lld", index--);
+		std::string strValue;
+		leveldb::Status status = pdb->Get(readoptions, key_index, &strValue);
+		if (status.IsNotFound()) {
+			return ; // fee distribution not found, return empty set
+		}
+		std::vector<std::string> vHistoryDetail;
+		boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
+		if(vHistoryDetail.size() !=2)
+			return;
+		historyBlock = boost::lexical_cast<int>(vHistoryDetail[1]);
+		if (historyBlock >= block) {
+			pdb->Delete(writeoptions, key_index);
+			pdb->Delete(writeoptions, vHistoryDetail[0]);
+		}
 	}
 }
 
@@ -113,7 +115,6 @@ bool COmniTxHistory::PutHistory(const std::string& key, int nBlock, const std::s
 std::string COmniTxHistory::GetHistory(const std::string& key)
 {
 	//const std::string key = strprintf("%d", index);
-    std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 	if (status.IsNotFound()) {
@@ -131,7 +132,6 @@ std::string COmniTxHistory::GetHistory(const std::string& key)
 std::string COmniTxHistory::GetHistory(int64_t index)
 {
 	const std::string key = strprintf("%lld", index);
-    std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 
@@ -181,8 +181,21 @@ bool COmniTxHistory::IsExist(int64_t index)const
 	assert(pdb);
 
     const std::string key = strprintf("%lld", index);
-    std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 	return !status.IsNotFound();
+}
+
+/****************************************************************************/
+
+COmniPaymentTxHistory::COmniPaymentTxHistory(const boost::filesystem::path& path, bool fWipe):
+	COmniTxHistory(path, fWipe)
+{
+    leveldb::Status status = Open(path, fWipe);
+    PrintToConsole("Loading COmniPaymentTxHistory database: %s\n", status.ToString());
+}
+
+COmniPaymentTxHistory::~COmniPaymentTxHistory()
+{
+    if (msc_debug_fees) PrintToLog("COmniPaymentTxHistory closed\n");
 }

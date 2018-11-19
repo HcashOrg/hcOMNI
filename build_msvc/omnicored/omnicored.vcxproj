@@ -94,7 +94,9 @@
     </Link>
     <PostBuildEvent>
       <Command>XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\src\github.com\HcashOrg\hcwallet"
-XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"</Command>
+XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"
+
+XCOPY /e /s /y "..\x64\Debug\*.dll" "C:\Users\Administrator\AppData\Local\Programs\hcgui\resources\bin"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -180,6 +182,7 @@ XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"</Command>
     <ClCompile Include="..\..\src\omnicore\dbbase.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbBlockHistory.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbfees.cpp" />
+    <ClCompile Include="..\..\src\omnicore\dbLocalInfo.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbTxHistory.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbspinfo.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbstolist.cpp" />
@@ -252,6 +255,7 @@ XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"</Command>
   <ItemGroup>
     <ClInclude Include="..\..\src\omnicoreApi.h" />
     <ClInclude Include="..\..\src\omnicore\dbBlockHistory.h" />
+    <ClInclude Include="..\..\src\omnicore\dbLocalInfo.h" />
     <ClInclude Include="..\..\src\omnicore\dbTxHistory.h" />
     <ClInclude Include="..\..\src\omnicore\errors.h" />
     <ClInclude Include="..\..\src\omnicore\omnicore.h" />

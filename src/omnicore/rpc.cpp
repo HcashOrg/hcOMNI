@@ -38,6 +38,7 @@
 #include "omnicore/pending.h"
 #include "omnicore/persistence.h"
 #include "omnicore/dbBlockHistory.h"
+#include "omnicore/dbLocalInfo.h"
 
 #include "amount.h"
 #include "base58.h"
@@ -2727,11 +2728,39 @@ UniValue omni_processpayment(const UniValue& params, bool fHelp)
 	//if(mastercore::_LatestBlock + 1 != Block  && mastercore::_LatestBlock > 0){
 	//	return "";
 	//}
-	if(!p_txhistory)return "nil";
-	if(!p_txhistory->GetHistory(params[2].get_str()).empty()) return "exit tx";
-	p_txhistory->PutHistory(vecTxHash.ToString(), Block, HexStr(params.write()));
+	if(!p_paymenttxhistory)return "nil";
+	if(!p_paymenttxhistory->GetHistory(params[2].get_str()).empty()) return "exit tx";
+	p_paymenttxhistory->PutHistory(vecTxHash.ToString(), Block, HexStr(params.write()));
 	return DEx_payment(vecTxHash, Idx, Sender, Reference, Amount, Block)? "fail" :"success";
 }
+
+void onblockconnected_p(const UniValue& params, bool fHelp)
+{
+    //Sender, Reference, Block, uint256(vecTxHash), Block, Idx, &(Script[0]), Script.size(), 3, Fee
+    int len = params.size();
+
+    if (fHelp || params.size() != 3)
+        throw runtime_error(
+            "omni_processpayment\n"
+            "\nExamples:\n" +
+            HelpExampleCli("omni_processpayment", "000000fff3d3322faddd"));
+
+
+	int curHeight = params[0].get_int();
+	mastercore::_LatestBlock = curHeight;
+    mastercore::_LatestBlockHash = uint256S(params[1].get_str());
+	mastercore::_LatestBlockTime = params[2].get_int64();
+	_my_sps->setWatermark(mastercore::_LatestBlockHash);
+	SetWaterline(curHeight);
+	
+	eraseExpiredAccepts(mastercore::_LatestBlock);
+	calculate_and_update_devmsc(mastercore::_LatestBlockTime, mastercore::_LatestBlock);
+	p_blockhistory->PutBlockHistory(mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString(), mastercore::_LatestBlockTime);
+	if (mastercore::_LatestBlock >= ConsensusParams().GENESIS_BLOCK) {
+		PersistInMemoryStateEx(mastercore::_LatestBlock, mastercore::_LatestBlockHash);
+	}
+}
+
 
 UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 {
@@ -2746,20 +2775,48 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
 
 
 	int curHeight = params[0].get_int();
-	if(curHeight - 1 != mastercore::_LatestBlock && mastercore::_LatestBlock > 0){mastercore::_LatestBlock = 0; return "";}
+	if(curHeight - 1 != mastercore::_LatestBlock && mastercore::_LatestBlock > 0)
+	{
+		mastercore::p_localblockinfo->PutInfo(curHeight, params.write());
+		return "";
+	}
 
-	mastercore::_LatestBlock = curHeight;
-    mastercore::_LatestBlockHash = uint256S(params[1].get_str());
-	mastercore::_LatestBlockTime = params[2].get_int64();
-	_my_sps->setWatermark(mastercore::_LatestBlockHash);
-	SetWaterline(curHeight);
-	//PrintToConsole("omni_onblockconnected : %d\t%s\t%I64d\n", mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString(), mastercore::_LatestBlockTime);
+	onblockconnected_p(params, fHelp);
 
-	eraseExpiredAccepts(mastercore::_LatestBlock);
-	calculate_and_update_devmsc(mastercore::_LatestBlockTime, mastercore::_LatestBlock);
-	p_blockhistory->PutBlockHistory(mastercore::_LatestBlock, mastercore::_LatestBlockHash.ToString(), mastercore::_LatestBlockTime);
-	if (mastercore::_LatestBlock >= ConsensusParams().GENESIS_BLOCK) {
-		PersistInMemoryStateEx(mastercore::_LatestBlock, mastercore::_LatestBlockHash);
+	std::string hash;
+	int64_t time;
+	int64_t index = mastercore::_LatestBlock + 1;
+	std::vector<std::string> vecTxList;
+	bool end = false;
+	while(true)
+	{
+		std::string blockInfo = mastercore::p_localblockinfo->GetBlockInfo(index);
+		if(blockInfo.empty()) break;
+		if(!mastercore::p_localtxinfo->GetTxInfo(index, &vecTxList).empty())
+		{
+			for (size_t i = 0; i < vecTxList.size(); i++)
+			{
+				UniValue valRequest;
+				if (!valRequest.read(vecTxList[i]))
+					throw JSONRPCError(RPC_PARSE_ERROR, "Parse error");
+				mastercore_handler_mptx(valRequest);
+			}
+			mastercore::p_localtxinfo->Delete(index);
+		}
+		mastercore::p_localblockinfo->Delete(index);
+
+		UniValue valRequest;
+		if (!valRequest.read(blockInfo))
+			throw JSONRPCError(RPC_PARSE_ERROR, "Parse error");
+
+		onblockconnected_p(valRequest, fHelp);
+		index++;
+		end = true;
+	}
+	if(end)
+	{
+		mastercore::p_localtxinfo->Clear();
+		mastercore::p_localblockinfo->Clear();
 	}
 	return "";
 }

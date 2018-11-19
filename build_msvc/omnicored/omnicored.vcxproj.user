@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>--testnet -u admin -P 123 --hcusername admin --walletpass 123 --hcpassword 123  --noclienttls --noservertls</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--testnet -u admin -P 123 --hcusername admin --walletpass 123 --hcpassword 123</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommand>$(GOPATH)\src\github.com\HcashOrg\hcwallet\hcwallet.exe</LocalDebuggerCommand>
   </PropertyGroup>

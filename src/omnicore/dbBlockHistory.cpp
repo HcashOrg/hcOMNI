@@ -140,7 +140,6 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
 	height = -1;
 	hash.clear();
 	const std::string key = strprintf("%d", index);
-    std::set<feeHistoryItem> sFeeHistoryItems;
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 	if (status.IsNotFound()) {
@@ -159,7 +158,7 @@ bool COmniBlockHistory::GetBlockHistory(int index, int& height, std::string& has
 }
 
 bool COmniBlockHistory::GetBlockHistory(const std::string& key, int& height, std::string& hash, int64_t* pTime)
-{    std::set<feeHistoryItem> sFeeHistoryItems;
+{
     std::string strValue;
     leveldb::Status status = pdb->Get(readoptions, key, &strValue);
 	if (status.IsNotFound()) {
