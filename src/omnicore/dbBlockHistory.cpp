@@ -249,10 +249,10 @@ int COmniBlockHistory::GetLeftTopBlock()
 {
 	int left = 0;
     leveldb::Iterator* it = NewIterator();
+	std::vector<std::string> vHistoryDetail;
     for(it->SeekToFirst(); it->Valid(); it->Next()) {
-
-		std::vector<std::string> vHistoryDetail;
-		boost::split(vHistoryDetail, it->value().ToString(), boost::is_any_of(":"), boost::token_compress_on);
+		std::string value(it->value().ToString());
+		boost::split(vHistoryDetail, value, boost::is_any_of(":"), boost::token_compress_on);
 		if(vHistoryDetail.size() != 3)
 		{
 			left = 0;
