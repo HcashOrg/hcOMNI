@@ -47,6 +47,7 @@ OMNICORE_H = \
   omnicore/walletutils.h \
   omnicore/dbTxHistory.h \
   omnicore/dbBlockHistory.h \
+  omnicore/dbLocalInfo.h \
   OmniThread/DataHandler.h \
   OmniThread/OmniInc.h \
   OmniThread/OmniThread.h \
@@ -102,6 +103,7 @@ OMNICORE_CPP = \
   omnicore/walletutils.cpp \
   omnicore/dbTxHistory.cpp \
   omnicore/dbBlockHistory.cpp \
+  omnicore/dbLocalInfo.cpp \
   OmniThread/OmniThread.cpp \
   OmniThread/WnEvent.cpp \
   OmniThread/WnLock.cpp \
