@@ -168,7 +168,7 @@ CMainConsensusParams::CMainConsensusParams()
     exodusBonusPerWeek = 0.10;
     exodusDeadline = 1672416000; //2022-12-31 00:00:00 btc timestemp 1377993600 = 2013-09-01 08:00:00
     exodusReward = 100;
-    GENESIS_BLOCK = 1;
+    GENESIS_BLOCK = 46000;
     //LAST_EXODUS_BLOCK = 255365;
 	LAST_EXODUS_BLOCK = 877000; //according to  param exodusDeadline
     // Notice range for feature activations:
@@ -211,7 +211,7 @@ CTestNetConsensusParams::CTestNetConsensusParams()
     exodusBonusPerWeek = 0.00;
     exodusDeadline = 1672416000;
     exodusReward = 100;
-    GENESIS_BLOCK = 40000;
+    GENESIS_BLOCK = 1;
     LAST_EXODUS_BLOCK = std::numeric_limits<int>::max();
     // Notice range for feature activations:
     MIN_ACTIVATION_BLOCKS = 0;

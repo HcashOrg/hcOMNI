@@ -2773,9 +2773,8 @@ UniValue omni_onblockconnected(const UniValue& params, bool fHelp)
             "\nExamples:\n" +
             HelpExampleCli("omni_processpayment", "000000fff3d3322faddd"));
 
-
 	int curHeight = params[0].get_int();
-	if(curHeight - 1 != mastercore::_LatestBlock && mastercore::_LatestBlock > 0)
+	if(curHeight - 1 != mastercore::_LatestBlock && mastercore::_LatestBlock > ConsensusParams().GENESIS_BLOCK)
 	{
 		mastercore::p_localblockinfo->PutInfo(curHeight, params.write());
 		return "";
