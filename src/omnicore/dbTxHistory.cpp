@@ -191,8 +191,8 @@ bool COmniTxHistory::IsExist(int64_t index)const
 COmniPaymentTxHistory::COmniPaymentTxHistory(const boost::filesystem::path& path, bool fWipe):
 	COmniTxHistory(path, fWipe)
 {
-    leveldb::Status status = Open(path, fWipe);
-    PrintToConsole("Loading COmniPaymentTxHistory database: %s\n", status.ToString());
+//    leveldb::Status status = Open(path, fWipe);
+//    PrintToConsole("Loading COmniPaymentTxHistory database: %s\n", status.ToString());
 }
 
 COmniPaymentTxHistory::~COmniPaymentTxHistory()

@@ -50,6 +50,7 @@ void CLocalBlockInfo::printStats()
 // Show Fee History DB records
 void CLocalBlockInfo::printAll()
 {
+	assert(pdb);
     int count = 0;
     leveldb::Iterator* it = NewIterator();
     for(it->SeekToFirst(); it->Valid(); it->Next()) {
@@ -63,6 +64,7 @@ void CLocalBlockInfo::printAll()
 // Count Fee History DB records
 int64_t CLocalBlockInfo::CountRecords()const
 {
+	assert(pdb);
     // No faster way to count than to iterate - "There is no way to implement Count more efficiently inside leveldb than outside."
     int64_t count = 0;
     leveldb::Iterator* it = NewIterator();
@@ -139,6 +141,7 @@ void CLocalTxInfo::printStats()
 // Show Fee History DB records
 void CLocalTxInfo::printAll()
 {
+	assert(pdb);
     int count = 0;
     leveldb::Iterator* it = NewIterator();
     for(it->SeekToFirst(); it->Valid(); it->Next()) {
@@ -152,6 +155,7 @@ void CLocalTxInfo::printAll()
 // Count Fee History DB records
 int64_t CLocalTxInfo::CountRecords()const
 {
+	assert(pdb);
     // No faster way to count than to iterate - "There is no way to implement Count more efficiently inside leveldb than outside."
     int64_t count = 0;
     leveldb::Iterator* it = NewIterator();
