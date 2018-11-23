@@ -94,11 +94,11 @@ int parse_cmdline(char* line, char*** argvp)
     return argc;
 }
 
-extern bool AppInitEx(char* netName);
+extern bool AppInitEx(char* netName, char* dataDir);
 
-MYDLLAPI void OmniStart(char* netName)
+MYDLLAPI void OmniStart(char* netName, char* dataDir)
 {
-    AppInitEx(netName);
+    AppInitEx(netName, dataDir);
     /*
     printf(" in OmniStart\n");
 

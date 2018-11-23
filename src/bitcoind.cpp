@@ -64,8 +64,13 @@ void WaitForShutdown(boost::thread_group* threadGroup)
 //
 // Start
 //
-bool AppInitEx(char* netName)
+bool AppInitEx(char* netName, char* dataDir)
 {
+	if (dataDir == NULL)
+	{
+		return false;
+	}
+	mapArgs["-datadir"] = dataDir;
 	if (!boost::filesystem::is_directory(GetDataDir(false))) {
 		return false;
     }
