@@ -1654,56 +1654,61 @@ UniValue omni_gettradehistoryforaddress(const UniValue& params, bool fHelp)
             + HelpExampleRpc("omni_gettradehistoryforaddress", "\"1MCHESTptvd2LnNp7wmr2sGTpRomteAkq8\"")
         );
 
-    std::string address = params[0].getValStr();
+	std::string address = ParseAddress(params[0]);
 	uint64_t count = (params.size() > 1) ? params[1].get_int64() : 10;
-    uint32_t propertyId = 0;
+	uint32_t propertyId = 0;
 
-    if (params.size() > 2) {
-        propertyId = ParsePropertyId(params[2]);
-        RequireExistingProperty(propertyId);
-    }
+	if (params.size() > 2) {
+		propertyId = ParsePropertyId(params[2]);
+		RequireExistingProperty(propertyId);
+	}
 
-	// request pair trade history from trade db
-    UniValue response(UniValue::VARR);
-    LOCK(cs_tally);
-    t_tradelistdb->getTradesForAddressNew(address, response, count, propertyId);//to be changed later
-    return response;
+	// Obtain a sorted vector of txids for the address trade history
+	std::vector<uint256> vecTransactions;
+	{
+		LOCK(cs_tally);
+		t_tradelistdb->getTradesForAddress(address, vecTransactions, propertyId);
+	}
 
-    // Obtain a sorted vector of txids for the address trade history
-    /*
-    std::vector<uint256> vecTransactions;
-    {
-        LOCK(cs_tally);
-        t_tradelistdb->getTradesForAddress(address, vecTransactions, propertyId);
-    }
+	// Populate the address trade history into JSON objects until we have processed count transactions
+	UniValue response(UniValue::VARR);
+	uint32_t processed = 0;
+	for (std::vector<uint256>::reverse_iterator it = vecTransactions.rbegin(); it != vecTransactions.rend(); ++it) {
+		UniValue txobj(UniValue::VOBJ);
+		//int populateResult = populateRPCTransactionObject(*it, txobj, "", true);
 
-    // Populate the address trade history into JSON objects until we have processed count transactions
-    UniValue response(UniValue::VARR);
-    uint32_t processed = 0;
+			int topBlock = mastercore::GetHeight();
+			int blockHeight = p_txhistory->GetTheBlockOfTx(it->ToString());
+			int confirmations = 1 + topBlock - blockHeight;
 
-    for (std::vector<uint256>::reverse_iterator it = vecTransactions.rbegin(); it != vecTransactions.rend(); ++it) {
-        UniValue txobj(UniValue::VOBJ);
-        int populateResult = populateRPCTransactionObject(*it, txobj, "", true);
-        if (0 == populateResult) {
-            response.push_back(txobj);
-            processed++;
-            if (processed >= count)
-                break;
-        }
-    }
+			std::string history = p_txhistory->GetHistory(it->ToString());
+			if (history.empty() || !txobj.read(history))
+			{
+				continue;
+			}
 
+			std::string ScriptEncode = txobj["PayLoad"].get_str();
+			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
 
-    for(std::vector<uint256>::reverse_iterator it = vecTransactions.rbegin(); it != vecTransactions.rend(); ++it) {
-        UniValue txobj(UniValue::VOBJ);
-        int populateResult = populateRPCTransactionObject(*it, txobj, "", true);
-        if (0 == populateResult) {
-            response.push_back(txobj);
-            processed++;
-            if (processed >= count) break;
-        }
-    }
-    return response;
-	*/
+			CMPTransaction mp_obj;
+			mp_obj.unlockLogic();
+			mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+			mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+			mp_obj.Set(txobj["Sender"].getValStr(), txobj["Reference"].getValStr(),
+				0, uint256S(txobj["TxHash"].getValStr()),
+				txobj["Block"].get_int(), txobj["Idx"].get_int(),
+				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
+			Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), txobj, topBlock, "", true);
+
+		if (!txobj.isNull()) {
+			response.push_back(txobj);
+			processed++;
+			if (processed >= count) break;
+		}
+	}
+
+	
+	return response;
 }
 
 UniValue omni_gettradehistoryforpair(const UniValue& params, bool fHelp)

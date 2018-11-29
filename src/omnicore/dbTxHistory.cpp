@@ -129,6 +129,21 @@ std::string COmniTxHistory::GetHistory(const std::string& key)
 	return std::string(vecRet.begin(), vecRet.end());
 }
 
+int64_t COmniTxHistory::GetTheBlockOfTx(const std::string& txHash)
+{
+	//const std::string key = strprintf("%d", index);
+	std::string strValue;
+	leveldb::Status status = pdb->Get(readoptions, txHash, &strValue);
+	if (status.IsNotFound()) {
+		return -1;
+	}
+	std::vector<std::string> vHistoryDetail;
+	boost::split(vHistoryDetail, strValue, boost::is_any_of(":"), boost::token_compress_on);
+	if (vHistoryDetail.size() != 3)
+		return -1;
+	return atoi64(vHistoryDetail[0].c_str());
+}
+
 std::string COmniTxHistory::GetHistory(int64_t index)
 {
 	const std::string key = strprintf("%lld", index);

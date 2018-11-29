@@ -30,6 +30,7 @@ public:
     /** Count Fee History DB records */
     int64_t CountRecords()const;
    
+	int64_t GetTheBlockOfTx(const std::string& txHash);
 	std::string GetHistory(const std::string& key);
 	std::string GetHistory(int64_t index);
 	std::string GetEndHistory();
