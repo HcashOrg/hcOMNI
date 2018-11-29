@@ -27,6 +27,13 @@
 #include "rpc/register.h"
 
 #include <stdio.h>
+
+#ifdef WIN32
+#include <windows.h>
+#include <DbgHelp.h>
+#pragma comment(lib, "dbghelp.lib")
+#endif // WIN32
+
 //#include "createpayload.h"
 /* Introduction text for doxygen: */
 
@@ -46,19 +53,43 @@
 
 static bool fDaemon;
 
-void WaitForShutdown(boost::thread_group* threadGroup)
+#ifdef WIN32
+
+LONG __stdcall ExceptCallBack(EXCEPTION_POINTERS *pExcPointer)
 {
-    bool fShutdown = ShutdownRequested();
-    // Tell the main threads to shutdown.
-    while (!fShutdown) {
-        MilliSleep(200);
-        fShutdown = ShutdownRequested();
-    }
-    if (threadGroup) {
-        Interrupt(*threadGroup);
-        threadGroup->join_all();
-    }
+	time_t nowtime = time(NULL);
+	std::string fileName;
+	char buf[21] = {0};
+	fileName += _i64toa_s(nowtime, buf, 20, 10);
+	fileName += ".dmp";
+	boost::filesystem::path filePath = GetDataDir(false)/fileName;
+	HANDLE hFile = CreateFileA(filePath.string().c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	MINIDUMP_EXCEPTION_INFORMATION loExceptionInfo;
+	loExceptionInfo.ExceptionPointers = pExcPointer;
+	loExceptionInfo.ThreadId = GetCurrentThreadId();
+	loExceptionInfo.ClientPointers = TRUE;
+	MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal, &loExceptionInfo, NULL, NULL);
+	CloseHandle(hFile);
+	return EXCEPTION_EXECUTE_HANDLER;
 }
+
+
+#endif // WIN32
+
+//void WaitForShutdown(boost::thread_group* threadGroup)
+//{
+//    bool fShutdown = ShutdownRequested();
+//    // Tell the main threads to shutdown.
+//    while (!fShutdown) {
+//        MilliSleep(200);
+//        fShutdown = ShutdownRequested();
+//    }
+//    if (threadGroup) {
+//        Interrupt(*threadGroup);
+//        threadGroup->join_all();
+//    }
+//}
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -78,6 +109,11 @@ bool AppInitEx(char* netName, char* dataDir)
 		SelectParams(netName);
 	}
 
+#ifdef WIN32
+	SetUnhandledExceptionFilter(ExceptCallBack);
+
+#endif // WIN32
+
 	RegisterAllCoreRPCCommands(tableRPC);
 	SetRPCWarmupFinished();
 	mastercore_init_ex();
@@ -87,126 +123,126 @@ bool AppInitEx(char* netName, char* dataDir)
 //
 // Start
 //
-bool AppInit(int argc, char* argv[])
-{
-    boost::thread_group threadGroup;
-    CScheduler scheduler;
-
-    bool fRet = false;
-
-    //
-    // Parameters
-    //
-    // If Qt is used, parameters/bitcoin.conf are parsed in qt/bitcoin.cpp's main()
-    ParseParameters(argc, argv);
-
-    // Process help and version before taking care about datadir
-    if (mapArgs.count("-?") || mapArgs.count("-h") || mapArgs.count("-help") || mapArgs.count("-version")) {
-        std::string strUsage = strprintf(_("%s Daemon"), _(PACKAGE_NAME)) + " " + _("version") + " " + FormatFullVersion() + "\n";
-
-        if (mapArgs.count("-version")) {
-            strUsage += FormatParagraph(LicenseInfo());
-        } else {
-            strUsage += "\n" + _("Usage:") + "\n" +
-                        "  omnicored [options]                     " + strprintf(_("Start %s Daemon"), _(PACKAGE_NAME)) + "\n";
-
-            strUsage += "\n" + HelpMessage(HMM_BITCOIND);
-        }
-
-        fprintf(stdout, "%s", strUsage.c_str());
-        return true;
-    }
-
-    try {
-        if (!boost::filesystem::is_directory(GetDataDir(false))) {
-            fprintf(stderr, "Error: Specified data directory \"%s\" does not exist.\n", mapArgs["-datadir"].c_str());
-            return false;
-        }
-        try {
-            ReadConfigFile(mapArgs, mapMultiArgs);
-        } catch (const std::exception& e) {
-            fprintf(stderr, "Error reading configuration file: %s\n", e.what());
-            return false;
-        }
-        // Check for -testnet or -regtest parameter (Params() calls are only valid after this clause)
-        try {
-            SelectParams(ChainNameFromCommandLine());
-        } catch (const std::exception& e) {
-            fprintf(stderr, "Error: %s\n", e.what());
-            return false;
-        }
-
-        // Command-line RPC
-        bool fCommandLine = false;
-        for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "bitcoin:"))
-                fCommandLine = true;
-
-        if (fCommandLine) {
-            fprintf(stderr, "Error: There is no RPC client functionality in omnicored anymore. Use the omnicore-cli utility instead.\n");
-            exit(EXIT_FAILURE);
-        }
-#ifndef WIN32
-        fDaemon = GetBoolArg("-daemon", false);
-        if (fDaemon) {
-            fprintf(stdout, "Omni Core server starting\n");
-
-            // Daemonize
-            pid_t pid = fork();
-            if (pid < 0) {
-                fprintf(stderr, "Error: fork() returned %d errno %d\n", pid, errno);
-                return false;
-            }
-            if (pid > 0) // Parent process, pid is child process id
-            {
-                return true;
-            }
-            // Child process falls through to rest of initialization
-
-            pid_t sid = setsid();
-            if (sid < 0)
-                fprintf(stderr, "Error: setsid() returned %d errno %d\n", sid, errno);
-        }
-#endif
-        SoftSetBoolArg("-server", true);
-
-        // Set this early so that parameter interactions go to console
-        InitLogging();
-        InitParameterInteraction();
-        fRet = AppInit2(threadGroup, scheduler);
-    } catch (const std::exception& e) {
-        PrintExceptionContinue(&e, "AppInit()");
-    } catch (...) {
-        PrintExceptionContinue(NULL, "AppInit()");
-    }
-
-    if (!fRet) {
-        Interrupt(threadGroup);
-        // threadGroup.join_all(); was left out intentionally here, because we didn't re-test all of
-        // the startup-failure cases to make sure they don't result in a hang due to some
-        // thread-blocking-waiting-for-another-thread-during-startup case
-    } else {
-        WaitForShutdown(&threadGroup);
-    }
-    Shutdown();
-
-    return fRet;
-}
-
-
-int main_actual(int argc, char* argv[])
-{
-    SetupEnvironment();
-
-    // Indicate no-UI mode
-    fQtMode = false;
-
-    // Connect bitcoind signal handlers
-    noui_connect();
-
-    return (AppInit(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE);
-}
-
+//bool AppInit(int argc, char* argv[])
+//{
+//    boost::thread_group threadGroup;
+//    CScheduler scheduler;
+//
+//    bool fRet = false;
+//
+//    //
+//    // Parameters
+//    //
+//    // If Qt is used, parameters/bitcoin.conf are parsed in qt/bitcoin.cpp's main()
+//    ParseParameters(argc, argv);
+//
+//    // Process help and version before taking care about datadir
+//    if (mapArgs.count("-?") || mapArgs.count("-h") || mapArgs.count("-help") || mapArgs.count("-version")) {
+//        std::string strUsage = strprintf(_("%s Daemon"), _(PACKAGE_NAME)) + " " + _("version") + " " + FormatFullVersion() + "\n";
+//
+//        if (mapArgs.count("-version")) {
+//            strUsage += FormatParagraph(LicenseInfo());
+//        } else {
+//            strUsage += "\n" + _("Usage:") + "\n" +
+//                        "  omnicored [options]                     " + strprintf(_("Start %s Daemon"), _(PACKAGE_NAME)) + "\n";
+//
+//            strUsage += "\n" + HelpMessage(HMM_BITCOIND);
+//        }
+//
+//        fprintf(stdout, "%s", strUsage.c_str());
+//        return true;
+//    }
+//
+//    try {
+//        if (!boost::filesystem::is_directory(GetDataDir(false))) {
+//            fprintf(stderr, "Error: Specified data directory \"%s\" does not exist.\n", mapArgs["-datadir"].c_str());
+//            return false;
+//        }
+//        try {
+//            ReadConfigFile(mapArgs, mapMultiArgs);
+//        } catch (const std::exception& e) {
+//            fprintf(stderr, "Error reading configuration file: %s\n", e.what());
+//            return false;
+//        }
+//        // Check for -testnet or -regtest parameter (Params() calls are only valid after this clause)
+//        try {
+//            SelectParams(ChainNameFromCommandLine());
+//        } catch (const std::exception& e) {
+//            fprintf(stderr, "Error: %s\n", e.what());
+//            return false;
+//        }
+//
+//        // Command-line RPC
+//        bool fCommandLine = false;
+//        for (int i = 1; i < argc; i++)
+//            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "bitcoin:"))
+//                fCommandLine = true;
+//
+//        if (fCommandLine) {
+//            fprintf(stderr, "Error: There is no RPC client functionality in omnicored anymore. Use the omnicore-cli utility instead.\n");
+//            exit(EXIT_FAILURE);
+//        }
+//#ifndef WIN32
+//        fDaemon = GetBoolArg("-daemon", false);
+//        if (fDaemon) {
+//            fprintf(stdout, "Omni Core server starting\n");
+//
+//            // Daemonize
+//            pid_t pid = fork();
+//            if (pid < 0) {
+//                fprintf(stderr, "Error: fork() returned %d errno %d\n", pid, errno);
+//                return false;
+//            }
+//            if (pid > 0) // Parent process, pid is child process id
+//            {
+//                return true;
+//            }
+//            // Child process falls through to rest of initialization
+//
+//            pid_t sid = setsid();
+//            if (sid < 0)
+//                fprintf(stderr, "Error: setsid() returned %d errno %d\n", sid, errno);
+//        }
+//#endif
+//        SoftSetBoolArg("-server", true);
+//
+//        // Set this early so that parameter interactions go to console
+//        InitLogging();
+//        InitParameterInteraction();
+//        fRet = AppInit2(threadGroup, scheduler);
+//    } catch (const std::exception& e) {
+//        PrintExceptionContinue(&e, "AppInit()");
+//    } catch (...) {
+//        PrintExceptionContinue(NULL, "AppInit()");
+//    }
+//
+//    if (!fRet) {
+//        Interrupt(threadGroup);
+//        // threadGroup.join_all(); was left out intentionally here, because we didn't re-test all of
+//        // the startup-failure cases to make sure they don't result in a hang due to some
+//        // thread-blocking-waiting-for-another-thread-during-startup case
+//    } else {
+//        WaitForShutdown(&threadGroup);
+//    }
+//    Shutdown();
+//
+//    return fRet;
+//}
+//
+//
+//int main_actual(int argc, char* argv[])
+//{
+//    SetupEnvironment();
+//
+//    // Indicate no-UI mode
+//    fQtMode = false;
+//
+//    // Connect bitcoind signal handlers
+//    noui_connect();
+//
+//    return (AppInit(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE);
+//}
+//
 
 
  

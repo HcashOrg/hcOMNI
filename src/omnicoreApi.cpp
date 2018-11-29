@@ -59,40 +59,40 @@ MYDLLAPI void SetCallback(unsigned int uiIndx, void* pJsonCmdReqOmToHc)
 
 
 
-int parse_cmdline(char* line, char*** argvp)
-{
-    char** argv = (char**)malloc(sizeof(char*));
-    int argc = 0;
-    while (*line != '\0') {
-        char quote = 0;
-        while (strchr("\t ", *line)) /* Skips white spaces */
-            line++;
-        if (!*line)
-            break;
-        argv = (char**)realloc(argv, (argc + 2) * sizeof(char*)); /* Starts a new parameter */
-        if (*line == '"') {
-            quote = '"';
-            line++;
-        }
-        argv[argc++] = line;
-    more:
-        while (*line && !strchr("\t ", *line))
-            line++;
-
-        if (line > argv[argc - 1] && line[-1] == quote) // End of quoted parameter
-            line[-1] = 0;
-        else if (*line && quote) { // Space within a quote
-
-            line++;
-            goto more;
-        } else // End of unquoted parameter
-            if (*line)
-            *line++ = 0;
-    }
-    argv[argc] = NULL;
-    *argvp = argv;
-    return argc;
-}
+//int parse_cmdline(char* line, char*** argvp)
+//{
+//    char** argv = (char**)malloc(sizeof(char*));
+//    int argc = 0;
+//    while (*line != '\0') {
+//        char quote = 0;
+//        while (strchr("\t ", *line)) /* Skips white spaces */
+//            line++;
+//        if (!*line)
+//            break;
+//        argv = (char**)realloc(argv, (argc + 2) * sizeof(char*)); /* Starts a new parameter */
+//        if (*line == '"') {
+//            quote = '"';
+//            line++;
+//        }
+//        argv[argc++] = line;
+//    more:
+//        while (*line && !strchr("\t ", *line))
+//            line++;
+//
+//        if (line > argv[argc - 1] && line[-1] == quote) // End of quoted parameter
+//            line[-1] = 0;
+//        else if (*line && quote) { // Space within a quote
+//
+//            line++;
+//            goto more;
+//        } else // End of unquoted parameter
+//            if (*line)
+//            *line++ = 0;
+//    }
+//    argv[argc] = NULL;
+//    *argvp = argv;
+//    return argc;
+//}
 
 extern bool AppInitEx(char* netName, char* dataDir);
 
