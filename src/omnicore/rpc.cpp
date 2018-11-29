@@ -1673,35 +1673,32 @@ UniValue omni_gettradehistoryforaddress(const UniValue& params, bool fHelp)
 	// Populate the address trade history into JSON objects until we have processed count transactions
 	UniValue response(UniValue::VARR);
 	uint32_t processed = 0;
+	int topBlock = mastercore::GetHeight();
+	UniValue txobj(UniValue::VOBJ);
 	for (std::vector<uint256>::reverse_iterator it = vecTransactions.rbegin(); it != vecTransactions.rend(); ++it) {
-		UniValue txobj(UniValue::VOBJ);
-		//int populateResult = populateRPCTransactionObject(*it, txobj, "", true);
+		int blockHeight = p_txhistory->GetTheBlockOfTx(it->ToString());
+		int confirmations = 1 + topBlock - blockHeight;
+		std::string history = p_txhistory->GetHistory(it->ToString());
+		if (history.empty() || !txobj.read(history))
+		{
+			continue;
+		}
+		UniValue txItem(UniValue::VOBJ);
+		std::string ScriptEncode = txobj["PayLoad"].get_str();
+		std::vector<unsigned char> Script = ParseHex(ScriptEncode);
 
-			int topBlock = mastercore::GetHeight();
-			int blockHeight = p_txhistory->GetTheBlockOfTx(it->ToString());
-			int confirmations = 1 + topBlock - blockHeight;
+		CMPTransaction mp_obj;
+		mp_obj.unlockLogic();
+		mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+		mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+		mp_obj.Set(txobj["Sender"].getValStr(), txobj["Reference"].getValStr(),
+			0, uint256S(txobj["TxHash"].getValStr()),
+			txobj["Block"].get_int(), txobj["Idx"].get_int(),
+			&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
+		Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), txItem, topBlock, "", true);
 
-			std::string history = p_txhistory->GetHistory(it->ToString());
-			if (history.empty() || !txobj.read(history))
-			{
-				continue;
-			}
-
-			std::string ScriptEncode = txobj["PayLoad"].get_str();
-			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
-
-			CMPTransaction mp_obj;
-			mp_obj.unlockLogic();
-			mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
-			mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
-			mp_obj.Set(txobj["Sender"].getValStr(), txobj["Reference"].getValStr(),
-				0, uint256S(txobj["TxHash"].getValStr()),
-				txobj["Block"].get_int(), txobj["Idx"].get_int(),
-				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
-			Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), txobj, topBlock, "", true);
-
-		if (!txobj.isNull()) {
-			response.push_back(txobj);
+		if (!txItem.isNull()) {
+			response.push_back(txItem);
 			processed++;
 			if (processed >= count) break;
 		}
