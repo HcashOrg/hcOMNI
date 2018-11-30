@@ -230,19 +230,19 @@ bool AppInitEx(char* netName, char* dataDir)
 //}
 //
 //
-//int main_actual(int argc, char* argv[])
-//{
-//    SetupEnvironment();
-//
-//    // Indicate no-UI mode
-//    fQtMode = false;
-//
-//    // Connect bitcoind signal handlers
-//    noui_connect();
-//
-//    return (AppInit(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE);
-//}
-//
+int main_actual(int argc, char* argv[])
+{
+    SetupEnvironment();
+
+    // Indicate no-UI mode
+    //fQtMode = false;
+
+    // Connect bitcoind signal handlers
+    //noui_connect();
+
+    //return (AppInit(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE);
+}
+
 
 
  
