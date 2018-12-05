@@ -233,6 +233,7 @@ bool AppInitEx(char* netName, char* dataDir)
 int main_actual(int argc, char* argv[])
 {
     SetupEnvironment();
+	return 0;
 
     // Indicate no-UI mode
     //fQtMode = false;
