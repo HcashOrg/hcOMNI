@@ -1,20 +1,22 @@
 #include "omnicoreApi.h"
 #include <vector>
 
+#include "omnicore/omniHelper.h"
+
 #ifdef _WIN32
-#ifdef MYDLL_IMPORTS
-#define MYDLLAPI extern "C" __declspec(dllimport)
+#ifdef DLL_IMPORTS
+#define OMNI_API extern "C" __declspec(dllimport)
 #else
-#define MYDLLAPI extern "C" __declspec(dllexport)
+#define OMNI_API extern "C" __declspec(dllexport)
 #endif
 #else
-#define MYDLLAPI extern "C"
+#define OMNI_API extern "C"
 #endif
 
 extern void PropertyToJSON(const CMPSPInfo::Entry& sProperty, UniValue& property_obj);
 
 
-MYDLLAPI const char* JsonCmdReq(char* pcReq)
+OMNI_API const char* JsonCmdReq(char* pcReq)
 {
     std::string strReq = std::string(pcReq);
     std::string strReply = HTTPReq_JSONRPC_Simple(strReq);
@@ -43,7 +45,7 @@ char* JsonCmdReqOmToHc(char* pcReq)  //linux version is defined in omniSubCall_u
 }
 #endif
 
-MYDLLAPI void SetCallback(unsigned int uiIndx, void* pJsonCmdReqOmToHc)
+OMNI_API void SetCallback(unsigned int uiIndx, void* pJsonCmdReqOmToHc)
 { //	now just set one callback function,other may add later
 
     gFunJsonCmdReqOmToHc = (FunJsonCmdReqOmToHc)pJsonCmdReqOmToHc;
@@ -96,22 +98,7 @@ MYDLLAPI void SetCallback(unsigned int uiIndx, void* pJsonCmdReqOmToHc)
 
 extern bool AppInitEx(char* netName, char* dataDir);
 
-MYDLLAPI void OmniStart(char* netName, char* dataDir)
+OMNI_API void OmniStart(char* netName, char* dataDir)
 {
-    AppInitEx(netName, dataDir);
-    /*
-    printf(" in OmniStart\n");
-
-	char* argv[] = {"-exe", "-regtest", "-txindex", "-server=1", "-addnode=192.168.1.24", "-reindex-chainstate", "-debug=1"};
-   //  int argc = parse_cmdline(7, &argv);
-
-
-    //below copy from main()
-    //char* argv[] = {"exeName", "-regtest", "-txindex"};
-    SetupEnvironment();
-  //  fQtMode = false; // Indicate no-UI mode
-    noui_connect();  // Connect bitcoind signal handlers
-    AppInit(7, argv);
-    //main(3, argv);
-	*/
+	AppInitEx(netName, dataDir);
 }

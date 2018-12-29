@@ -1,7 +1,7 @@
 // This file serves to provide payload creation functions.
 
 #include "omnicore/createpayload.h"
-
+#include "omnicore/omniHelper.h"
 #include "omnicore/log.h"
 #include "omnicore/parsing.h"
 
@@ -559,6 +559,40 @@ std::vector<unsigned char> CreatePayload_OmniCoreAlert(uint16_t alertType, uint3
 
     return payload;
 }
+
+std::vector<unsigned char> CreatePayload_OmniAgreement(const std::string& agreementid,
+	const std::string& nonencryptedcontent, const std::string& key, const std::string& encryptedcontent)
+{
+	std::vector<unsigned char> payload;
+	uint16_t messageType = 201;
+	uint16_t messageVer = 0;
+	
+	std::string data = OmniCore::Compress(nonencryptedcontent);
+	uint32_t length = data.size();
+
+	SwapByteOrder16(messageVer);
+	SwapByteOrder16(messageType);
+	SwapByteOrder32(length);
+
+	PUSH_BACK_BYTES(payload, messageVer);
+	PUSH_BACK_BYTES(payload, messageType);
+	PUSH_BACK_BYTES(payload, length);
+
+	payload.insert(payload.end(), agreementid .begin(), agreementid.end());
+	payload.push_back('\0');
+
+	payload.insert(payload.end(), data.begin(), data.end());
+	payload.push_back('\0');
+
+	if (!key.empty()){
+
+		data = OmniCore::AesEncryptEnhance(encryptedcontent, key);
+		payload.insert(payload.end(), data.begin(), data.end());
+		payload.push_back('\0');
+	}
+	return payload;
+}
+
 
 #undef PUSH_BACK_BYTES
 #undef PUSH_BACK_BYTES_PTR

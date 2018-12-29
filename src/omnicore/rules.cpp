@@ -70,6 +70,9 @@ std::vector<TransactionRestriction> CConsensusParams::GetRestrictions() const
         { MSC_TYPE_METADEX_CANCEL_ECOSYSTEM,  MP_TX_PKT_V0,  false,   MSC_METADEX_BLOCK  },
 
         { MSC_TYPE_SEND_ALL,                  MP_TX_PKT_V0,  false,   MSC_SEND_ALL_BLOCK },
+		{ MSC_TYPE_SEND_AGREEMENT,            MP_TX_PKT_V0,  false,   MSC_SEND_AGREEMENT },
+
+		
 
         { MSC_TYPE_OFFER_ACCEPT_A_BET,        MP_TX_PKT_V0,  false,   MSC_BET_BLOCK      },
     };
@@ -200,6 +203,7 @@ CMainConsensusParams::CMainConsensusParams()
     TRADEALLPAIRS_FEATURE_BLOCK = 46000;
     FEES_FEATURE_BLOCK = 999999;
     FREEZENOTICE_FEATURE_BLOCK = 999999;
+	MSC_SEND_AGREEMENT = 0;
 }
 
 /**
@@ -241,6 +245,7 @@ CTestNetConsensusParams::CTestNetConsensusParams()
     TRADEALLPAIRS_FEATURE_BLOCK = 0;
     FEES_FEATURE_BLOCK = 0;
     FREEZENOTICE_FEATURE_BLOCK = 0;
+	MSC_SEND_AGREEMENT = 0;
 }
 
 /**
@@ -282,6 +287,7 @@ CRegTestConsensusParams::CRegTestConsensusParams()
     TRADEALLPAIRS_FEATURE_BLOCK = 999999;
     FEES_FEATURE_BLOCK = 999999;
     FREEZENOTICE_FEATURE_BLOCK = 999999;
+	MSC_SEND_AGREEMENT = 0;
 }
 
 //! Consensus parameters for mainnet

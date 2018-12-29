@@ -134,6 +134,7 @@ public:
     //! Block to activate the waiting period for enabling managed property address freezing
     int FREEZENOTICE_FEATURE_BLOCK;
 
+	int MSC_SEND_AGREEMENT;
     /** Returns a mapping of transaction types, and the blocks at which they are enabled. */
     virtual std::vector<TransactionRestriction> GetRestrictions() const;
 

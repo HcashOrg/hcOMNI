@@ -39,6 +39,7 @@
 #include "omnicore/version.h"
 #include "omnicore/walletcache.h"
 #include "omnicore/walletutils.h"
+#include "omnicore/dbagreementtradelist.h"
 
 #include "base58.h"
 #include "chainparams.h"
@@ -151,6 +152,8 @@ COmniFeeHistory* mastercore::p_feehistory;
 COmniTxHistory* mastercore::p_txhistory;
 //! LevelDB based storage for the p_paymenttxhistory
 COmniPaymentTxHistory* mastercore::p_paymenttxhistory = nullptr;
+//! LevelDB based storage for the t_agttradelistdb
+CMPAgtTradeList* mastercore::t_agttradelistdb = nullptr;
 
 //! LevelDB based storage for the TxHistory
 COmniBlockHistory* mastercore::p_blockhistory;
@@ -1572,6 +1575,7 @@ void clear_all_state()
 	p_blockhistory->Clear();
 	p_localblockinfo->Clear();
 	p_localtxinfo->Clear();
+	t_agttradelistdb->Clear();
 
     assert(p_txlistdb->setDBVersion() == DB_VERSION); // new set of databases, set DB version
     exodus_prev = 0;
@@ -1597,6 +1601,7 @@ void RewindDBs(int nHeight, int top, bool fInitialParse)
 	p_blockhistory->RollBackHistory(nHeight, top);
 	p_localblockinfo->RollBackHistory(nHeight);
 	p_localtxinfo->RollBackHistory(nHeight);
+	t_agttradelistdb->RollBackHistory(nHeight);
 
     reorgRecoveryMaxHeight = 0;
 
@@ -1730,6 +1735,7 @@ int mastercore_init()
 	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
 	p_localblockinfo = new CLocalBlockInfo(GetDataDir() / "OMNI_localblockinfo", fReindex);
 	p_localtxinfo = new CLocalTxInfo(GetDataDir() / "OMNI_localtxinfo", fReindex);
+	t_agttradelistdb = new CMPAgtTradeList(GetDataDir() / "OMNI_agttxinfo", fReindex);
 
 	_LatestBlock = p_blockhistory->GetTopBlock();
     MPPersistencePath = GetDataDir() / "MP_persist";
@@ -1882,6 +1888,7 @@ int mastercore_init_ex()
 	p_blockhistory = new COmniBlockHistory(GetDataDir() / "OMNI_blockhistory", fReindex);
 	p_localblockinfo = new CLocalBlockInfo(GetDataDir() / "OMNI_localblockinfo", fReindex);
 	p_localtxinfo = new CLocalTxInfo(GetDataDir() / "OMNI_localtxinfo", fReindex);
+	t_agttradelistdb = new CMPAgtTradeList(GetDataDir() / "OMNI_agttxinfo", fReindex);
 
 	_LatestBlock = p_blockhistory->GetTopBlock();
     MPPersistencePath = GetDataDir() / "MP_persist";
@@ -2038,6 +2045,10 @@ int mastercore_shutdown()
         delete p_localtxinfo;
         p_localtxinfo = NULL;
     }
+	if (t_agttradelistdb) {
+		delete t_agttradelistdb;
+		t_agttradelistdb = NULL;
+	}
 
     mastercoreInitialized = 0;
 

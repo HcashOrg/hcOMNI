@@ -62,6 +62,9 @@
       <Filter>OmniThread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\omnicore\dbLocalInfo.cpp" />
+    <ClCompile Include="..\..\src\omnicore\rpcagreement.cpp" />
+    <ClCompile Include="..\..\src\omnicore\omniHelper.cpp" />
+    <ClCompile Include="..\..\src\omnicore\dbagreementtradelist.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\omnicoreApi.h" />
@@ -93,6 +96,10 @@
     <ClInclude Include="..\..\src\omnicore\omnicore.h" />
     <ClInclude Include="..\..\src\omnicore\persistence.h" />
     <ClInclude Include="..\..\src\omnicore\dbLocalInfo.h" />
+    <ClInclude Include="..\..\src\rpc\register.h" />
+    <ClInclude Include="..\..\src\omnicore\rpcagreement.h" />
+    <ClInclude Include="..\..\src\omnicore\omniHelper.h" />
+    <ClInclude Include="..\..\src\omnicore\dbagreementtradelist.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="OmniThread">

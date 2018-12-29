@@ -94,9 +94,7 @@
     </Link>
     <PostBuildEvent>
       <Command>XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\src\github.com\HcashOrg\hcwallet"
-XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"
-
-XCOPY /e /s /y "..\x64\Debug\*.dll" "C:\Users\Administrator\AppData\Local\Programs\hcgui\resources\bin"</Command>
+XCOPY /e /s /y "..\x64\Debug\*.dll" "$(GOPATH)\bin"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -179,6 +177,7 @@ XCOPY /e /s /y "..\x64\Debug\*.dll" "C:\Users\Administrator\AppData\Local\Progra
     <ClCompile Include="..\..\src\omnicore\convert.cpp" />
     <ClCompile Include="..\..\src\omnicore\createpayload.cpp" />
     <ClCompile Include="..\..\src\omnicore\createtx.cpp" />
+    <ClCompile Include="..\..\src\omnicore\dbagreementtradelist.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbbase.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbBlockHistory.cpp" />
     <ClCompile Include="..\..\src\omnicore\dbfees.cpp" />
@@ -195,11 +194,13 @@ XCOPY /e /s /y "..\x64\Debug\*.dll" "C:\Users\Administrator\AppData\Local\Progra
     <ClCompile Include="..\..\src\omnicore\mdex.cpp" />
     <ClCompile Include="..\..\src\omnicore\notifications.cpp" />
     <ClCompile Include="..\..\src\omnicore\omnicore.cpp" />
+    <ClCompile Include="..\..\src\omnicore\omniHelper.cpp" />
     <ClCompile Include="..\..\src\omnicore\parse_string.cpp" />
     <ClCompile Include="..\..\src\omnicore\parsing.cpp" />
     <ClCompile Include="..\..\src\omnicore\pending.cpp" />
     <ClCompile Include="..\..\src\omnicore\persistence.cpp" />
     <ClCompile Include="..\..\src\omnicore\rpc.cpp" />
+    <ClCompile Include="..\..\src\omnicore\rpcagreement.cpp" />
     <ClCompile Include="..\..\src\omnicore\rpcmbstring.cpp" />
     <ClCompile Include="..\..\src\omnicore\rpcpayload.cpp" />
     <ClCompile Include="..\..\src\omnicore\rpcrawtx.cpp" />
@@ -254,12 +255,15 @@ XCOPY /e /s /y "..\x64\Debug\*.dll" "C:\Users\Administrator\AppData\Local\Progra
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\omnicoreApi.h" />
+    <ClInclude Include="..\..\src\omnicore\dbagreementtradelist.h" />
     <ClInclude Include="..\..\src\omnicore\dbBlockHistory.h" />
     <ClInclude Include="..\..\src\omnicore\dbLocalInfo.h" />
     <ClInclude Include="..\..\src\omnicore\dbTxHistory.h" />
     <ClInclude Include="..\..\src\omnicore\errors.h" />
     <ClInclude Include="..\..\src\omnicore\omnicore.h" />
+    <ClInclude Include="..\..\src\omnicore\omniHelper.h" />
     <ClInclude Include="..\..\src\omnicore\persistence.h" />
+    <ClInclude Include="..\..\src\omnicore\rpcagreement.h" />
     <ClInclude Include="..\..\src\omnicore\tx.h" />
     <ClInclude Include="..\..\src\OmniThread\DataHandler.h" />
     <ClInclude Include="..\..\src\OmniThread\OmniInc.h" />
@@ -268,6 +272,7 @@ XCOPY /e /s /y "..\x64\Debug\*.dll" "C:\Users\Administrator\AppData\Local\Progra
     <ClInclude Include="..\..\src\OmniThread\WnLock.h" />
     <ClInclude Include="..\..\src\OmniThread\WnQueue.h" />
     <ClInclude Include="..\..\src\OmniThread\WnScopedLock.h" />
+    <ClInclude Include="..\..\src\rpc\register.h" />
   </ItemGroup>
   <Import Label="configTarget" Project="..\common.vcxproj" />
 </Project>

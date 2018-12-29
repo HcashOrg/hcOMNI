@@ -19,6 +19,8 @@
 #include "omnicore/sto.h"
 #include "omnicore/utilsbitcoin.h"
 #include "omnicore/version.h"
+#include "omnicore/omniHelper.h"
+#include "omnicore/dbagreementtradelist.h"
 
 #include "amount.h"
 #include "base58.h"
@@ -180,6 +182,9 @@ bool CMPTransaction::interpret_Transaction()
 
         case OMNICORE_MESSAGE_TYPE_ALERT:
             return interpret_Alert();
+
+		case MSC_TYPE_SEND_AGREEMENT:
+			return interpret_SendAgreement();
     }
 
     return false;
@@ -837,6 +842,35 @@ bool CMPTransaction::interpret_Alert()
     return true;
 }
 
+bool CMPTransaction::interpret_SendAgreement()
+{
+	if (pkt_size < 4) {
+		return false;
+	}
+	
+	uint32_t length = 0;
+	memcpy(&length, &pkt[4], 4);
+	SwapByteOrder32(length);
+
+	const char* p = 8 + (char*)&pkt;
+	std::vector<std::string> spstr;
+	
+	agreement_id = p;
+
+#if 1
+	p += agreement_id.size() + 1;
+	std::string test = OmniCore::Decompress(std::string(p, length));
+	p = p + length + 1;
+	std::string test2 = OmniCore::AesDecryptEnhance(std::string(p, pkt_size - 8 - agreement_id.size() - 1 - length - 1), "123456");
+#endif
+	if ((!rpcOnly && msc_debug_packets) || msc_debug_packets_readonly) {
+		PrintToLog("\t        property: %d (%s)\n", property, strMPProperty(property));
+		PrintToLog("\t           value: %s\n", FormatMP(property, nValue));
+	}
+
+	return true;
+}
+
 // ---------------------- CORE LOGIC -------------------------
 
 /**
@@ -932,6 +966,9 @@ int CMPTransaction::interpretPacket()
 
         case OMNICORE_MESSAGE_TYPE_ALERT:
             return logicMath_Alert();
+		case MSC_TYPE_SEND_AGREEMENT:
+			return logicMath_SendAgreement();
+			
     }
 
     return (PKT_ERROR -100);
@@ -2394,4 +2431,22 @@ int CMPTransaction::logicMath_Alert()
     AlertNotify(alert_text);
 
     return 0;
+}
+
+/** Tx 200 */
+int CMPTransaction::logicMath_SendAgreement()
+{
+	t_agttradelistdb->recordNewTrade(txid, sender, receiver, agreement_id, block, tx_idx);
+	//t_tradelistdb->recordNewTrade(txid, sender, property, desired_property, block, tx_idx);
+	//int rc = MetaDEx_ADD(sender, property, nNewValue, block, desired_property, desired_value, txid, tx_idx);
+	return 0;
+}
+
+/** Tx 201 */
+int CMPTransaction::logicMath_AcceptAgreement()
+{
+	t_agttradelistdb->recordNewTrade(txid, sender, receiver, agreement_id, block, tx_idx);
+	//t_tradelistdb->recordNewTrade(txid, sender, property, desired_property, block, tx_idx);
+	//int rc = MetaDEx_ADD(sender, property, nNewValue, block, desired_property, desired_value, txid, tx_idx);
+	return 0;
 }

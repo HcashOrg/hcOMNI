@@ -95,6 +95,9 @@ private:
     uint32_t activation_block;
     uint32_t min_client_version;
 
+	//agreement
+	std::string agreement_id;
+
     // Indicates whether the transaction can be used to execute logic
     bool rpcOnly;
 
@@ -128,6 +131,7 @@ private:
     bool interpret_Activation();
     bool interpret_Deactivation();
     bool interpret_Alert();
+	bool interpret_SendAgreement();
 
     /**
      * Logic and "effects"
@@ -155,7 +159,8 @@ private:
     int logicMath_Activation();
     int logicMath_Deactivation();
     int logicMath_Alert();
-
+	int logicMath_SendAgreement();
+	int logicMath_AcceptAgreement();
     /**
      * Logic helpers
      */
