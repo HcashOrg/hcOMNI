@@ -48,6 +48,9 @@ OMNICORE_H = \
   omnicore/dbTxHistory.h \
   omnicore/dbBlockHistory.h \
   omnicore/dbLocalInfo.h \
+  omnicore/rpcagreement.h \
+  omnicore/omniHelper.h \
+  omnicore/dbagreementtradelist.h \
   OmniThread/DataHandler.h \
   OmniThread/OmniInc.h \
   OmniThread/OmniThread.h \
@@ -104,6 +107,9 @@ OMNICORE_CPP = \
   omnicore/dbTxHistory.cpp \
   omnicore/dbBlockHistory.cpp \
   omnicore/dbLocalInfo.cpp \
+  omnicore/dbagreementtradelist.cpp \
+  omnicore/omniHelper.cpp \
+  omnicore/rpcagreement.cpp \
   OmniThread/OmniThread.cpp \
   OmniThread/WnEvent.cpp \
   OmniThread/WnLock.cpp \
