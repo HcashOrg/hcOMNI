@@ -70,11 +70,10 @@ AC_DEFUN([AX_BOOST_IOSTREAMS],
         AC_CACHE_CHECK(whether the Boost::Iostreams library is available,
 					   ax_cv_boost_iostreams,
         [AC_LANG_PUSH([C++])
-         AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[@%:@include <boost/iostreams/path.hpp>]],
-                                   [[using namespace boost::iostreams;
-                                   path my_path( "foo/bar/data.txt" );
-                                   return 0;]])],
-					       ax_cv_boost_iostreams=yes, ax_cv_boost_iostreams=no)
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[@%:@include <boost/iostreams/filter/zlib.hpp>]],
+                                  [[boost::iostreams::zlib_error *a = 0;]])],
+                           ax_cv_boost_iostreams=yes, ax_cv_boost_iostreams=no)
+
          AC_LANG_POP([C++])
 		])
 		if test "x$ax_cv_boost_iostreams" = "xyes"; then
