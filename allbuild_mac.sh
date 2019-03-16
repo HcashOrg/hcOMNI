@@ -7,7 +7,7 @@
 chmod 777 autogen.sh
 
 ./autogen.sh
-./configure --without-gui --without-miniupnpc --with-incompatible-bdb --disable-tests --disable-bench
+./configure --without-gui --without-miniupnpc --with-incompatible-bdb --disable-tests --disable-bench --disable-zmq
 
 sudo make clean
 sudo make

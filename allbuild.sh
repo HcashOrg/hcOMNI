@@ -8,7 +8,7 @@ sudo apt-get install make  pkg-config autoconf libtool
 sudo apt-get install libboost-all-dev libssl-dev libevent-dev libdb-dev  libdb++-dev
 
 ./autogen.sh
-./configure  --without-gui --without-miniupnpc --with-incompatible-bdb --disable-tests --disable-bench
+./configure  --without-gui --without-miniupnpc --with-incompatible-bdb --disable-tests --disable-bench --disable-zmq
 
 make clean
 make
