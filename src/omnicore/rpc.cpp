@@ -2033,6 +2033,130 @@ UniValue omni_gettransaction(const UniValue& params, bool fHelp)
     return result;
 }
 
+
+UniValue omni_listwallettransactions(const UniValue& params, bool fHelp)
+{
+	if (fHelp || params.size() > 5)
+		throw runtime_error(
+			"omni_listwallettransactions ( \"address\" count skip startblock endblock )\n"
+			"\nList wallet transactions, optionally filtered by an address and block boundaries.\n"
+			"\nArguments:\n"
+			"1. address              (string, optional) address filter (default: \"*\")\n"
+			"2. count                (number, optional) show at most n transactions (default: 10)\n"
+			"3. skip                 (number, optional) skip the first n transactions (default: 0)\n"
+			"4. startblock           (number, optional) first block to begin the search (default: 0)\n"
+			"5. endblock             (number, optional) last block to include in the search (default: 999999999)\n"
+			"\nResult:\n"
+			"[                                 (array of JSON objects)\n"
+			"  {\n"
+			"    \"txid\" : \"hash\",                  (string) the hex-encoded hash of the transaction\n"
+			"    \"sendingaddress\" : \"address\",     (string) the Bitcoin address of the sender\n"
+			"    \"referenceaddress\" : \"address\",   (string) a Bitcoin address used as reference (if any)\n"
+			"    \"ismine\" : true|false,            (boolean) whether the transaction involes an address in the wallet\n"
+			"    \"confirmations\" : nnnnnnnnnn,     (number) the number of transaction confirmations\n"
+			"    \"fee\" : \"n.nnnnnnnn\",             (string) the transaction fee in bitcoins\n"
+			"    \"blocktime\" : nnnnnnnnnn,         (number) the timestamp of the block that contains the transaction\n"
+			"    \"valid\" : true|false,             (boolean) whether the transaction is valid\n"
+			"    \"version\" : n,                    (number) the transaction version\n"
+			"    \"type_int\" : n,                   (number) the transaction type as number\n"
+			"    \"type\" : \"type\",                  (string) the transaction type as string\n"
+			"    [...]                             (mixed) other transaction type specific properties\n"
+			"  },\n"
+			"  ...\n"
+			"]\n"
+			"\nExamples:\n"
+			+ HelpExampleCli("omni_listtransactions", "")
+			+ HelpExampleRpc("omni_listtransactions", "")
+		);
+
+	// obtains parameters - default all wallet addresses & last 10 transactions
+	std::string addressParam;
+	std::set<std::string> addresses;
+	if (params.size() > 0) {
+		if (params[0].isArray())
+		{
+			for (size_t i = 0; i < params[0].size(); i++)
+			{
+				addresses.insert(params[0][i].get_str());
+			}
+		}
+	}
+
+
+	int64_t nCount = 10;
+	if (params.size() > 1 && !params[1].isNull()) nCount = params[1].get_int64();
+	if (nCount < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative count");
+	int64_t nFrom = 0;
+	if (params.size() > 2 && !params[2].isNull()) nFrom = params[2].get_int64();
+	if (nFrom < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative from");
+	int64_t nStartBlock = 0;
+	if (params.size() > 3 && !params[3].isNull()) nStartBlock = params[3].get_int64();
+	if (nStartBlock < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative start block");
+	int64_t nEndBlock = 999999999;
+	if (params.size() > 4 && !params[4].isNull()) nEndBlock = params[4].get_int64();
+	if (nEndBlock < 0) throw JSONRPCError(RPC_INVALID_PARAMETER, "Negative end block");
+
+
+	UniValue response(UniValue::VARR);
+
+	std::string history;
+	int blockHeight = mastercore::GetHeight();
+	int64_t top = p_txhistory->GetTop();
+	UniValue txobj;
+	do {
+		UniValue result(UniValue::VOBJ);
+		history = p_txhistory->GetHistory(top--);
+		if (history.empty())
+			break;
+		txobj.read(history);
+		if (!txobj.exists("PayLoad")) continue;
+
+		if (txobj["Block"].get_int() > nEndBlock ||
+			txobj["Block"].get_int() < nStartBlock)
+			continue;
+
+		BOOST_FOREACH(const std::string& address, addresses) {
+			
+			if (txobj["Sender"].getValStr() == address && txobj["Reference"].getValStr() == address)
+			{
+				addressParam = address;
+				break;
+			}
+		}
+		if (addressParam.empty())
+			continue;
+		/*
+		if (!addressParam.empty())
+		{
+			if (txobj["Sender"].getValStr() != addressParam && txobj["Reference"].getValStr() != addressParam)
+				continue;
+		}
+		*/
+		if (nFrom <= 0 && nCount > 0) {
+			//		response.push_back(txobj);
+			std::string ScriptEncode = txobj["PayLoad"].get_str();
+			std::vector<unsigned char> Script = ParseHex(ScriptEncode);
+
+			CMPTransaction mp_obj;
+			mp_obj.unlockLogic();
+			mp_obj.Set(uint256S(txobj["TxHash"].getValStr()), txobj["Block"].get_int(), txobj["Idx"].get_int(), txobj["Time"].get_int64());
+			mp_obj.SetBlockHash(uint256S(txobj["BlockHash"].getValStr()));
+			mp_obj.Set(txobj["Sender"].getValStr(), txobj["Reference"].getValStr(),
+				0, uint256S(txobj["TxHash"].getValStr()),
+				txobj["Block"].get_int(), txobj["Idx"].get_int(),
+				&(Script[0]), Script.size(), 3, txobj["Fee"].get_int());
+			if (Parsehistory(mp_obj, uint256S(txobj["TxHash"].getValStr()), uint256S(txobj["BlockHash"].getValStr()), result, blockHeight, addressParam) == 0)
+			{
+				response.push_back(result);
+				nCount--;
+			}
+		}
+		nFrom--;
+	} while (!history.empty());
+	return response;
+}
+
+
 UniValue omni_listtransactions(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() > 5)
@@ -2898,6 +3022,7 @@ static const CRPCCommand commands[] =
 	{ "omni layer (data retrieval)", "omni_stop",					   &omni_stop,						 false },
 #ifdef ENABLE_WALLET
     { "omni layer (data retrieval)", "omni_listtransactions",          &omni_listtransactions,           false },
+	{ "omni layer (data retrieval)", "omni_listwallettransactions",    &omni_listwallettransactions,     false },
     { "omni layer (data retrieval)", "omni_getfeeshare",               &omni_getfeeshare,                false },
     { "omni layer (configuration)",  "omni_setautocommit",             &omni_setautocommit,              true  },
     { "omni layer (data retrieval)", "omni_getwalletbalances",         &omni_getwalletbalances,          false },
