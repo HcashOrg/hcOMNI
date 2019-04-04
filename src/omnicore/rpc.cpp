@@ -2117,7 +2117,7 @@ UniValue omni_listwallettransactions(const UniValue& params, bool fHelp)
 
 		BOOST_FOREACH(const std::string& address, addresses) {
 			
-			if (txobj["Sender"].getValStr() == address && txobj["Reference"].getValStr() == address)
+			if (txobj["Sender"].getValStr() == address || txobj["Reference"].getValStr() == address)
 			{
 				addressParam = address;
 				break;
