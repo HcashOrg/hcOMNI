@@ -2070,7 +2070,6 @@ UniValue omni_listwallettransactions(const UniValue& params, bool fHelp)
 		);
 
 	// obtains parameters - default all wallet addresses & last 10 transactions
-	std::string addressParam;
 	std::set<std::string> addresses;
 	if (params.size() > 0) {
 		if (params[0].isArray())
@@ -2104,6 +2103,7 @@ UniValue omni_listwallettransactions(const UniValue& params, bool fHelp)
 	int64_t top = p_txhistory->GetTop();
 	UniValue txobj;
 	do {
+		std::string addressParam;
 		UniValue result(UniValue::VOBJ);
 		history = p_txhistory->GetHistory(top--);
 		if (history.empty())
