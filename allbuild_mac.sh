@@ -6,7 +6,7 @@
 
 chmod 777 autogen.sh
 
-brew install automake berkeley-db libtool boost openssl pkg-config protobuf libevent
+brew install automake berkeley-db@4 libtool boost openssl pkg-config protobuf libevent
 
 ./autogen.sh
 ./configure --without-gui --without-miniupnpc --with-incompatible-bdb --disable-tests --disable-bench --disable-zmq
