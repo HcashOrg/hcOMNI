@@ -4,7 +4,9 @@
 #ifdef _WIN32
 typedef long long ssize_t;
 #endif
-
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 // Increase with every consensus affecting change
 #define OMNICORE_VERSION_MAJOR       0
 // Increase with every non-consensus affecting feature

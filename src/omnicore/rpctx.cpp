@@ -262,6 +262,77 @@ UniValue omni_send(const UniValue& params, bool fHelp)
 	*/
 }
 
+UniValue omni_aisend(const UniValue& params, bool fHelp)
+{
+    if (fHelp || params.size() < 4 || params.size() > 6)
+        throw runtime_error(
+            "omni_send \"fromaddress\" \"toaddress\" propertyid \"amount\" ( \"redeemaddress\" \"referenceamount\" )\n"
+
+            "\nCreate and broadcast a simple send transaction.\n"
+
+            "\nArguments:\n"
+            "1. fromaddress          (string, required) the address to send from\n"
+            "2. toaddress            (string, required) the address of the receiver\n"
+            "3. propertyid           (number, required) the identifier of the tokens to send\n"
+            "4. amount               (string, required) the amount to send\n"
+            "5. redeemaddress        (string, optional) an address that can spend the transaction dust (sender by default)\n"
+            "6. referenceamount      (string, optional) a bitcoin amount that is sent to the receiver (minimal by default)\n"
+
+            "\nResult:\n"
+            "\"hash\"                  (string) the hex-encoded transaction hash\n"
+
+            "\nExamples:\n" +
+            HelpExampleCli("omni_send", "\"3M9qvHKtgARhqcMtM5cRT9VaiDJ5PSfQGY\" \"37FaKponF7zqoMLUjEiko25pDiuVH5YLEa\" 1 \"100.0\"") + HelpExampleRpc("omni_send", "\"3M9qvHKtgARhqcMtM5cRT9VaiDJ5PSfQGY\", \"37FaKponF7zqoMLUjEiko25pDiuVH5YLEa\", 1, \"100.0\""));
+
+    // obtain parameters & info
+    std::string fromAddress = params[0].getValStr(); //ParseAddress(params[0]);
+    std::string toAddress = params[1].getValStr();   //ParseAddress(params[1]);
+    uint32_t propertyId = ParsePropertyId(params[2]);
+    int64_t amount = ParseAmount(params[3], isPropertyDivisible(propertyId));
+    std::string redeemAddress = (params.size() > 4 && !ParseText(params[4]).empty()) ? ParseAddress(params[4]) : "";
+    int64_t referenceAmount = (params.size() > 5) ? ParseAmount(params[5], true) : 0;
+
+    // perform checks
+    RequireExistingProperty(propertyId);
+    RequireBalance(fromAddress, propertyId, amount);
+    RequireSaneReferenceAmount(referenceAmount);
+
+    if (isAddressFrozen(fromAddress, propertyId)) {
+        throw JSONRPCError(1, error_str(-3));
+    }
+
+    // create a payload for the transaction
+    std::vector<unsigned char> payload = CreatePayload_SimpleSend(propertyId, amount);
+    return PayLoadWrap(payload);
+
+    //std::vector<unsigned char> vchData;
+    //   std::vector<unsigned char> vchOmBytes = GetOmMarker();
+    //   vchData.insert(vchData.end(), vchOmBytes.begin(), vchOmBytes.end());
+    //   vchData.insert(vchData.end(), payload.begin(), payload.end());
+    //   return HexStr(vchData.begin(), vchData.end());
+    //std::string strReply = JSONRPCReply(HexStr(vchData.begin(), vchData.end()), NullUniValue, root["id"]);
+
+    /*
+    // request the wallet build the transaction (and if needed commit it)
+    uint256 txid;
+    std::string rawHex;
+    int result = WalletTxBuilder(fromAddress, toAddress, redeemAddress, referenceAmount, payload, txid, rawHex, autoCommit);
+
+    // check error and return the txid (or raw hex depending on autocommit)
+    if (result != 0) {
+        throw JSONRPCError(result, error_str(result));
+    } else {
+        if (!autoCommit) {
+            return rawHex;
+        } else {
+            PendingAdd(txid, fromAddress, MSC_TYPE_SIMPLE_SEND, propertyId, amount);
+            return txid.GetHex();
+        }
+    }
+	*/
+}
+
+
 UniValue omni_sendall(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 5)
@@ -346,7 +417,7 @@ UniValue omni_pending_add(const UniValue& params, bool fHelp)
     RequireExistingProperty(propertyId);
     RequireBalance(fromAddress, propertyId, amount);
 
-    PendingAdd(vecTxHash, fromAddress, pendingType, propertyId, amount, fSubtract);
+    PendingAdd(vecTxHash, fromAddress, "", pendingType, propertyId, amount, fSubtract);
 
     return "";
 }
@@ -1599,6 +1670,7 @@ static const CRPCCommand commands[] =
 #ifdef ENABLE_WALLET
         {"omni layer (transaction creation)", "omni_sendrawtx", &omni_sendrawtx, false},
         {"omni layer (transaction creation)", "omni_send", &omni_send, false},
+        {"omni layer (transaction creation)", "omni_aisend", &omni_aisend, false},
         {"omni layer (transaction creation)", "omni_senddexsell", &omni_senddexsell, false},
         {"omni layer (transaction creation)", "omni_senddexaccept", &omni_senddexaccept, false},
         {"omni layer (transaction creation)", "omni_sendissuancecrowdsale", &omni_sendissuancecrowdsale, false},
